@@ -15,6 +15,14 @@
     transition: all 0.3s ease;
     font-weight: 500;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: flex-start;
+}
+
+.navbar-menu li a i {
+    flex-shrink: 0;
 }
 
 .navbar-menu li a:hover {
@@ -139,15 +147,18 @@
     .navbar-menu li a {
         padding: 6px 12px;
         font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        justify-content: flex-start;
     }
     
     .navbar-menu li a span {
         display: inline;
     }
     
-    .navbar-menu li a {
-        min-width: 40px;
-        justify-content: center;
+    .navbar-menu li a i {
+        flex-shrink: 0;
     }
     
     .tutorial-step {
