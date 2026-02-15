@@ -14,12 +14,13 @@
     border: none;
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
     cursor: pointer;
-    z-index: 10000;
+    z-index: 10001 !important;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: center;
+    pointer-events: auto !important;
 }
 
 .fab-button:hover {
@@ -43,11 +44,12 @@
     position: fixed;
     bottom: 90px;
     right: 20px;
-    z-index: 9999;
+    z-index: 10000 !important;
     opacity: 0;
     visibility: hidden;
     transform: scale(0.8) translateY(10px);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: auto !important;
 }
 
 .fab-menu.active {
@@ -70,6 +72,7 @@
     gap: 12px;
     min-width: 160px;
     transform-origin: right center;
+    pointer-events: auto !important;
 }
 
 .fab-item:hover {
@@ -173,14 +176,26 @@
 }
 
 /* Z-index management pour éviter les conflits */
+.leaflet-control {
+    z-index: 9995 !important;
+}
+
+.leaflet-control-measure {
+    z-index: 9994 !important;
+}
+
+.leaflet-control-attribution {
+    z-index: 9993 !important;
+}
+
 .leaflet-control-container {
-    z-index: 9998 !important;
+    z-index: 9992 !important;
 }
 
 .leaflet-top.leaflet-left {
-    z-index: 9997 !important;
+    z-index: 9991 !important;
 }
 
 .leaflet-top.leaflet-right {
-    z-index: 9996 !important;
+    z-index: 9990 !important;
 }
