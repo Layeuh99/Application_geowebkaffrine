@@ -22,6 +22,7 @@
         <link rel="stylesheet" href="css/leaflet-search.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/metadata.css">
         <link rel="stylesheet" href="css/app-modern.css?v=18">
         <link rel="stylesheet" href="css/dark-theme.css">
         <link rel="stylesheet" href="css/mobile-responsive.css">
@@ -49,10 +50,11 @@
                 <li><a href="#" onclick="showHome()" role="menuitem" aria-label="Accueil"><i class="fas fa-home" aria-hidden="true"></i> <span>Accueil</span></a></li>
                 <li><a href="#" onclick="toggleLeftPanel()" role="menuitem" aria-label="Panneau des couches"><i class="fas fa-th" aria-hidden="true"></i> <span>Couches</span></a></li>
                 <li><a href="#" onclick="toggleRightPanel()" role="menuitem" aria-label="Fonds de carte et légende"><i class="fas fa-palette" aria-hidden="true"></i> <span>Fonds & Légende</span></a></li>
+                <li><a href="#" onclick="showMetadata()" role="menuitem" aria-label="Métadonnées"><i class="fas fa-info" aria-hidden="true"></i> <span>Métadonnées</span></a></li>
                 <li><a href="#" onclick="showAbout()" role="menuitem" aria-label="À propos de l'application"><i class="fas fa-info-circle" aria-hidden="true"></i> <span>À propos</span></a></li>
-                <li><a href="#" onclick="showSpatialQuery()" role="menuitem" aria-label="Requête spatiale"><i class="fas fa-draw-polygon" aria-hidden="true"></i> <span>Requête spatiale</span></a></li>
-                <li><a href="#" onclick="showAttributeQuery()" role="menuitem" aria-label="Requête attributaire"><i class="fas fa-database" aria-hidden="true"></i> <span>Requête attributaire</span></a></li>
-                <li><a href="#" onclick="showAttributeQuery()"><i class="fas fa-database"></i> Requete attributaire</a></li>
+                <li><a href="#" onclick="showSpatialQuery()" role="menuitem" aria-label="Analyser autour d&#39;un point"><i class="fas fa-draw-polygon" aria-hidden="true"></i> <span>Analyser autour d&#39;un point</span></a></li>
+                <li><a href="#" onclick="showAttributeQuery()" role="menuitem" aria-label="Rechercher des informations"><i class="fas fa-database" aria-hidden="true"></i> <span>Rechercher des informations</span></a></li>
+                <li><a href="#" onclick="enableRoutingMode()" role="menuitem" aria-label="Calculer un itinéraire"><i class="fas fa-route" aria-hidden="true"></i> <span>Itinéraire</span></a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle"><i class="fas fa-download"></i> Telechargement <i class="fas fa-chevron-down"></i></a>
                     <ul class="dropdown-menu">
@@ -119,6 +121,9 @@
                 <div class="welcome-footer">
                     <button class="btn btn-primary" onclick="closeWelcomeModal()">
                         <i class="fas fa-map-marked-alt"></i> Explorer la carte
+                    </button>
+                    <button class="btn btn-secondary" onclick="startInteractiveGuide(true)" style="margin-left: 10px;">
+                        <i class="fas fa-question-circle"></i> Lancer le guide
                     </button>
                     <label class="dont-show-again">
                         <input type="checkbox" id="dontShowWelcome"> Ne plus afficher
@@ -377,11 +382,11 @@
             </div>
         </div>
 
-        <!-- Modal Requête Spatiale AMÉLIORÉ -->
+        <!-- Modal Analyse Spatiale AMÉLIORÉ -->
         <div id="spatialQueryModal" class="modal">
             <div class="modal-content" style="max-width: 500px;">
                 <span class="modal-close" onclick="closeModal('spatialQueryModal')">&times;</span>
-                <h2><i class="fas fa-draw-polygon"></i> Requête Spatiale</h2>
+                <h2><i class="fas fa-draw-polygon"></i> Analyser autour d'un point</h2>
                 <div style="padding: 20px;">
                     
                     <!-- Étape 1: Choisir la couche cible -->
@@ -463,11 +468,103 @@
             </div>
         </div>
 
-        <!-- Modal Requête Attributaire AMÉLIORÉ -->
+        <!-- Modal Métadonnées -->
+        <div id="metadataModal" class="modal">
+            <div class="modal-content" style="max-width: 600px;">
+                <span class="modal-close" onclick="closeModal('metadataModal')">&times;</span>
+                <h2><i class="fas fa-info"></i> Métadonnées des Données</h2>
+                <div style="padding: 20px;">
+                    <div class="metadata-tabs">
+                        <button class="metadata-tab active" onclick="showMetadataTab('general')">
+                            <i class="fas fa-globe"></i> Général
+                        </button>
+                        <button class="metadata-tab" onclick="showMetadataTab('layers')">
+                            <i class="fas fa-layer-group"></i> Couches
+                        </button>
+                        <button class="metadata-tab" onclick="showMetadataTab('technical')">
+                            <i class="fas fa-cog"></i> Technique
+                        </button>
+                    </div>
+                    
+                    <div id="metadataGeneral" class="metadata-content">
+                        <div class="metadata-section">
+                            <h3><i class="fas fa-database"></i> Source des données</h3>
+                            <p><strong>Organisme:</strong> Direction Régionale de la Statistique et de la Démographie (DRSD) Kaffrine</p>
+                            <p><strong>Partenaire technique:</strong> UAM - Université Amadou Mahtar Mbow</p>
+                            <p><strong>Projet:</strong> Plateforme GéoWeb Kaffrine</p>
+                        </div>
+                        
+                        <div class="metadata-section">
+                            <h3><i class="fas fa-calendar"></i> Date de production</h3>
+                            <p><strong>Dernière mise à jour:</strong> Décembre 2024</p>
+                            <p><strong>Période de référence:</strong> Recensement Général de la Population et de l'Habitat (RGPH) 2013</p>
+                            <p><strong>Mise à jour des infrastructures:</strong> 2024</p>
+                        </div>
+                        
+                        <div class="metadata-section">
+                            <h3><i class="fas fa-map"></i> Zone géographique</h3>
+                            <p><strong>Région:</strong> Kaffrine</p>
+                            <p><strong>Étendue:</strong> 11,242 km²</p>
+                            <p><strong>Population:</strong> 668,474 habitants (RGPH 2013)</p>
+                        </div>
+                    </div>
+                    
+                    <div id="metadataLayers" class="metadata-content" style="display: none;">
+                        <div class="metadata-section">
+                            <h3><i class="fas fa-layer-group"></i> Couches disponibles</h3>
+                            <div class="layer-metadata">
+                                <div class="layer-item">
+                                    <h4><i class="fas fa-map"></i> Limites administratives</h4>
+                                    <ul>
+                                        <li><strong>Région Kaffrine:</strong> 1 entité</li>
+                                        <li><strong>Départements:</strong> 4 départements (Birkelane, Kaffrine, Koungheul, Malem Hoddar)</li>
+                                        <li><strong>Arrondissements:</strong> 11 arrondissements</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="layer-item">
+                                    <h4><i class="fas fa-road"></i> Infrastructure</h4>
+                                    <ul>
+                                        <li><strong>Réseau routier:</strong> Routes principales et secondaires</li>
+                                        <li><strong>Localités:</strong> Villages et villes</li>
+                                        <li><strong>Établissements:</strong> Écoles et infrastructures éducatives</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="metadataTechnical" class="metadata-content" style="display: none;">
+                        <div class="metadata-section">
+                            <h3><i class="fas fa-globe"></i> Système de projection</h3>
+                            <p><strong>SCR:</strong> WGS84 (EPSG:4326)</p>
+                            <p><strong>Format:</strong> GeoJSON</p>
+                            <p><strong>Précision:</strong> Niveau administratif</p>
+                        </div>
+                        
+                        <div class="metadata-section">
+                            <h3><i class="fas fa-shield-alt"></i> Limites d'utilisation</h3>
+                            <p><strong>Usage autorisé:</strong> Consultation et analyse</p>
+                            <p><strong>Restrictions:</strong> Usage commercial non autorisé sans accord</p>
+                            <p><strong>Citation:</strong> DRSD Kaffrine / UAM - Année 2024</p>
+                        </div>
+                        
+                        <div class="metadata-section">
+                            <h3><i class="fas fa-user"></i> Responsable du projet</h3>
+                            <p><strong>Coordonnateur:</strong> Mouhsine Abdallah Babacar DIAO</p>
+                            <p><strong>Contact:</strong> diao.mouhsine@uam.edu.sn</p>
+                            <p><strong>Téléphone:</strong> +221 77 837 94 57</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Recherche d'Informations AMÉLIORÉ -->
         <div id="attributeQueryModal" class="modal">
             <div class="modal-content">
                 <span class="modal-close" onclick="closeModal('attributeQueryModal')">&times;</span>
-                <h2><i class="fas fa-database"></i> Requête Attributaire</h2>
+                <h2><i class="fas fa-database"></i> Rechercher des informations</h2>
                 <div style="padding: 20px;">
                     <!-- Étape 1: Choisir la couche -->
                     <div id="attrStep1" style="margin-bottom: 20px;">
@@ -535,8 +632,13 @@
         <script src="js/leaflet-svg-shape-markers.min.js"></script>
         <script src="js/leaflet.rotatedMarker.js"></script>
         <script src="js/leaflet.pattern.js"></script>
-        <script src="js/leaflet-hash.js"></script>
-        <script src="js/Autolinker.min.js"></script>
+        <script src="js/leaflet.js.map"></script>
+        <script src="js/map-core-module.js"></script>
+        <script src="js/guide-module.js"></script>
+        <script src="js/metadata-module.js"></script>
+        <script src="js/spatial-analysis-module.js"></script>
+        <script src="js/routing-module.js"></script>
+        <script src="js/app-modern.js"></script>
         <script src="js/rbush.min.js"></script>
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
