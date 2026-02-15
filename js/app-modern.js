@@ -1088,10 +1088,23 @@ function showWelcomeModal() {
 function closeWelcomeModal() {
     document.getElementById('welcomeModal').classList.remove('active');
     
-    // Sauvegarder la prÃ©fÃ©rence si cochÃ©
+    // Sauvegarder la préférence si coché
     let dontShow = document.getElementById('dontShowWelcome').checked;
     if (dontShow) {
         localStorage.setItem('hideWelcome', 'true');
+    }
+}
+
+function showMetadata() {
+    // Fermer le modal de bienvenue
+    document.getElementById('welcomeModal').classList.remove('active');
+    
+    // Ouvrir le modal des métadonnées
+    let metadataModal = document.getElementById('metadataModal');
+    if (metadataModal) {
+        metadataModal.classList.add('active');
+    } else {
+        console.warn('[MODAL] Modal des métadonnées non trouvé');
     }
 }
 

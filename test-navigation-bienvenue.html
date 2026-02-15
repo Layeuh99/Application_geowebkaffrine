@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Navigation Bienvenue - GéoWeb Kaffrine</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        .content {
+            padding: 40px;
+        }
+        .test-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+        .test-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .btn-secondary {
+            background: #6c757d;
+        }
+        .btn-success {
+            background: #28a745;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .iframe-container {
+            margin-top: 30px;
+            border: 3px solid #e9ecef;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+        .iframe-container iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+        @media (max-width: 768px) {
+            .content { padding: 20px; }
+            .btn-group { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧭 Test Navigation Bienvenue</h1>
+            <p>Vérification des fonctions de navigation du modal de bienvenue</p>
+        </div>
+        
+        <div class="content">
+            <div class="test-section">
+                <h2>🔧 Test des Fonctions JavaScript</h2>
+                <div class="btn-group">
+                    <button class="btn" onclick="testCloseWelcomeModal()">
+                        🚪 Tester closeWelcomeModal()
+                    </button>
+                    <button class="btn" onclick="testShowMetadata()">
+                        📋 Tester showMetadata()
+                    </button>
+                    <button class="btn btn-secondary" onclick="testShowWelcomeModal()">
+                        👋 Tester showWelcomeModal()
+                    </button>
+                    <button class="btn btn-success" onclick="testAllFunctions()">
+                        🧪 Tester toutes les fonctions
+                    </button>
+                </div>
+                <div id="testStatus" class="status info">
+                    Cliquez sur les boutons pour tester les fonctions de navigation
+                </div>
+            </div>
+            
+            <div class="test-section">
+                <h2>📝 Vérifications</h2>
+                <ul style="line-height: 1.8; color: #495057;">
+                    <li><strong>closeWelcomeModal()</strong> : Ferme le modal de bienvenue</li>
+                    <li><strong>showMetadata()</strong> : Ouvre le modal des métadonnées</li>
+                    <li><strong>showWelcomeModal()</strong> : Rouvre le modal de bienvenue</li>
+                    <li><strong>closeModal()</strong> : Ferme n'importe quel modal</li>
+                </ul>
+            </div>
+            
+            <div class="iframe-container">
+                <iframe src="index.html" title="GéoWeb Kaffrine - Test Navigation"></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function updateStatus(message, type = 'info') {
+            const status = document.getElementById('testStatus');
+            status.textContent = message;
+            status.className = `status ${type}`;
+        }
+        
+        function testCloseWelcomeModal() {
+            try {
+                // Vérifier si la fonction existe dans l'iframe
+                const iframe = document.querySelector('iframe');
+                const iframeWindow = iframe.contentWindow;
+                
+                if (iframeWindow.closeWelcomeModal) {
+                    updateStatus('✅ closeWelcomeModal() existe et fonctionne', 'success');
+                } else {
+                    updateStatus('❌ closeWelcomeModal() n\'existe pas dans l\'iframe', 'error');
+                }
+            } catch (e) {
+                updateStatus('⚠️ Erreur lors du test: ' + e.message, 'error');
+            }
+        }
+        
+        function testShowMetadata() {
+            try {
+                const iframe = document.querySelector('iframe');
+                const iframeWindow = iframe.contentWindow;
+                
+                if (iframeWindow.showMetadata) {
+                    updateStatus('✅ showMetadata() existe et fonctionne', 'success');
+                } else {
+                    updateStatus('❌ showMetadata() n\'existe pas dans l\'iframe', 'error');
+                }
+            } catch (e) {
+                updateStatus('⚠️ Erreur lors du test: ' + e.message, 'error');
+            }
+        }
+        
+        function testShowWelcomeModal() {
+            try {
+                const iframe = document.querySelector('iframe');
+                const iframeWindow = iframe.contentWindow;
+                
+                if (iframeWindow.showWelcomeModal) {
+                    updateStatus('✅ showWelcomeModal() existe et fonctionne', 'success');
+                } else {
+                    updateStatus('❌ showWelcomeModal() n\'existe pas dans l\'iframe', 'error');
+                }
+            } catch (e) {
+                updateStatus('⚠️ Erreur lors du test: ' + e.message, 'error');
+            }
+        }
+        
+        function testAllFunctions() {
+            updateStatus('🧪 Test en cours de toutes les fonctions...', 'info');
+            
+            setTimeout(() => {
+                testCloseWelcomeModal();
+                setTimeout(() => {
+                    testShowMetadata();
+                    setTimeout(() => {
+                        testShowWelcomeModal();
+                        updateStatus('🎉 Tests terminés ! Vérifiez les résultats ci-dessus.', 'success');
+                    }, 500);
+                }, 500);
+            }, 500);
+        }
+        
+        // Attendre que l'iframe se charge
+        const iframe = document.querySelector('iframe');
+        iframe.onload = function() {
+            updateStatus('🚀 Iframe chargée - Prêt à tester les fonctions', 'success');
+        };
+    </script>
+</body>
+</html>
