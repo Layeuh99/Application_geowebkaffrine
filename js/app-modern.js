@@ -1522,6 +1522,109 @@ document.addEventListener('click', function(event) {
 });
 
 // ============================================
+// FONCTIONS MINI TUTORIEL
+// ============================================
+
+let currentTutorialStep = 1;
+const totalTutorialSteps = 4;
+
+function showMiniTutorial() {
+    const modal = document.getElementById('miniTutorialModal');
+    if (modal) {
+        modal.classList.add('active');
+        modal.style.display = 'flex';
+        currentTutorialStep = 1;
+        updateTutorialStep();
+        
+        // Empêcher le scroll du body
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeMiniTutorial() {
+    const modal = document.getElementById('miniTutorialModal');
+    if (modal) {
+        modal.classList.remove('active');
+        modal.style.display = 'none';
+        
+        // Restaurer le scroll
+        document.body.style.overflow = 'auto';
+        
+        // Sauvegarder la préférence si coché
+        const dontShowCheckbox = document.getElementById('dontShowMiniTutorial');
+        if (dontShowCheckbox && dontShowCheckbox.checked) {
+            localStorage.setItem('hideMiniTutorial', 'true');
+        }
+    }
+}
+
+function updateTutorialStep() {
+    // Masquer toutes les étapes
+    for (let i = 1; i <= totalTutorialSteps; i++) {
+        const step = document.getElementById(`tutorialStep${i}`);
+        if (step) {
+            step.classList.remove('active');
+        }
+    }
+    
+    // Afficher l'étape actuelle
+    const currentStep = document.getElementById(`tutorialStep${currentTutorialStep}`);
+    if (currentStep) {
+        currentStep.classList.add('active');
+    }
+    
+    // Mettre à jour l'indicateur de progression
+    const stepIndicator = document.getElementById('tutorialStep');
+    const totalIndicator = document.getElementById('tutorialTotal');
+    if (stepIndicator) stepIndicator.textContent = currentTutorialStep;
+    if (totalIndicator) totalIndicator.textContent = totalTutorialSteps;
+    
+    // Mettre à jour les boutons de navigation
+    const prevBtn = document.getElementById('tutorialPrev');
+    const nextBtn = document.getElementById('tutorialNext');
+    
+    if (prevBtn) {
+        prevBtn.disabled = currentTutorialStep === 1;
+    }
+    
+    if (nextBtn) {
+        if (currentTutorialStep === totalTutorialSteps) {
+            nextBtn.innerHTML = 'Terminer <i class="fas fa-check"></i>';
+            nextBtn.onclick = closeMiniTutorial;
+        } else {
+            nextBtn.innerHTML = 'Suivant <i class="fas fa-chevron-right"></i>';
+            nextBtn.onclick = nextTutorialStep;
+        }
+    }
+}
+
+function nextTutorialStep() {
+    if (currentTutorialStep < totalTutorialSteps) {
+        currentTutorialStep++;
+        updateTutorialStep();
+    }
+}
+
+function previousTutorialStep() {
+    if (currentTutorialStep > 1) {
+        currentTutorialStep--;
+        updateTutorialStep();
+    }
+}
+
+// Fermer le mini tutoriel en cliquant en dehors
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('miniTutorialModal');
+    const content = document.querySelector('.mini-tutorial-content');
+    
+    if (modal && modal.classList.contains('active') && 
+        !content.contains(event.target) && 
+        !event.target.closest('.fab-item')) {
+        closeMiniTutorial();
+    }
+});
+
+// ============================================
 // GESTION DES THEMES CLAIR/SOMBRE
 // ============================================
 function initTheme() {

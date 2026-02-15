@@ -455,6 +455,97 @@
             </button>
         </div>
 
+        <!-- Modal Mini Tutoriel -->
+        <div id="miniTutorialModal" class="modal mini-tutorial-modal">
+            <div class="modal-content mini-tutorial-content">
+                <button class="modal-close tutorial-close" onclick="closeMiniTutorial()">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div class="tutorial-header">
+                    <h2><i class="fas fa-graduation-cap"></i> Tutoriel Rapide</h2>
+                    <div class="tutorial-progress">
+                        <span id="tutorialStep">1</span> / <span id="tutorialTotal">4</span>
+                    </div>
+                </div>
+                
+                <div class="tutorial-body">
+                    <!-- Étape 1 -->
+                    <div class="tutorial-step active" id="tutorialStep1">
+                        <div class="step-icon">
+                            <i class="fas fa-map"></i>
+                        </div>
+                        <h3>Explorer la carte</h3>
+                        <p>Activez les couches thématiques pour visualiser les données administratives, infrastructures et localités de la région de Kaffrine.</p>
+                        <div class="step-actions">
+                            <button class="btn btn-outline" onclick="toggleLeftPanel()">
+                                <i class="fas fa-layer-group"></i> Voir les couches
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Étape 2 -->
+                    <div class="tutorial-step" id="tutorialStep2">
+                        <div class="step-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>Rechercher</h3>
+                        <p>Trouvez rapidement une école, une localité ou n'importe quel point d'intérêt dans la région.</p>
+                        <div class="step-actions">
+                            <button class="btn btn-outline" onclick="showAttributeQuery(); closeMiniTutorial();">
+                                <i class="fas fa-search"></i> Lancer une recherche
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Étape 3 -->
+                    <div class="tutorial-step" id="tutorialStep3">
+                        <div class="step-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Analyser</h3>
+                        <p>Effectuez des analyses spatiales autour d'un point pour trouver les écoles, localités ou infrastructures à proximité.</p>
+                        <div class="step-actions">
+                            <button class="btn btn-outline" onclick="showSpatialQuery(); closeMiniTutorial();">
+                                <i class="fas fa-map"></i> Lancer une analyse
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Étape 4 -->
+                    <div class="tutorial-step" id="tutorialStep4">
+                        <div class="step-icon">
+                            <i class="fas fa-road"></i>
+                        </div>
+                        <h3>Itinéraire</h3>
+                        <p>Sélectionnez un point de départ et un point d'arrivée pour obtenir le meilleur trajet avec distance et temps.</p>
+                        <div class="step-actions">
+                            <button class="btn btn-outline" onclick="enableRoutingMode(); closeMiniTutorial();">
+                                <i class="fas fa-road"></i> Calculer un itinéraire
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tutorial-footer">
+                    <div class="tutorial-nav">
+                        <button class="btn btn-secondary" id="tutorialPrev" onclick="previousTutorialStep()" disabled>
+                            <i class="fas fa-chevron-left"></i> Précédent
+                        </button>
+                        <button class="btn btn-primary" id="tutorialNext" onclick="nextTutorialStep()">
+                            Suivant <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="tutorial-options">
+                        <label class="dont-show-tutorial">
+                            <input type="checkbox" id="dontShowMiniTutorial">
+                            <span>Ne plus afficher ce tutoriel</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Modals -->
         <div id="aboutModal" class="modal">
             <div class="modal-content">
@@ -929,6 +1020,10 @@
         <div class="fab-item" onclick="toggleMeasure(); closeFabMenu();">
             <i class="fas fa-ruler-combined"></i>
             <span>Mesurer</span>
+        </div>
+        <div class="fab-item" onclick="showMiniTutorial(); closeFabMenu();">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Tutoriel</span>
         </div>
     </div>
 
