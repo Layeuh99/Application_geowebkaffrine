@@ -18,6 +18,12 @@ html, body {
     background-color: #f5f5f5;
 }
 
+/* S'assurer que le body peut toujours défiler */
+body {
+    position: relative;
+    min-height: 100vh;
+}
+
 /* ============================================
    STYLES DES CONTRÔLES DE COUCHES
    ============================================ */
@@ -1997,6 +2003,14 @@ select {
         padding: 10px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         z-index: 999;
+        max-height: 80vh; /* Limiter la hauteur pour permettre le scroll */
+        overflow-y: auto; /* Permettre le scroll dans le menu mobile */
+    }
+    
+    /* S'assurer que le body peut défiler même avec le menu mobile ouvert */
+    body {
+        overflow-y: auto !important;
+        position: relative;
     }
 
     .navbar-menu.active {
