@@ -3386,31 +3386,7 @@ function zoomToAdvancedSpatialResult(index) {
 // CONTRÔLE DES COUCHES
 // ============================================
 
-/**
- * Active/désactive une couche
- * @param {string} layerName - Nom de la couche
- */
-function toggleLayer(layerName) {
-    if (!map || !layers[layerName]) {
-        console.warn('[LAYER] Couche non trouvée:', layerName);
-        return;
-    }
-    
-    const checkbox = document.getElementById('layer-' + layerName);
-    const isChecked = checkbox.checked;
-    
-    if (isChecked) {
-        if (!map.hasLayer(layers[layerName])) {
-            map.addLayer(layers[layerName]);
-        }
-        console.log('[LAYER] Couche activée:', layerName);
-    } else {
-        if (map.hasLayer(layers[layerName])) {
-            map.removeLayer(layers[layerName]);
-        }
-        console.log('[LAYER] Couche désactivée:', layerName);
-    }
-}
+// La fonction toggleLayer est déjà définie plus haut dans le fichier
 
 /**
  * Initialise les contrôles de couches
