@@ -1196,16 +1196,170 @@ function handleRoutingClick(e) {
 function drawRoutingPath() {
     if (routingPoints.length !== 2) return;
     
-    // Tracer une ligne droite entre les deux points
-    routingLine = L.polyline(routingPoints, {
-        color: '#667eea',
+    // Chercher un chemin qui suit les routes existantes
+    findRouteAlongRoads(routingPoints[0], routingPoints[1]);
+}
+
+function findRouteAlongRoads(startPoint, endPoint) {
+    console.log('[ROUTING] Recherche de route entre', startPoint, endPoint);
+    
+    // Récupérer la couche Routes
+    let routesLayer = layers.Routes;
+    if (!routesLayer) {
+        console.warn('[ROUTING] Couche Routes non trouvée, utilisation ligne droite');
+        drawStraightLine(startPoint, endPoint);
+        return;
+    }
+    
+    // Chercher les routes les plus proches des points de départ et d'arrivée
+    let nearestStartRoad = findNearestRoad(startPoint, routesLayer);
+    let nearestEndRoad = findNearestRoad(endPoint, routesLayer);
+    
+    if (!nearestStartRoad || !nearestEndRoad) {
+        console.warn('[ROUTING] Pas de routes trouvées, utilisation ligne droite');
+        drawStraightLine(startPoint, endPoint);
+        return;
+    }
+    
+    // Construire un chemin simple en suivant les routes
+    let path = buildSimplePath(nearestStartRoad, nearestEndRoad, routesLayer);
+    
+    if (path.length > 0) {
+        // Ajouter les points de départ et d'arrivée
+        path.unshift(startPoint);
+        path.push(endPoint);
+        
+        // Dessiner le chemin
+        routingLine = L.polyline(path, {
+            color: '#667eea',
+            weight: 4,
+            opacity: 0.8
+        }).addTo(map);
+        
+        // Calculer la distance réelle
+        let totalDistance = 0;
+        for (let i = 0; i < path.length - 1; i++) {
+            totalDistance += calculateDistance(
+                {lat: path[i].lat, lng: path[i].lng},
+                {lat: path[i+1].lat, lng: path[i+1].lng}
+            );
+        }
+        
+        console.log('[ROUTING] Chemin trouvé, distance:', Math.round(totalDistance), 'm');
+        
+        // Afficher les informations
+        alert(`Itinéraire créé !\n\nDistance : ${Math.round(totalDistance)} m\nChemin : ${path.length} points\n\nCliquez sur "Itinéraire" pour en créer un nouveau.`);
+        
+        // Zoom sur l'itinéraire
+        let bounds = L.latLngBounds(path);
+        map.fitBounds(bounds.pad(0.1));
+    } else {
+        console.warn('[ROUTING] Pas de chemin trouvé, utilisation ligne droite');
+        drawStraightLine(startPoint, endPoint);
+    }
+}
+
+function findNearestRoad(point, routesLayer) {
+    let nearestRoad = null;
+    let minDistance = Infinity;
+    
+    routesLayer.eachLayer(function(road) {
+        if (road.feature && road.feature.geometry) {
+            let roadCenter = getLayerCenter(road);
+            if (roadCenter) {
+                let distance = calculateDistance(
+                    {lat: point.lat, lng: point.lng},
+                    {lat: roadCenter.lat, lng: roadCenter.lng}
+                );
+                
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    nearestRoad = road;
+                }
+            }
+        }
+    });
+    
+    return nearestRoad;
+}
+
+function buildSimplePath(startRoad, endRoad, routesLayer) {
+    // Implémentation simple : chercher les routes intermédiaires
+    let path = [];
+    let visited = new Set();
+    
+    // Point de départ sur la première route
+    let startPoint = getLayerCenter(startRoad);
+    if (startPoint) path.push(startPoint);
+    
+    // Chercher une route intermédiaire si nécessaire
+    if (startRoad !== endRoad) {
+        let intermediateRoad = findIntermediateRoad(startRoad, endRoad, routesLayer, visited);
+        if (intermediateRoad) {
+            let intermediatePoint = getLayerCenter(intermediateRoad);
+            if (intermediatePoint) path.push(intermediatePoint);
+        }
+    }
+    
+    // Point d'arrivée sur la dernière route
+    let endPoint = getLayerCenter(endRoad);
+    if (endPoint) path.push(endPoint);
+    
+    return path;
+}
+
+function findIntermediateRoad(startRoad, endRoad, routesLayer, visited) {
+    // Chercher une route qui connecte les deux routes
+    let startCenter = getLayerCenter(startRoad);
+    let endCenter = getLayerCenter(endRoad);
+    
+    if (!startCenter || !endCenter) return null;
+    
+    let maxSearchDistance = 5000; // 5km max pour chercher une connexion
+    
+    routesLayer.eachLayer(function(road) {
+        if (visited.has(road)) return;
+        
+        let roadCenter = getLayerCenter(road);
+        if (!roadCenter) return;
+        
+        let distToStart = calculateDistance(
+            {lat: startCenter.lat, lng: startCenter.lng},
+            {lat: roadCenter.lat, lng: roadCenter.lng}
+        );
+        
+        let distToEnd = calculateDistance(
+            {lat: roadCenter.lat, lng: roadCenter.lng},
+            {lat: endCenter.lat, lng: endCenter.lng}
+        );
+        
+        // Si cette route est raisonnablement proche des deux points
+        if (distToStart < maxSearchDistance && distToEnd < maxSearchDistance) {
+            return road;
+        }
+    });
+    
+    return null;
+}
+
+function drawStraightLine(startPoint, endPoint) {
+    // Fallback : ligne droite si aucune route trouvée
+    routingLine = L.polyline([startPoint, endPoint], {
+        color: '#ff6b6b',
         weight: 4,
         opacity: 0.8,
-        dashArray: '10, 10'
+        dashArray: '5, 5'
     }).addTo(map);
     
+    let distance = calculateDistance(
+        {lat: startPoint.lat, lng: startPoint.lng},
+        {lat: endPoint.lat, lng: endPoint.lng}
+    );
+    
+    alert(`Itinéraire créé (ligne droite) !\n\nDistance : ${Math.round(distance)} m\n\nAucune route trouvée entre les points.`);
+    
     // Zoom sur l'itinéraire
-    let bounds = L.latLngBounds(routingPoints);
+    let bounds = L.latLngBounds([startPoint, endPoint]);
     map.fitBounds(bounds.pad(0.1));
 }
 
