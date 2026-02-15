@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Minimal - GéoWeb Kaffrine</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .warning { background: #fff3cd; color: #856404; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        .test-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-btn:hover { background: #0056b3; }
+        #map {
+            height: 400px;
+            background: #e9ecef;
+            border-radius: 5px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Debug Minimal - GéoWeb Kaffrine</h1>
+        <p>Cette page de diagnostic identifie les problèmes fondamentaux</p>
+        
+        <div id="status" class="status info">Diagnostic en cours...</div>
+        
+        <h2>📋 Tests de Base</h2>
+        <button class="test-btn" onclick="testHTML()">Tester HTML</button>
+        <button class="test-btn" onclick="testCSS()">Tester CSS</button>
+        <button class="test-btn" onclick="testJS()">Tester JavaScript</button>
+        <button class="test-btn" onclick="testLeaflet()">Tester Leaflet</button>
+        <button class="test-btn" onclick="testFiles()">Tester Fichiers</button>
+        
+        <div id="map">Carte - Test en cours...</div>
+        
+        <h2>📁 État des Fichiers</h2>
+        <div id="fileStatus">Vérification des fichiers...</div>
+        
+        <h2>🔧 Actions Correctives</h2>
+        <button class="test-btn" onclick="openOriginal()">Ouvrir index.html</button>
+        <button class="test-btn" onclick="clearCache()">Vider le cache</button>
+        <button class="test-btn" onclick="hardReload()">Rechargement forcé</button>
+    </div>
+
+    <script>
+        function updateStatus(message, type = 'info') {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+        }
+        
+        function updateFileStatus(files) {
+            const fileStatus = document.getElementById('fileStatus');
+            fileStatus.innerHTML = files.map(file => 
+                `<div class="status ${file.exists ? 'success' : 'error'}">
+                    ${file.exists ? '✅' : '❌'} ${file.path}
+                </div>`
+            ).join('');
+        }
+        
+        function testHTML() {
+            updateStatus('✅ HTML fonctionne correctement', 'success');
+        }
+        
+        function testCSS() {
+            const styles = getComputedStyle(document.body);
+            if (styles.fontFamily) {
+                updateStatus('✅ CSS fonctionne correctement', 'success');
+            } else {
+                updateStatus('❌ CSS ne fonctionne pas', 'error');
+            }
+        }
+        
+        function testJS() {
+            try {
+                const test = new Date();
+                updateStatus('✅ JavaScript fonctionne correctement', 'success');
+            } catch (e) {
+                updateStatus('❌ JavaScript ne fonctionne pas: ' + e.message, 'error');
+            }
+        }
+        
+        function testLeaflet() {
+            try {
+                if (typeof L !== 'undefined') {
+                    updateStatus('✅ Leaflet est chargé', 'success');
+                    // Créer une carte de test
+                    document.getElementById('map').innerHTML = '';
+                    const map = L.map('map').setView([14.5, -15.5], 6);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+                } else {
+                    updateStatus('❌ Leaflet n\'est pas chargé', 'error');
+                }
+            } catch (e) {
+                updateStatus('❌ Erreur Leaflet: ' + e.message, 'error');
+            }
+        }
+        
+        async function testFiles() {
+            const files = [
+                'css/leaflet.css',
+                'css/app-modern.css',
+                'js/leaflet.js',
+                'js/app-modern.js',
+                'data/Region_3.js'
+            ];
+            
+            const results = await Promise.all(
+                files.map(async file => {
+                    try {
+                        const response = await fetch(file, { method: 'HEAD' });
+                        return { path: file, exists: response.ok };
+                    } catch (e) {
+                        return { path: file, exists: false };
+                    }
+                })
+            );
+            
+            updateFileStatus(results);
+            
+            const allExist = results.every(f => f.exists);
+            updateStatus(
+                allExist ? '✅ Tous les fichiers existent' : '❌ Certains fichiers manquent',
+                allExist ? 'success' : 'error'
+            );
+        }
+        
+        function openOriginal() {
+            window.open('index.html', '_blank');
+        }
+        
+        function clearCache() {
+            if ('caches' in window) {
+                caches.keys().then(names => {
+                    names.forEach(name => {
+                        caches.delete(name);
+                    });
+                });
+            }
+            localStorage.clear();
+            sessionStorage.clear();
+            updateStatus('🗑️ Cache vidé', 'warning');
+        }
+        
+        function hardReload() {
+            clearCache();
+            setTimeout(() => {
+                window.location.reload(true);
+            }, 1000);
+        }
+        
+        // Diagnostic automatique au chargement
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                testHTML();
+                setTimeout(() => testCSS(), 500);
+                setTimeout(() => testJS(), 1000);
+                setTimeout(() => testFiles(), 1500);
+                setTimeout(() => testLeaflet(), 2000);
+            }, 1000);
+        });
+        
+        // Charger Leaflet pour le test
+        const script = document.createElement('script');
+        script.src = 'js/leaflet.js';
+        script.onload = () => console.log('Leaflet chargé');
+        script.onerror = () => console.error('Leaflet non chargé');
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>
