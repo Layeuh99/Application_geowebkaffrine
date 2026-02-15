@@ -66,7 +66,7 @@
     position: static !important;
 }
 
-/* Correction du panneau latéral */
+/* Correction du panneau latéral - SANS TRANSFORM sur conteneur */
 .sidebar-left,
 .sidebar-right {
     z-index: 400 !important;
@@ -76,21 +76,21 @@
     background: white;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     overflow: visible;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
+    left: -100%;
+    transition: left 0.3s ease;
 }
 
 .sidebar-left:not(.collapsed) {
-    transform: translateX(0);
+    left: 0;
 }
 
 .sidebar-right {
-    right: 0;
-    transform: translateX(100%);
+    right: -100%;
+    left: auto;
 }
 
 .sidebar-right:not(.collapsed) {
-    transform: translateX(0);
+    right: 0;
 }
 
 /* Structure du panneau */
@@ -432,7 +432,6 @@
     right: 20px;
     opacity: 0;
     visibility: hidden;
-    transform: scale(0.8) translateY(10px);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: auto;
 }
@@ -440,7 +439,6 @@
 .fab-menu.active {
     opacity: 1;
     visibility: visible;
-    transform: scale(1) translateY(0);
 }
 
 .fab-item {
@@ -461,12 +459,11 @@
 
 .fab-item:hover {
     background: #f8f9ff;
-    transform: translateX(-4px);
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.25);
 }
 
 .fab-item:active {
-    transform: translateX(-2px) scale(0.98);
+    box-shadow: 0 2px 6px rgba(102, 126, 234, 0.2);
 }
 
 .fab-item i {
@@ -507,11 +504,9 @@
 @keyframes fabItemSlideIn {
     from {
         opacity: 0;
-        transform: translateX(20px) scale(0.8);
     }
     to {
         opacity: 1;
-        transform: translateX(0) scale(1);
     }
 }
 
@@ -549,11 +544,17 @@
    NETTOYAGE CSS - SUPPRESSION DES CONFLITS
    ============================================ */
 
+/* ============================================
+   HIÉRARCHIE Z-INDEX UNIQUE ET STRUCTURÉE
+   ============================================ */
+   
 /* Suppression des z-index arbitraires et doublons */
 .leaflet-top.leaflet-left,
 .leaflet-top.leaflet-right {
     z-index: 200 !important;
 }
+
+/* Pas de z-index 9999, 10000, 10001 - utiliser la hiérarchie structurée */
 
 /* Correction des overflow problématiques */
 .modal {
@@ -567,6 +568,17 @@
 .sidebar-left,
 .sidebar-right {
     overflow: visible !important;
+}
+
+/* Supprimer les overflow cachés qui bloquent le scroll */
+body {
+    overflow: auto !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+}
+
+html {
+    overflow: auto !important;
 }
 
 /* Correction des pointer-events */
@@ -636,20 +648,21 @@
     .sidebar-left,
     .sidebar-right {
         z-index: 400 !important;
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
+        left: -100%;
+        transition: left 0.3s ease;
     }
     
     .sidebar-right {
-        transform: translateX(100%);
+        right: -100%;
+        left: auto;
     }
     
     .sidebar-left:not(.collapsed) {
-        transform: translateX(0);
+        left: 0;
     }
     
     .sidebar-right:not(.collapsed) {
-        transform: translateX(0);
+        right: 0;
     }
 }
 
@@ -722,14 +735,7 @@ body {
 .fab-menu,
 .modal,
 .dropdown-menu {
-    transform: none;
-    will-change: transform;
-}
-
-.fab-button:hover,
-.fab-menu.active,
-.modal.active {
-    transform: scale(var(--scale, 1)) translateY(var(--translate-y, 0));
+    will-change: opacity, visibility;
 }
 
 /* Assurer que tous les éléments sont cliquables */
