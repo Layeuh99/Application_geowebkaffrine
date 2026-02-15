@@ -3156,7 +3156,14 @@ function executeAdvancedSpatialQuery() {
     map.once('click', function(e) {
         document.getElementById('spatialClickInstructions').style.display = 'none';
         window.spatialQueryActive = false;
-        performAdvancedSpatialSearch(e.latlng, targetLayerName);
+        
+        // Vérifier que la fonction existe
+        if (typeof performAdvancedSpatialSearch === 'function') {
+            performAdvancedSpatialSearch(e.latlng, targetLayerName);
+        } else {
+            console.error('[SPATIAL] performAdvancedSpatialSearch non trouvée');
+            alert('Erreur interne: fonction de recherche spatiale non trouvée');
+        }
     });
 }
 
