@@ -3347,7 +3347,7 @@ function toggleLayer(layerName) {
 /**
  * Initialise les contrôles de couches
  */
-function initLayerControl() {
+function syncLayerCheckboxes() {
     // Synchroniser les checkboxes avec l'état des couches
     Object.keys(layers).forEach(layerName => {
         const checkbox = document.getElementById('layer-' + layerName);
