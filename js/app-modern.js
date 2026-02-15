@@ -3149,32 +3149,15 @@ function executeAdvancedSpatialQuery() {
     
     document.getElementById('spatialClickInstructions').style.display = 'block';
     
+    // Désactiver temporairement la fermeture automatique des dropdowns
+    window.spatialQueryActive = true;
+    
     // Attendre le clic sur la carte
     map.once('click', function(e) {
         document.getElementById('spatialClickInstructions').style.display = 'none';
+        window.spatialQueryActive = false;
         performAdvancedSpatialSearch(e.latlng, targetLayerName);
     });
-}
-
-function startClickQueryAdvanced() {
-    let targetLayerName = document.getElementById('spatialTargetLayer').value;
-    if (!targetLayerName) {
-        alert('Veuillez sÃ©lectionner une couche');
-        return;
-    }
-    
-    closeModal('spatialQueryModal');
-    
-    setTimeout(() => {
-        alert('Cliquez sur la carte pour voir les Ã©lÃ©ments proches');
-    }, 300);
-    
-    map.once('click', function(e) {
-        performClickSearch(e.latlng, targetLayerName);
-    });
-}
-
-function performAdvancedSpatialSearch(latlng, targetLayerName) {
     console.log('[SPATIAL] Recherche dÃ©marrÃ©e', latlng, targetLayerName, 'type:', currentSpatialType, 'distance:', currentBufferDistance);
     resetAllStyles();
     
@@ -3533,6 +3516,11 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', function(e) {
         if (window.innerWidth > 768) {
             return; // Ne pas fermer au clic sur desktop (hover)
+        }
+        
+        // Ne pas fermer les dropdowns pendant une requête spatiale
+        if (window.spatialQueryActive) {
+            return;
         }
         
         const clickedDropdown = e.target.closest('.dropdown');
