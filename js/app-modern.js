@@ -693,8 +693,8 @@ function changeBasemapByName(name) {
 
 function toggleLayer(layerName, visible) {
     let layerMap = {
-        'Ecoles': clusters.Ecoles,
-        'Localites': clusters.Localites,
+        'Ecoles': clusters.Ecoles || layers.Ecoles,
+        'Localites': clusters.Localites || layers.Localites,
         'Routes': layers.Routes,
         'Arrondissement': layers.Arrondissement,
         'Departement': layers.Departement,
@@ -704,17 +704,21 @@ function toggleLayer(layerName, visible) {
     let layer = layerMap[layerName];
     if (layer) {
         if (visible) {
-            map.addLayer(layer);
+            if (!map.hasLayer(layer)) {
+                map.addLayer(layer);
+            }
         } else {
-            map.removeLayer(layer);
+            if (map.hasLayer(layer)) {
+                map.removeLayer(layer);
+            }
         }
     }
 }
 
 function changeLayerOpacity(layerName, opacityValue) {
     let layerMap = {
-        'Ecoles': layers.Ecoles,
-        'Localites': layers.Localites,
+        'Ecoles': clusters.Ecoles || layers.Ecoles,
+        'Localites': clusters.Localites || layers.Localites,
         'Routes': layers.Routes,
         'Arrondissement': layers.Arrondissement,
         'Departement': layers.Departement,
@@ -722,25 +726,24 @@ function changeLayerOpacity(layerName, opacityValue) {
     };
     
     let layer = layerMap[layerName];
-    if (!layer) return;
-    
-    let opacity = opacityValue / 100;
-    
-    // Mettre Ã  jour l'opacitÃ© de la couche
-    layer.eachLayer(function(l) {
-        if (l.setStyle) {
-            // Pour les couches vectorielles (polygones, lignes)
-            l.setStyle({
-                fillOpacity: opacity * 0.7,
-                opacity: opacity
+    if (layer) {
+        if (layer.setOpacity) {
+            layer.setOpacity(opacityValue / 100);
+        } else if (layer.eachLayer) {
+            // Pour les groupes de couches
+            layer.eachLayer(function(l) {
+                if (l.setStyle) {
+                    l.setStyle({
+                        opacity: opacityValue / 100
+                    });
+                } else if (l.setOpacity) {
+                    l.setOpacity(opacityValue / 100);
+                }
             });
-        } else if (l.setOpacity) {
-            // Pour les marqueurs avec setOpacity
-            l.setOpacity(opacity);
         }
-    });
+    }
     
-    // Mettre Ã  jour l'affichage du pourcentage
+    // Mettre à jour l'affichage du pourcentage
     let slider = document.querySelector(`.opacity-slider[oninput*="${layerName}"]`);
     if (slider) {
         let valueSpan = slider.parentElement.querySelector('.opacity-value');
@@ -748,7 +751,7 @@ function changeLayerOpacity(layerName, opacityValue) {
             valueSpan.textContent = opacityValue + '%';
         }
         
-        // Mettre Ã  jour l'icÃ´ne Å“il
+        // Mettre à jour l'icône œil
         let icon = slider.parentElement.querySelector('.opacity-label i');
         if (icon) {
             if (opacityValue == 0) {
