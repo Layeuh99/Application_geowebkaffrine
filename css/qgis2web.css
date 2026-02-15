@@ -1,9 +1,9 @@
-
-        #map {
+#map {
             background-color: #ffffff
         }
         html, body, #map {
-			overflow: hidden;
+			overflow-x: hidden;
+			overflow-y: auto;
         }
         .col9{
 			height: 100%!important;
@@ -60,7 +60,6 @@
         }
         .leaflet-tooltip-left:before, .leaflet-tooltip-right:before {
             border: 0px;
-        }
         }
         .fa, .leaflet-container, a {
             color: #0b3b5e !important;
