@@ -374,6 +374,11 @@ html, body {
     display: flex;
 }
 
+/* Correction : ne pas bloquer le body quand un modal est actif */
+body.modal-open {
+    overflow: auto !important;
+}
+
 .modal-content {
     background: white;
     border-radius: 15px;
@@ -381,20 +386,33 @@ html, body {
     width: 100%;
     max-height: 90vh;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: auto;
     position: relative;
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
 
 @media (max-width: 768px) {
     .modal {
-        padding: 0;
+        padding: 10px;
     }
     
     .modal-content {
-        max-width: 100%;
-        max-height: 100%;
-        border-radius: 0;
-        height: 100%;
+        max-width: 95%;
+        max-height: 90vh; /* Correction : ne pas utiliser 100vh */
+        border-radius: 15px;
+        height: auto; /* Correction : ne pas forcer 100% */
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        touch-action: auto;
+    }
+    
+    /* Correction spécifique pour le modal de bienvenue sur mobile */
+    .welcome-modal .modal-content {
+        max-height: 85vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        touch-action: auto;
     }
 }
 

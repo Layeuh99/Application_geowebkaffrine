@@ -1079,14 +1079,24 @@ function closeModal(modalId) {
 // MODAL DE BIENVENUE
 // ============================================
 function showWelcomeModal() {
-    // VÃ©rifier si l'utilisateur a choisi de ne plus afficher
+    // Vérifier si l'utilisateur a choisi de ne plus afficher
     if (localStorage.getItem('hideWelcome') !== 'true') {
-        document.getElementById('welcomeModal').classList.add('active');
+        const modal = document.getElementById('welcomeModal');
+        modal.classList.add('active');
+        
+        // NE PAS bloquer le scroll du body - permettre le scroll mobile
+        document.body.classList.add('modal-open');
+        // document.body.style.overflow = 'hidden'; // COMMENTÉ pour ne pas bloquer
     }
 }
 
 function closeWelcomeModal() {
-    document.getElementById('welcomeModal').classList.remove('active');
+    const modal = document.getElementById('welcomeModal');
+    modal.classList.remove('active');
+    
+    // Restaurer le scroll du body
+    document.body.classList.remove('modal-open');
+    document.body.style.overflow = 'auto';
     
     // Sauvegarder la préférence si coché
     let dontShow = document.getElementById('dontShowWelcome').checked;
