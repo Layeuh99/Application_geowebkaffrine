@@ -1433,6 +1433,40 @@ function showHome() {
 }
 
 // ============================================
+// FONCTIONS BOUTON ACTION RAPIDE (FAB)
+// ============================================
+
+function toggleFabMenu() {
+    const fabMenu = document.getElementById('fabMenu');
+    const fabButton = document.getElementById('fabButton');
+    
+    if (fabMenu.classList.contains('active')) {
+        closeFabMenu();
+    } else {
+        fabMenu.classList.add('active');
+        fabButton.innerHTML = '<i class="fas fa-times"></i>';
+    }
+}
+
+function closeFabMenu() {
+    const fabMenu = document.getElementById('fabMenu');
+    const fabButton = document.getElementById('fabButton');
+    
+    fabMenu.classList.remove('active');
+    fabButton.innerHTML = '<i class="fas fa-bolt"></i>';
+}
+
+// Fermer le FAB en cliquant ailleurs
+document.addEventListener('click', function(event) {
+    const fabButton = document.getElementById('fabButton');
+    const fabMenu = document.getElementById('fabMenu');
+    
+    if (!fabButton.contains(event.target) && !fabMenu.contains(event.target)) {
+        closeFabMenu();
+    }
+});
+
+// ============================================
 // GESTION DES THEMES CLAIR/SOMBRE
 // ============================================
 function initTheme() {
