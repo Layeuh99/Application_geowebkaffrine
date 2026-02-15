@@ -16,7 +16,9 @@
         <link rel="stylesheet" href="css/leaflet.css">
         <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
         <link rel="stylesheet" href="css/L.Control.Locate.min.css">
-        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/app-modern.css?v=18">
+        <link rel="stylesheet" href="css/fab.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.0.13/css/all.min.css">
         <link rel="stylesheet" href="css/MarkerCluster.css">
         <link rel="stylesheet" href="css/MarkerCluster.Default.css">
         <link rel="stylesheet" href="css/leaflet-search.css">
@@ -904,6 +906,31 @@
         
         <!-- Application principale -->
         <script src="js/app-modern.js"></script>
+
+    <!-- Bouton d'action rapide flottant (FAB) -->
+    <div id="fabButton" class="fab-button" onclick="toggleFabMenu()">
+        <i class="fas fa-bolt"></i>
+    </div>
+    
+    <!-- Menu FAB radial -->
+    <div id="fabMenu" class="fab-menu">
+        <div class="fab-item" onclick="showSpatialQuery(); closeFabMenu();">
+            <i class="fas fa-map"></i>
+            <span>Analyser</span>
+        </div>
+        <div class="fab-item" onclick="enableRoutingMode(); closeFabMenu();">
+            <i class="fas fa-road"></i>
+            <span>Itinéraire</span>
+        </div>
+        <div class="fab-item" onclick="showAttributeQuery(); closeFabMenu();">
+            <i class="fas fa-search"></i>
+            <span>Rechercher</span>
+        </div>
+        <div class="fab-item" onclick="toggleMeasure(); closeFabMenu();">
+            <i class="fas fa-ruler-combined"></i>
+            <span>Mesurer</span>
+        </div>
+    </div>
 
 <!-- Service Worker Registration -->
 <!-- Désactivation agressive du Service Worker -->
