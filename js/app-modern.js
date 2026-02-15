@@ -3416,10 +3416,10 @@ function clearAdvancedSpatialQuery() {
 console.log('[PWA] RequÃªtes avancÃ©es chargÃ©es');
 
 // ============================================
-// GESTION DES DROPDOWNS
+// GESTION DES DROPDOWNS AMÉLIORÉE
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('[DROPDOWN] Initialisation des dropdowns...');
+    console.log('[DROPDOWN] Initialisation des dropdowns améliorés...');
     
     // Gestion des dropdowns principaux
     const dropdowns = document.querySelectorAll('.dropdown');
@@ -3432,7 +3432,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(`[DROPDOWN] Dropdown ${index + 1}:`, {
             hasToggle: !!toggle,
             hasMenu: !!menu,
-            toggleText: toggle ? toggle.textContent : 'N/A'
+            toggleText: toggle ? toggle.textContent.trim() : 'N/A'
         });
         
         if (toggle && menu) {
@@ -3453,32 +3453,66 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
             
-            // Mobile : ouverture au clic
+            // Mobile : ouverture/fermeture au clic avec animation
             toggle.addEventListener('click', function(e) {
-                console.log('[DROPDOWN] Click sur toggle, mobile:', window.innerWidth <= 768);
                 e.preventDefault();
                 e.stopPropagation();
                 
-                if (window.innerWidth <= 768) {
-                    const isVisible = menu.style.opacity === '1';
-                    console.log('[DROPDOWN] État actuel du menu:', isVisible ? 'visible' : 'caché');
+                const isMobile = window.innerWidth <= 768;
+                console.log('[DROPDOWN] Click sur toggle, mobile:', isMobile);
+                
+                if (isMobile) {
+                    const isActive = dropdown.classList.contains('active');
+                    const isSubmenu = dropdown.classList.contains('dropdown-submenu');
                     
-                    menu.style.opacity = isVisible ? '0' : '1';
-                    menu.style.visibility = isVisible ? 'hidden' : 'visible';
-                    
-                    console.log('[DROPDOWN] Nouvel état du menu:', menu.style.opacity === '1' ? 'visible' : 'caché');
-                    
-                    // Fermer les autres dropdowns
-                    dropdowns.forEach(function(otherDropdown, otherIndex) {
-                        if (otherDropdown !== dropdown) {
-                            const otherMenu = otherDropdown.querySelector('.dropdown-menu');
-                            if (otherMenu) {
-                                console.log(`[DROPDOWN] Fermeture du dropdown ${otherIndex + 1}`);
-                                otherMenu.style.opacity = '0';
-                                otherMenu.style.visibility = 'hidden';
+                    // Fermer les autres dropdowns principaux
+                    if (!isSubmenu) {
+                        dropdowns.forEach(function(otherDropdown, otherIndex) {
+                            if (otherDropdown !== dropdown && !otherDropdown.classList.contains('dropdown-submenu')) {
+                                otherDropdown.classList.remove('active');
+                                const otherMenu = otherDropdown.querySelector('.dropdown-menu');
+                                if (otherMenu) {
+                                    otherMenu.style.maxHeight = '0';
+                                    otherMenu.style.opacity = '0';
+                                    otherMenu.style.visibility = 'hidden';
+                                }
                             }
+                        });
+                    }
+                    
+                    // Fermer les sous-menus du même dropdown
+                    const submenus = dropdown.querySelectorAll('.dropdown-submenu');
+                    submenus.forEach(function(submenu) {
+                        submenu.classList.remove('active');
+                        const submenuMenu = submenu.querySelector('.dropdown-menu');
+                        if (submenuMenu) {
+                            submenuMenu.style.maxHeight = '0';
+                            submenuMenu.style.opacity = '0';
+                            submenuMenu.style.visibility = 'hidden';
                         }
                     });
+                    
+                    // Animation d'ouverture/fermeture
+                    if (isActive) {
+                        dropdown.classList.remove('active');
+                        menu.style.maxHeight = '0';
+                        menu.style.opacity = '0';
+                        menu.style.visibility = 'hidden';
+                        console.log(`[DROPDOWN] Dropdown ${index + 1} fermé`);
+                    } else {
+                        dropdown.classList.add('active');
+                        menu.style.maxHeight = '500px';
+                        menu.style.opacity = '1';
+                        menu.style.visibility = 'visible';
+                        console.log(`[DROPDOWN] Dropdown ${index + 1} ouvert`);
+                        
+                        // Mesurer la hauteur réelle pour ajuster max-height
+                        setTimeout(() => {
+                            const scrollHeight = menu.scrollHeight;
+                            menu.style.maxHeight = scrollHeight + 'px';
+                            console.log(`[DROPDOWN] Hauteur ajustée pour dropdown ${index + 1}: ${scrollHeight}px`);
+                        }, 300);
+                    }
                 }
             });
         } else {
@@ -3501,14 +3535,50 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (toggle && menu) {
             toggle.addEventListener('click', function(e) {
-                console.log(`[DROPDOWN] Click sur sous-menu ${index + 1}`);
                 e.preventDefault();
                 e.stopPropagation();
                 
-                const isVisible = menu.style.opacity === '1';
-                menu.style.opacity = isVisible ? '0' : '1';
-                menu.style.visibility = isVisible ? 'hidden' : 'visible';
-                console.log(`[DROPDOWN] Sous-menu ${index + 1} ${isVisible ? 'fermé' : 'ouvert'}`);
+                const isActive = submenu.classList.contains('active');
+                console.log(`[DROPDOWN] Click sur sous-menu ${index + 1}, état actuel: ${isActive ? 'actif' : 'inactif'}`);
+                
+                // Fermer les autres sous-menus du même parent
+                const parentDropdown = submenu.closest('.dropdown');
+                if (parentDropdown) {
+                    const otherSubmenus = parentDropdown.querySelectorAll('.dropdown-submenu');
+                    otherSubmenus.forEach(function(otherSubmenu) {
+                        if (otherSubmenu !== submenu) {
+                            otherSubmenu.classList.remove('active');
+                            const otherMenu = otherSubmenu.querySelector('.dropdown-menu');
+                            if (otherMenu) {
+                                otherMenu.style.maxHeight = '0';
+                                otherMenu.style.opacity = '0';
+                                otherMenu.style.visibility = 'hidden';
+                            }
+                        }
+                    });
+                }
+                
+                // Animation d'ouverture/fermeture
+                if (isActive) {
+                    submenu.classList.remove('active');
+                    menu.style.maxHeight = '0';
+                    menu.style.opacity = '0';
+                    menu.style.visibility = 'hidden';
+                    console.log(`[DROPDOWN] Sous-menu ${index + 1} fermé`);
+                } else {
+                    submenu.classList.add('active');
+                    menu.style.maxHeight = '300px';
+                    menu.style.opacity = '1';
+                    menu.style.visibility = 'visible';
+                    console.log(`[DROPDOWN] Sous-menu ${index + 1} ouvert`);
+                    
+                    // Mesurer la hauteur réelle pour ajuster max-height
+                    setTimeout(() => {
+                        const scrollHeight = menu.scrollHeight;
+                        menu.style.maxHeight = scrollHeight + 'px';
+                        console.log(`[DROPDOWN] Hauteur ajustée pour sous-menu ${index + 1}: ${scrollHeight}px`);
+                    }, 300);
+                }
             });
         }
     });
@@ -3519,42 +3589,80 @@ document.addEventListener('DOMContentLoaded', function() {
             return; // Ne pas fermer au clic sur desktop (hover)
         }
         
-        console.log('[DROPDOWN] Click en dehors détecté sur mobile');
+        const clickedDropdown = e.target.closest('.dropdown');
         
-        if (!e.target.closest('.dropdown')) {
-            console.log('[DROPDOWN] Fermeture de tous les dropdowns');
+        if (!clickedDropdown) {
+            console.log('[DROPDOWN] Click en dehors détecté sur mobile - fermeture de tous les dropdowns');
+            dropdowns.forEach(function(dropdown, index) {
+                dropdown.classList.remove('active');
+                const menu = dropdown.querySelector('.dropdown-menu');
+                if (menu) {
+                    menu.style.maxHeight = '0';
+                    menu.style.opacity = '0';
+                    menu.style.visibility = 'hidden';
+                }
+                
+                // Fermer aussi les sous-menus
+                const submenus = dropdown.querySelectorAll('.dropdown-submenu');
+                submenus.forEach(function(submenu) {
+                    submenu.classList.remove('active');
+                    const submenuMenu = submenu.querySelector('.dropdown-menu');
+                    if (submenuMenu) {
+                        submenuMenu.style.maxHeight = '0';
+                        submenuMenu.style.opacity = '0';
+                        submenuMenu.style.visibility = 'hidden';
+                    }
+                });
+            });
+        }
+    });
+    
+    // Gestion du mode responsive avec animations
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        
+        resizeTimeout = setTimeout(() => {
+            const isMobile = window.innerWidth <= 768;
+            console.log('[DROPDOWN] Redimensionnement détecté:', window.innerWidth, 'mobile:', isMobile);
+            
             dropdowns.forEach(function(dropdown, index) {
                 const menu = dropdown.querySelector('.dropdown-menu');
                 if (menu) {
-                    menu.style.opacity = '0';
-                    menu.style.visibility = 'hidden';
+                    if (isMobile) {
+                        // Mode mobile : utiliser les classes et animations
+                        dropdown.classList.remove('active');
+                        menu.style.maxHeight = '0';
+                        menu.style.opacity = '0';
+                        menu.style.visibility = 'hidden';
+                        menu.style.transform = 'none';
+                        console.log(`[DROPDOWN] Dropdown ${index + 1} réinitialisé pour mobile`);
+                    } else {
+                        // Mode desktop : utiliser les styles hover
+                        dropdown.classList.remove('active');
+                        menu.style.opacity = '0';
+                        menu.style.visibility = 'hidden';
+                        menu.style.transform = 'translateY(-10px)';
+                        console.log(`[DROPDOWN] Dropdown ${index + 1} réinitialisé pour desktop`);
+                    }
+                }
+            });
+        }, 250); // Délai pour éviter les changements fréquents
+    });
+    
+    // Support du clavier pour l'accessibilité
+    dropdowns.forEach(function(dropdown) {
+        const toggle = dropdown.querySelector('.dropdown-toggle');
+        if (toggle) {
+            toggle.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggle.click();
                 }
             });
         }
     });
     
-    // Gestion du mode responsive
-    window.addEventListener('resize', function() {
-        console.log('[DROPDOWN] Redimensionnement détecté:', window.innerWidth);
-        dropdowns.forEach(function(dropdown, index) {
-            const menu = dropdown.querySelector('.dropdown-menu');
-            if (menu) {
-                // Réinitialiser les styles selon la taille de l'écran
-                if (window.innerWidth > 768) {
-                    menu.style.opacity = '0';
-                    menu.style.visibility = 'hidden';
-                    menu.style.transform = 'translateY(-10px)';
-                    console.log(`[DROPDOWN] Dropdown ${index + 1} réinitialisé pour desktop`);
-                } else {
-                    menu.style.opacity = '0';
-                    menu.style.visibility = 'hidden';
-                    menu.style.transform = 'none';
-                    console.log(`[DROPDOWN] Dropdown ${index + 1} réinitialisé pour mobile`);
-                }
-            }
-        });
-    });
-    
-    console.log('[DROPDOWN] Initialisation terminée');
+    console.log('[DROPDOWN] Initialisation terminée avec animations fluides');
 });
 
