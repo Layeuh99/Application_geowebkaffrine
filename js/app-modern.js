@@ -7,8 +7,6 @@
 // ============================================
 // VARIABLES GLOBALES & PERFORMANCE
 // ============================================
-let locateControl;
-let layerControl;
 let currentBasemap = 'OSMStandard';
 let highlightLayer;
 let bounds_group;
@@ -734,11 +732,11 @@ function changeLayerOpacity(layerName, opacityValue) {
 }
 
 // ============================================
-// CONTRÃ”LES DE CARTE
+// CONTRÔLES DE CARTE
 // ============================================
 function initControls() {
-    // ContrÃ´le de localisation
-    locateControl = L.control.locate({
+    // Contrôle de localisation
+    const locateControlInstance = L.control.locate({
         locateOptions: {maxZoom: 19},
         position: 'topright'
     }).addTo(map);
