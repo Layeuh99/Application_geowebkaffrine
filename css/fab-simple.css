@@ -1,0 +1,74 @@
+/* ============================================
+   BOUTON ACTION RAPIDE (FAB) - SEULEMENT LE NÉCESSAIRE
+   ============================================ */
+
+.fab-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.fab-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+}
+
+.fab-button i {
+    color: white;
+    font-size: 1.2rem;
+}
+
+.fab-menu {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.fab-menu.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.fab-item {
+    background: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 140px;
+}
+
+.fab-item:hover {
+    background: #f8f9ff;
+}
+
+.fab-item i {
+    color: #667eea;
+    font-size: 1rem;
+    width: 16px;
+}
+
+.fab-item span {
+    color: #333;
+    font-weight: 500;
+}
