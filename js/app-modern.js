@@ -1457,11 +1457,22 @@ function toggleTheme() {
 
 function updateThemeIcon(theme) {
     let icon = document.getElementById('themeIcon');
+    let fabIcon = document.querySelector('#fabButton i');
+    
     if (icon) {
         if (theme === 'dark') {
             icon.className = 'fas fa-sun';
         } else {
             icon.className = 'fas fa-moon';
+        }
+    }
+    
+    // Mettre à jour l'icône du FAB aussi
+    if (fabIcon) {
+        if (theme === 'dark') {
+            fabIcon.className = 'fas fa-bolt';
+        } else {
+            fabIcon.className = 'fas fa-bolt';
         }
     }
 }
