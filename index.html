@@ -48,29 +48,62 @@
                 <h1 class="brand-text">GéoWeb Kaffrine</h1>
             </div>
             <ul class="navbar-menu" role="menubar" aria-label="Menu principal">
-                <li><a href="#" onclick="showHome()" role="menuitem" aria-label="Accueil"><i class="fas fa-home" aria-hidden="true"></i> <span>Accueil</span></a></li>
-                <li><a href="#" onclick="toggleLeftPanel()" role="menuitem" aria-label="Couches de données"><i class="fas fa-th" aria-hidden="true"></i> <span>Couches</span></a></li>
-                <li><a href="#" onclick="toggleRightPanel()" role="menuitem" aria-label="Fonds de carte et légende"><i class="fas fa-palette" aria-hidden="true"></i> <span>Fonds & Légende</span></a></li>
-                <li><a href="#" onclick="showMetadata()" role="menuitem" aria-label="Métadonnées"><i class="fas fa-info" aria-hidden="true"></i> <span>Métadonnées</span></a></li>
-                <li><a href="#" onclick="showAbout()" role="menuitem" aria-label="À propos"><i class="fas fa-info-circle" aria-hidden="true"></i> <span>À propos</span></a></li>
-                <li><a href="#" onclick="showSpatialQuery()" role="menuitem" aria-label="Analyser autour d&#39;un point"><i class="fas fa-draw-polygon" aria-hidden="true"></i> <span>Analyser</span></a></li>
-                <li><a href="#" onclick="showAttributeQuery()" role="menuitem" aria-label="Rechercher des informations"><i class="fas fa-database" aria-hidden="true"></i> <span>Rechercher</span></a></li>
-                <li><a href="#" onclick="enableRoutingMode()" role="menuitem" aria-label="Calculer un itinéraire"><i class="fas fa-route" aria-hidden="true"></i> <span>Itinéraire</span></a></li>
+                <!-- Navigation -->
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle"><i class="fas fa-download"></i> Télécharger <i class="fas fa-chevron-down"></i></a>
+                    <a href="#" class="dropdown-toggle" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-compass" aria-hidden="true"></i> <span>Navigation</span> <i class="fas fa-chevron-down"></i>
+                    </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#" onclick="downloadData('geojson')"><i class="fas fa-file-code"></i> GeoJSON</a></li>
-                        <li><a href="#" onclick="downloadData('shapefile')"><i class="fas fa-file-archive"></i> Shapefile</a></li>
-                        <li><a href="#" onclick="downloadData('kml')"><i class="fas fa-file-alt"></i> KML</a></li>
+                        <li><a href="#" onclick="showHome()" role="menuitem"><i class="fas fa-home" aria-hidden="true"></i> Accueil</a></li>
+                        <li><a href="#" onclick="showAbout()" role="menuitem"><i class="fas fa-info-circle" aria-hidden="true"></i> À propos</a></li>
+                        <li><a href="#" onclick="showMetadata()" role="menuitem"><i class="fas fa-info" aria-hidden="true"></i> Métadonnées</a></li>
                     </ul>
                 </li>
-                <li><a href="#" onclick="toggleMeasure()" role="menuitem" aria-label="Outils de mesure"><i class="fas fa-ruler-combined" aria-hidden="true"></i> <span>Mesurer</span></a></li>
+                
+                <!-- Données -->
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle"><i class="fas fa-search-plus"></i> Zoom <i class="fas fa-chevron-down"></i></a>
+                    <a href="#" class="dropdown-toggle" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-database" aria-hidden="true"></i> <span>Données</span> <i class="fas fa-chevron-down"></i>
+                    </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#" onclick="map.zoomIn()"><i class="fas fa-plus"></i> Zoom Avant</a></li>
-                        <li><a href="#" onclick="map.zoomOut()"><i class="fas fa-minus"></i> Zoom Arriere</a></li>
-                        <li><a href="#" onclick="resetZoom()"><i class="fas fa-expand"></i> Vue complete</a></li>
+                        <li><a href="#" onclick="toggleLeftPanel()" role="menuitem"><i class="fas fa-th" aria-hidden="true"></i> Couches</a></li>
+                        <li><a href="#" onclick="toggleRightPanel()" role="menuitem"><i class="fas fa-palette" aria-hidden="true"></i> Fonds & Légende</a></li>
+                        <li class="dropdown-submenu">
+                            <a href="#" class="dropdown-toggle" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-download" aria-hidden="true"></i> Télécharger <i class="fas fa-chevron-right"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" onclick="downloadData('geojson')" role="menuitem"><i class="fas fa-file-code" aria-hidden="true"></i> GeoJSON</a></li>
+                                <li><a href="#" onclick="downloadData('shapefile')" role="menuitem"><i class="fas fa-file-archive" aria-hidden="true"></i> Shapefile</a></li>
+                                <li><a href="#" onclick="downloadData('kml')" role="menuitem"><i class="fas fa-file-alt" aria-hidden="true"></i> KML</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                
+                <!-- Analyse -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-chart-line" aria-hidden="true"></i> <span>Analyse</span> <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" onclick="showAttributeQuery()" role="menuitem"><i class="fas fa-search" aria-hidden="true"></i> Rechercher</a></li>
+                        <li><a href="#" onclick="showSpatialQuery()" role="menuitem"><i class="fas fa-draw-polygon" aria-hidden="true"></i> Analyser</a></li>
+                        <li><a href="#" onclick="enableRoutingMode()" role="menuitem"><i class="fas fa-route" aria-hidden="true"></i> Itinéraire</a></li>
+                        <li><a href="#" onclick="toggleMeasure()" role="menuitem"><i class="fas fa-ruler-combined" aria-hidden="true"></i> Mesurer</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Affichage -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-eye" aria-hidden="true"></i> <span>Affichage</span> <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" onclick="map.zoomIn()" role="menuitem"><i class="fas fa-plus" aria-hidden="true"></i> Zoom Avant</a></li>
+                        <li><a href="#" onclick="map.zoomOut()" role="menuitem"><i class="fas fa-minus" aria-hidden="true"></i> Zoom Arrière</a></li>
+                        <li><a href="#" onclick="resetZoom()" role="menuitem"><i class="fas fa-expand" aria-hidden="true"></i> Vue complète</a></li>
+                        <li><a href="#" onclick="toggleTheme()" role="menuitem"><i class="fas fa-adjust" aria-hidden="true"></i> Thème clair/sombre</a></li>
                     </ul>
                 </li>
             </ul>
