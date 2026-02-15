@@ -22,7 +22,7 @@ let routingStep = 'start'; // 'start', 'end', 'complete'
 function initRoutingModule() {
     // Vérifier si Leaflet Routing Machine est disponible
     if (typeof L.Routing === 'undefined') {
-        console.warn('Leaflet Routing Machine n\'est pas disponible');
+        console.warn('Leaflet Routing Machine non disponible');
         return;
     }
     
@@ -31,10 +31,7 @@ function initRoutingModule() {
         waypoints: [],
         routeWhileDragging: false,
         addWaypoints: false,
-        createMarker: function(i, waypoint, n) {
-            // Ne pas créer de marqueurs automatiques
-            return null;
-        },
+        createMarker: () => null,
         lineOptions: {
             styles: [
                 {color: '#667eea', weight: 6, opacity: 0.8},
@@ -71,7 +68,7 @@ function enableRoutingMode() {
     
     map.getContainer().style.cursor = 'crosshair';
     
-    showNotification('Cliquez sur la carte pour définir le point de départ', 'info');
+    showNotification('Cliquez pour définir le point de départ', 'info');
     
     // Ajouter l'écouteur de clic
     map.on('click', handleRoutingClick);
@@ -116,10 +113,10 @@ function setStartPoint(point) {
         })
     }).addTo(map);
     
-    startMarker.bindPopup('<strong>Départ</strong><br>Point de départ de l\'itinéraire').openPopup();
+    startMarker.bindPopup('<strong>Départ</strong>').openPopup();
     
     routingStep = 'end';
-    showNotification('Cliquez sur la carte pour définir le point d\'arrivée', 'info');
+    showNotification('Cliquez pour définir le point d\'arrivée', 'info');
     
     updateRoutingPanel();
 }
@@ -144,7 +141,7 @@ function setEndPoint(point) {
         })
     }).addTo(map);
     
-    endMarker.bindPopup('<strong>Arrivée</strong><br>Point d\'arrivée de l\'itinéraire').openPopup();
+    endMarker.bindPopup('<strong>Arrivée</strong>').openPopup();
     
     routingStep = 'complete';
     calculateRoute();
@@ -156,7 +153,7 @@ function setEndPoint(point) {
  */
 function calculateRoute() {
     if (!startMarker || !endMarker || !routingControl) {
-        showNotification('Veuillez définir les points de départ et d\'arrivée', 'warning');
+        showNotification('Veuillez définir les points', 'warning');
         return;
     }
     
@@ -179,11 +176,11 @@ function calculateRoute() {
         // Afficher les informations sur l'itinéraire
         displayRouteInfo(summary);
         
-        showNotification('Itinéraire calculé avec succès', 'success');
+        showNotification('Itinéraire calculé', 'success');
     });
     
     routingControl.on('routingerror', function(e) {
-        showNotification('Erreur lors du calcul de l\'itinéraire: ' + e.error.message, 'error');
+        showNotification('Erreur de calcul: ' + e.error.message, 'error');
     });
 }
 
@@ -196,9 +193,9 @@ function displayRouteInfo(summary) {
     const time = Math.round(summary.totalTime / 60);
     
     const infoHtml = `
-        <div style="background: #f0f4ff; padding: 15px; border-radius: 8px; margin-top: 10px;">
+        <div style="background: #f0f4ff; padding: 15px; border-radius: 8px;">
             <h4 style="margin: 0 0 10px 0; color: #667eea;">
-                <i class="fas fa-route"></i> Informations sur l'itinéraire
+                <i class="fas fa-route"></i> Itinéraire
             </h4>
             <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
                 <strong>Distance:</strong>
@@ -241,22 +238,15 @@ function createRoutingPanel() {
     panel.id = 'routingPanel';
     panel.className = 'routing-panel';
     panel.style.cssText = `
-        position: fixed;
-        top: 80px;
-        right: 20px;
-        width: 300px;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        z-index: 1000;
-        padding: 20px;
-        display: none;
+        position: fixed; top: 80px; right: 20px; width: 300px;
+        background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        z-index: 1000; padding: 20px; display: none;
     `;
     
     panel.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
             <h3 style="margin: 0; color: #667eea;">
-                <i class="fas fa-route"></i> Calcul d'itinéraire
+                <i class="fas fa-route"></i> Itinéraire
             </h3>
             <button onclick="disableRoutingMode()" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #666;">
                 <i class="fas fa-times"></i>
@@ -266,7 +256,7 @@ function createRoutingPanel() {
         <div id="routingStatus" style="margin-bottom: 15px; padding: 10px; background: #f8f9fa; border-radius: 6px;">
             <p style="margin: 0; color: #666;">
                 <i class="fas fa-info-circle"></i> 
-                <span id="routingStatusText">Cliquez sur la carte pour définir le point de départ</span>
+                <span id="routingStatusText">Cliquez pour le point de départ</span>
             </p>
         </div>
         
@@ -300,11 +290,11 @@ function updateRoutingPanel() {
     
     switch (routingStep) {
         case 'start':
-            text = 'Cliquez sur la carte pour définir le point de départ';
+            text = 'Cliquez pour le point de départ';
             bgColor = '#fff3cd';
             break;
         case 'end':
-            text = 'Cliquez sur la carte pour définir le point d\'arrivée';
+            text = 'Cliquez pour le point d\'arrivée';
             bgColor = '#d1ecf1';
             break;
         case 'complete':
@@ -379,32 +369,14 @@ function addRoutingStyles() {
     const style = document.createElement('style');
     style.textContent = `
         .routing-marker {
-            background: #667eea;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            background: #667eea; color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);
             border: 3px solid white;
         }
-        
-        .routing-start {
-            background: #28a745;
-        }
-        
-        .routing-end {
-            background: #dc3545;
-        }
-        
-        .routing-panel {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        .leaflet-routing-container {
-            display: none !important;
-        }
+        .routing-start { background: #28a745; }
+        .routing-end { background: #dc3545; }
+        .leaflet-routing-container { display: none !important; }
     `;
     document.head.appendChild(style);
 }

@@ -1,0 +1,230 @@
+/* ============================================
+   Styles pour le tutoriel et améliorations UX
+   ============================================ */
+
+/* Améliorations de la barre de navigation */
+.navbar-menu {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.navbar-menu li a {
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.navbar-menu li a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+/* Styles pour le tutoriel */
+.tutorial-section {
+    margin: 25px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border-left: 4px solid #667eea;
+}
+
+.tutorial-section h3 {
+    color: #667eea;
+    margin: 0 0 20px 0;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tutorial-steps {
+    display: grid;
+    gap: 15px;
+}
+
+.tutorial-step {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+.tutorial-step:hover {
+    transform: translateX(5px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-color: #667eea;
+}
+
+.step-number {
+    min-width: 40px;
+    height: 40px;
+    background: #667eea;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-content h4 {
+    color: #333;
+    margin: 0 0 8px 0;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.step-content p {
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+/* Amélioration des boutons du footer */
+.welcome-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    margin-top: 25px;
+}
+
+.welcome-footer .btn {
+    min-width: 200px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.welcome-footer .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.dont-show-again {
+    font-size: 0.9rem;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dont-show-again input {
+    margin: 0;
+}
+
+/* Responsive pour mobile */
+@media (max-width: 768px) {
+    .navbar-menu {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+    
+    .navbar-menu li a {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .navbar-menu li a span {
+        display: none;
+    }
+    
+    .navbar-menu li a {
+        min-width: 40px;
+        justify-content: center;
+    }
+    
+    .tutorial-step {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .welcome-footer {
+        gap: 10px;
+    }
+    
+    .welcome-footer .btn {
+        width: 100%;
+        max-width: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tutorial-section {
+        padding: 15px;
+        margin: 20px 0;
+    }
+    
+    .tutorial-step {
+        padding: 12px;
+    }
+    
+    .step-number {
+        min-width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    .step-content h4 {
+        font-size: 1rem;
+    }
+    
+    .step-content p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Amélioration de l'espacement général */
+.modal-content {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.welcome-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Animation d'apparition */
+.tutorial-step {
+    animation: slideInUp 0.5s ease-out;
+    animation-fill-mode: both;
+}
+
+.tutorial-step:nth-child(1) { animation-delay: 0.1s; }
+.tutorial-step:nth-child(2) { animation-delay: 0.2s; }
+.tutorial-step:nth-child(3) { animation-delay: 0.3s; }
+.tutorial-step:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Amélioration de l'icône analyser */
+.fas.fa-analyze::before {
+    content: "\f50d"; /* Utilisation de l'icône search */
+}

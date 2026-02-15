@@ -22,6 +22,7 @@
         <link rel="stylesheet" href="css/leaflet-search.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/tutorial.css">
         <link rel="stylesheet" href="css/metadata.css">
         <link rel="stylesheet" href="css/app-modern.css?v=18">
         <link rel="stylesheet" href="css/dark-theme.css">
@@ -48,22 +49,22 @@
             </div>
             <ul class="navbar-menu" role="menubar" aria-label="Menu principal">
                 <li><a href="#" onclick="showHome()" role="menuitem" aria-label="Accueil"><i class="fas fa-home" aria-hidden="true"></i> <span>Accueil</span></a></li>
-                <li><a href="#" onclick="toggleLeftPanel()" role="menuitem" aria-label="Panneau des couches"><i class="fas fa-th" aria-hidden="true"></i> <span>Couches</span></a></li>
+                <li><a href="#" onclick="toggleLeftPanel()" role="menuitem" aria-label="Couches de données"><i class="fas fa-th" aria-hidden="true"></i> <span>Couches</span></a></li>
                 <li><a href="#" onclick="toggleRightPanel()" role="menuitem" aria-label="Fonds de carte et légende"><i class="fas fa-palette" aria-hidden="true"></i> <span>Fonds & Légende</span></a></li>
                 <li><a href="#" onclick="showMetadata()" role="menuitem" aria-label="Métadonnées"><i class="fas fa-info" aria-hidden="true"></i> <span>Métadonnées</span></a></li>
-                <li><a href="#" onclick="showAbout()" role="menuitem" aria-label="À propos de l'application"><i class="fas fa-info-circle" aria-hidden="true"></i> <span>À propos</span></a></li>
-                <li><a href="#" onclick="showSpatialQuery()" role="menuitem" aria-label="Analyser autour d&#39;un point"><i class="fas fa-draw-polygon" aria-hidden="true"></i> <span>Analyser autour d&#39;un point</span></a></li>
-                <li><a href="#" onclick="showAttributeQuery()" role="menuitem" aria-label="Rechercher des informations"><i class="fas fa-database" aria-hidden="true"></i> <span>Rechercher des informations</span></a></li>
+                <li><a href="#" onclick="showAbout()" role="menuitem" aria-label="À propos"><i class="fas fa-info-circle" aria-hidden="true"></i> <span>À propos</span></a></li>
+                <li><a href="#" onclick="showSpatialQuery()" role="menuitem" aria-label="Analyser autour d&#39;un point"><i class="fas fa-draw-polygon" aria-hidden="true"></i> <span>Analyser</span></a></li>
+                <li><a href="#" onclick="showAttributeQuery()" role="menuitem" aria-label="Rechercher des informations"><i class="fas fa-database" aria-hidden="true"></i> <span>Rechercher</span></a></li>
                 <li><a href="#" onclick="enableRoutingMode()" role="menuitem" aria-label="Calculer un itinéraire"><i class="fas fa-route" aria-hidden="true"></i> <span>Itinéraire</span></a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle"><i class="fas fa-download"></i> Telechargement <i class="fas fa-chevron-down"></i></a>
+                    <a href="#" class="dropdown-toggle"><i class="fas fa-download"></i> Télécharger <i class="fas fa-chevron-down"></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="#" onclick="downloadData('geojson')"><i class="fas fa-file-code"></i> GeoJSON</a></li>
                         <li><a href="#" onclick="downloadData('shapefile')"><i class="fas fa-file-archive"></i> Shapefile</a></li>
                         <li><a href="#" onclick="downloadData('kml')"><i class="fas fa-file-alt"></i> KML</a></li>
                     </ul>
                 </li>
-                <li><a href="#" onclick="toggleMeasure()"><i class="fas fa-ruler-combined"></i> Outils de mesure</a></li>
+                <li><a href="#" onclick="toggleMeasure()" role="menuitem" aria-label="Outils de mesure"><i class="fas fa-ruler-combined" aria-hidden="true"></i> <span>Mesurer</span></a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle"><i class="fas fa-search-plus"></i> Zoom <i class="fas fa-chevron-down"></i></a>
                     <ul class="dropdown-menu">
@@ -84,7 +85,7 @@
             </div>
         </nav>
 
-        <!-- Modal de Bienvenue -->
+        <!-- Modal de Bienvenue avec Tutoriel -->
         <div id="welcomeModal" class="modal welcome-modal">
             <div class="modal-content welcome-content">
                 <div class="welcome-header">
@@ -95,38 +96,56 @@
                         <circle cx="50" cy="50" r="8" fill="#333"/>
                     </svg>
                     <h2>Bienvenue sur GéoWeb Kaffrine</h2>
-                    <p class="welcome-subtitle">Votre plateforme de cartographie interactive</p>
+                    <p class="welcome-subtitle">Plateforme interactive de visualisation et d'analyse géographique de la région de Kaffrine</p>
                 </div>
-                <div class="welcome-body">
-                    <p>Explorez les données géographiques de la région de Kaffrine avec une interface moderne et intuitive.</p>
-                    <div class="welcome-features">
-                        <div class="feature-item">
-                            <i class="fas fa-th"></i>
-                            <span>Visualisez les couches thématiques</span>
+                
+                <div class="tutorial-section">
+                    <h3><i class="fas fa-graduation-cap"></i> Tutoriel Rapide</h3>
+                    
+                    <div class="tutorial-steps">
+                        <div class="tutorial-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4><i class="fas fa-map"></i> Explorer la carte</h4>
+                                <p>Activez les couches thématiques pour visualiser les données disponibles (administratives, infrastructures, localités).</p>
+                            </div>
                         </div>
-                        <div class="feature-item">
-                            <i class="fas fa-search"></i>
-                            <span>Effectuez des requêtes spatiales et attributaires</span>
+                        
+                        <div class="tutorial-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4><i class="fas fa-search"></i> Rechercher des informations</h4>
+                                <p>Utilisez la fonction de recherche pour trouver un établissement scolaire ou une localité spécifique.</p>
+                            </div>
                         </div>
-                        <div class="feature-item">
-                            <i class="fas fa-download"></i>
-                            <span>Téléchargez les données en GeoJSON, KML, Shapefile</span>
+                        
+                        <div class="tutorial-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4><i class="fas fa-analyze"></i> Analyser</h4>
+                                <p>Utilisez les outils d'analyse spatiale et de mesure pour étudier les zones et calculer des distances.</p>
+                            </div>
                         </div>
-                        <div class="feature-item">
-                            <i class="fas fa-ruler-combined"></i>
-                            <span>Mesurez les distances et surfaces</span>
+                        
+                        <div class="tutorial-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4><i class="fas fa-route"></i> Calculer un itinéraire</h4>
+                                <p>Sélectionnez un point de départ et un point d'arrivée pour obtenir un trajet avec distance et temps.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+                
                 <div class="welcome-footer">
                     <button class="btn btn-primary" onclick="closeWelcomeModal()">
-                        <i class="fas fa-map-marked-alt"></i> Explorer la carte
+                        <i class="fas fa-map-marked-alt"></i> Commencer l'exploration
                     </button>
-                    <button class="btn btn-secondary" onclick="startInteractiveGuide(true)" style="margin-left: 10px;">
-                        <i class="fas fa-question-circle"></i> Lancer le guide
+                    <button class="btn btn-secondary" onclick="showMetadata()" style="margin-left: 10px;">
+                        <i class="fas fa-info-circle"></i> Voir les métadonnées
                     </button>
                     <label class="dont-show-again">
-                        <input type="checkbox" id="dontShowWelcome"> Ne plus afficher
+                        <input type="checkbox" id="dontShowWelcome"> Ne plus afficher au prochain chargement
                     </label>
                 </div>
                 <button class="modal-close" onclick="closeWelcomeModal()">
@@ -470,90 +489,203 @@
 
         <!-- Modal Métadonnées -->
         <div id="metadataModal" class="modal">
-            <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-content">
                 <span class="modal-close" onclick="closeModal('metadataModal')">&times;</span>
                 <h2><i class="fas fa-info"></i> Métadonnées des Données</h2>
-                <div style="padding: 20px;">
-                    <div class="metadata-tabs">
-                        <button class="metadata-tab active" onclick="showMetadataTab('general')">
-                            <i class="fas fa-globe"></i> Général
-                        </button>
-                        <button class="metadata-tab" onclick="showMetadataTab('layers')">
-                            <i class="fas fa-layer-group"></i> Couches
-                        </button>
-                        <button class="metadata-tab" onclick="showMetadataTab('technical')">
-                            <i class="fas fa-cog"></i> Technique
-                        </button>
-                    </div>
-                    
-                    <div id="metadataGeneral" class="metadata-content">
-                        <div class="metadata-section">
-                            <h3><i class="fas fa-database"></i> Source des données</h3>
-                            <p><strong>Organisme:</strong> Direction Régionale de la Statistique et de la Démographie (DRSD) Kaffrine</p>
-                            <p><strong>Partenaire technique:</strong> UAM - Université Amadou Mahtar Mbow</p>
-                            <p><strong>Projet:</strong> Plateforme GéoWeb Kaffrine</p>
-                        </div>
-                        
-                        <div class="metadata-section">
-                            <h3><i class="fas fa-calendar"></i> Date de production</h3>
-                            <p><strong>Dernière mise à jour:</strong> Décembre 2024</p>
-                            <p><strong>Période de référence:</strong> Recensement Général de la Population et de l'Habitat (RGPH) 2013</p>
-                            <p><strong>Mise à jour des infrastructures:</strong> 2024</p>
-                        </div>
-                        
-                        <div class="metadata-section">
-                            <h3><i class="fas fa-map"></i> Zone géographique</h3>
-                            <p><strong>Région:</strong> Kaffrine</p>
-                            <p><strong>Étendue:</strong> 11,242 km²</p>
-                            <p><strong>Population:</strong> 668,474 habitants (RGPH 2013)</p>
-                        </div>
-                    </div>
-                    
-                    <div id="metadataLayers" class="metadata-content" style="display: none;">
-                        <div class="metadata-section">
-                            <h3><i class="fas fa-layer-group"></i> Couches disponibles</h3>
-                            <div class="layer-metadata">
-                                <div class="layer-item">
-                                    <h4><i class="fas fa-map"></i> Limites administratives</h4>
-                                    <ul>
-                                        <li><strong>Région Kaffrine:</strong> 1 entité</li>
-                                        <li><strong>Départements:</strong> 4 départements (Birkelane, Kaffrine, Koungheul, Malem Hoddar)</li>
-                                        <li><strong>Arrondissements:</strong> 11 arrondissements</li>
-                                    </ul>
-                                </div>
-                                
-                                <div class="layer-item">
-                                    <h4><i class="fas fa-road"></i> Infrastructure</h4>
-                                    <ul>
-                                        <li><strong>Réseau routier:</strong> Routes principales et secondaires</li>
-                                        <li><strong>Localités:</strong> Villages et villes</li>
-                                        <li><strong>Établissements:</strong> Écoles et infrastructures éducatives</li>
-                                    </ul>
-                                </div>
+                
+                <div class="metadata-tabs">
+                    <button class="metadata-tab active" onclick="showMetadataTab('general')">
+                        <i class="fas fa-globe"></i> Général
+                    </button>
+                    <button class="metadata-tab" onclick="showMetadataTab('layers')">
+                        <i class="fas fa-layer-group"></i> Couches
+                    </button>
+                    <button class="metadata-tab" onclick="showMetadataTab('technical')">
+                        <i class="fas fa-cog"></i> Technique
+                    </button>
+                </div>
+                
+                <div id="metadataGeneral" class="metadata-content">
+                    <div class="metadata-section">
+                        <h3><i class="fas fa-database"></i> Source des données</h3>
+                        <div class="metadata-grid">
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Organisme</div>
+                                <div class="metadata-item-value">Direction Régionale de la Statistique et de la Démographie (DRSD) Kaffrine</div>
+                            </div>
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Partenaire technique</div>
+                                <div class="metadata-item-value">UAM - Université Amadou Mahtar Mbow</div>
+                            </div>
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Projet</div>
+                                <div class="metadata-item-value">Plateforme GéoWeb Kaffrine</div>
+                            </div>
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Responsable</div>
+                                <div class="metadata-item-value">Mouhsine Abdallah Babacar DIAO</div>
                             </div>
                         </div>
                     </div>
                     
-                    <div id="metadataTechnical" class="metadata-content" style="display: none;">
-                        <div class="metadata-section">
-                            <h3><i class="fas fa-globe"></i> Système de projection</h3>
-                            <p><strong>SCR:</strong> WGS84 (EPSG:4326)</p>
-                            <p><strong>Format:</strong> GeoJSON</p>
-                            <p><strong>Précision:</strong> Niveau administratif</p>
+                    <div class="metadata-section">
+                        <h3><i class="fas fa-calendar"></i> Période de référence</h3>
+                        <div class="metadata-grid">
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Dernière mise à jour</div>
+                                <div class="metadata-item-value">Décembre 2024</div>
+                            </div>
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Recensement</div>
+                                <div class="metadata-item-value">RGPH 2013</div>
+                            </div>
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Mise à jour infrastructures</div>
+                                <div class="metadata-item-value">2024</div>
+                            </div>
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Fréquence de mise à jour</div>
+                                <div class="metadata-item-value">Annuelle</div>
+                            </div>
                         </div>
-                        
-                        <div class="metadata-section">
-                            <h3><i class="fas fa-shield-alt"></i> Limites d'utilisation</h3>
-                            <p><strong>Usage autorisé:</strong> Consultation et analyse</p>
-                            <p><strong>Restrictions:</strong> Usage commercial non autorisé sans accord</p>
-                            <p><strong>Citation:</strong> DRSD Kaffrine / UAM - Année 2024</p>
+                    </div>
+                    
+                    <div class="metadata-section">
+                        <h3><i class="fas fa-map"></i> Zone géographique</h3>
+                        <div class="metadata-grid">
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Région</div>
+                                <div class="metadata-item-value">Kaffrine</div>
+                            </div>
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Superficie</div>
+                                <div class="metadata-item-value">11,242 km²</div>
+                            </div>
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Population</div>
+                                <div class="metadata-item-value">668,474 habitants (RGPH 2013)</div>
+                            </div>
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Départements</div>
+                                <div class="metadata-item-value">4 (Birkelane, Kaffrine, Koungheul, Malem Hoddar)</div>
+                            </div>
                         </div>
-                        
-                        <div class="metadata-section">
-                            <h3><i class="fas fa-user"></i> Responsable du projet</h3>
-                            <p><strong>Coordonnateur:</strong> Mouhsine Abdallah Babacar DIAO</p>
-                            <p><strong>Contact:</strong> diao.mouhsine@uam.edu.sn</p>
-                            <p><strong>Téléphone:</strong> +221 77 837 94 57</p>
+                    </div>
+                </div>
+                
+                <div id="metadataLayers" class="metadata-content" style="display: none;">
+                    <div class="metadata-section">
+                        <h3><i class="fas fa-layer-group"></i> Couches administratives</h3>
+                        <div class="layer-metadata">
+                            <div class="layer-item">
+                                <h4><i class="fas fa-map"></i> Limites administratives</h4>
+                                <ul>
+                                    <li><strong>Région Kaffrine:</strong> 1 entité</li>
+                                    <li><strong>Départements:</strong> 4 départements</li>
+                                    <li><strong>Arrondissements:</strong> 11 arrondissements</li>
+                                    <li><strong>Précision:</strong> Niveau administratif officiel</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metadata-section">
+                        <h3><i class="fas fa-road"></i> Couches d'infrastructures</h3>
+                        <div class="layer-metadata">
+                            <div class="layer-item">
+                                <h4><i class="fas fa-road"></i> Réseau routier</h4>
+                                <ul>
+                                    <li><strong>Type:</strong> Routes principales et secondaires</li>
+                                    <li><strong>Source:</strong> Données administratives</li>
+                                    <li><strong>Mise à jour:</strong> 2024</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="layer-item">
+                                <h4><i class="fas fa-map-marker-alt"></i> Localités</h4>
+                                <ul>
+                                    <li><strong>Type:</strong> Villages et villes</li>
+                                    <li><strong>Nombre:</strong> +500 localités</li>
+                                    <li><strong>Attributs:</strong> Nom, type, population</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="layer-item">
+                                <h4><i class="fas fa-school"></i> Établissements scolaires</h4>
+                                <ul>
+                                    <li><strong>Type:</strong> Écoles primaires et secondaires</li>
+                                    <li><strong>Couverture:</strong> Ensemble de la région</li>
+                                    <li><strong>Attributs:</strong> Nom, type, coordonnées</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="metadataTechnical" class="metadata-content" style="display: none;">
+                    <div class="metadata-section">
+                        <h3><i class="fas fa-globe"></i> Système de référence</h3>
+                        <div class="metadata-grid">
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Système de projection</div>
+                                <div class="metadata-item-value">WGS84 (EPSG:4326)</div>
+                            </div>
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Format des données</div>
+                                <div class="metadata-item-value">GeoJSON</div>
+                            </div>
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Précision</div>
+                                <div class="metadata-item-value">Niveau administratif</div>
+                            </div>
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Échelle de référence</div>
+                                <div class="metadata-item-value">1:50 000</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metadata-section">
+                        <h3><i class="fas fa-shield-alt"></i> Conditions d'utilisation</h3>
+                        <div class="metadata-grid">
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Usage autorisé</div>
+                                <div class="metadata-item-value">Consultation et analyse <span class="metadata-badge">Public</span></div>
+                            </div>
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Restrictions</div>
+                                <div class="metadata-item-value">Usage commercial non autorisé sans accord</div>
+                            </div>
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Citation requise</div>
+                                <div class="metadata-item-value">DRSD Kaffrine / UAM - Année 2024</div>
+                            </div>
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Licence</div>
+                                <div class="metadata-item-value">Ouverte avec conditions</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metadata-section">
+                        <h3><i class="fas fa-user"></i> Contact technique</h3>
+                        <div class="metadata-grid">
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Coordonnateur</div>
+                                <div class="metadata-item-value">Mouhsine Abdallah Babacar DIAO</div>
+                            </div>
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Email institutionnel</div>
+                                <div class="metadata-item-value">diao.mouhsine@uam.edu.sn</div>
+                            </div>
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Email personnel</div>
+                                <div class="metadata-item-value">mouhsineabdallahbabacar@gmail.com</div>
+                            </div>
+                            <div class="metadata-item">
+                                <div class="metadata-item-label">Téléphone</div>
+                                <div class="metadata-item-value">+221 77 837 94 57</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -637,6 +769,7 @@
         <script src="js/guide-module.js"></script>
         <script src="js/metadata-module.js"></script>
         <script src="js/spatial-analysis-module.js"></script>
+        <script src="js/analysis-improved.js"></script>
         <script src="js/routing-module.js"></script>
         <script src="js/app-modern.js"></script>
         <script src="js/rbush.min.js"></script>
