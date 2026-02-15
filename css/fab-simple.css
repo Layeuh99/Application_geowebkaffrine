@@ -2,6 +2,9 @@
    BOUTON ACTION RAPIDE (FAB) - SEULEMENT LE NÉCESSAIRE
    ============================================ */
 
+/* Assurer que FontAwesome se charge correctement */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.0.13/css/all.min.css');
+
 .fab-button {
     position: fixed;
     bottom: 20px;
@@ -71,4 +74,17 @@
 .fab-item span {
     color: #333;
     font-weight: 500;
+}
+
+/* Correction du scroll de la page de bienvenue */
+body {
+    overflow: auto !important;
+}
+
+.modal-open {
+    overflow: auto !important;
+}
+
+.welcome-modal:not(.active) {
+    display: none !important;
 }
