@@ -5,6 +5,59 @@
 /* Assurer que FontAwesome se charge correctement */
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.0.13/css/all.min.css');
 
+/* Fallback pour les icônes si FontAwesome ne se charge pas */
+.fas, .fa {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+}
+
+/* Icônes de base avec fallback */
+.fa-compass:before { content: "🧭"; }
+.fa-layer-group:before { content: "📊"; }
+.fa-palette:before { content: "🎨"; }
+.fa-database:before { content: "💾"; }
+.fa-chart-line:before { content: "📈"; }
+.fa-search:before { content: "🔍"; }
+.fa-map:before { content: "🗺️"; }
+.fa-road:before { content: "🛣️"; }
+.fa-ruler-combined:before { content: "📏"; }
+.fa-eye:before { content: "👁️"; }
+.fa-home:before { content: "🏠"; }
+.fa-info-circle:before { content: "ℹ️"; }
+.fa-info:before { content: "ℹ️"; }
+.fa-file-code:before { content: "📄"; }
+.fa-file-archive:before { content: "📦"; }
+.fa-file-alt:before { content: "📋"; }
+.fa-search-plus:before { content: "🔎"; }
+.fa-search-minus:before { content: "🔍"; }
+.fa-expand:before { content: "⛶"; }
+.fa-adjust:before { content: "🌓"; }
+.fa-bars:before { content: "☰"; }
+.fa-moon:before { content: "🌙"; }
+.fa-sun:before { content: "☀️"; }
+.fa-mobile-alt:before { content: "📱"; }
+.fa-crosshairs:before { content: "⊕"; }
+.fa-expand-arrows-alt:before { content: "⛶"; }
+.fa-ruler:before { content: "📏"; }
+.fa-th:before { content: "⊞"; }
+.fa-download:before { content: "⬇️"; }
+.fa-times:before { content: "✖️"; }
+.fa-bolt:before { content: "⚡"; }
+.fa-trash:before { content: "🗑️"; }
+.fa-play:before { content: "▶️"; }
+.fa-circle-notch:before { content: "⭕"; }
+.fa-bullseye:before { content: "🎯"; }
+.fa-hand-pointer:before { content: "👆"; }
+.fa-chevron-down:before { content: "▼"; }
+.fa-graduation-cap:before { content: "🎓"; }
+.fa-globe:before { content: "🌍"; }
+.fa-cog:before { content: "⚙️"; }
+.fa-school:before { content: "🏫"; }
+.fa-map-marker-alt:before { content: "📍"; }
+
 .fab-button {
     position: fixed;
     bottom: 20px;
