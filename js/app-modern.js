@@ -78,7 +78,12 @@ document.addEventListener('DOMContentLoaded', function() {
     updateScale();
     updateZoomLevel();
     
-    // Centrer la carte aprÃ¨s un court dÃ©lai pour s'assurer que tout est chargÃ©
+    // Initialiser les contrôles de couches après l'initialisation des couches
+    setTimeout(function() {
+        initLayerControl();
+    }, 100);
+    
+    // Centrer la carte après un court délai pour s'assurer que tout est chargé
     setTimeout(function() {
         centerMap();
     }, 200);
@@ -86,10 +91,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Configurer la fermeture des panneaux au clic sur la carte
     setupPanelCloseOnMapClick();
     
-    // S'assurer que le panneau de couches est visible par dÃ©faut sur desktop
+    // S'assurer que le panneau de couches est visible par défaut sur desktop
     initializePanels();
     
-    // Afficher le modal de bienvenue aprÃ¨s un court dÃ©lai
+    // Afficher le modal de bienvenue après un court délai
     setTimeout(function() {
         showWelcomeModal();
     }, 500);
@@ -3300,6 +3305,49 @@ function zoomToAdvancedSpatialResult(index) {
         }
     }
     layer.bindPopup(content).openPopup();
+}
+
+// ============================================
+// CONTRÔLE DES COUCHES
+// ============================================
+
+/**
+ * Active/désactive une couche
+ * @param {string} layerName - Nom de la couche
+ */
+function toggleLayer(layerName) {
+    if (!map || !layers[layerName]) {
+        console.warn('[LAYER] Couche non trouvée:', layerName);
+        return;
+    }
+    
+    const checkbox = document.getElementById('layer-' + layerName);
+    const isChecked = checkbox.checked;
+    
+    if (isChecked) {
+        if (!map.hasLayer(layers[layerName])) {
+            map.addLayer(layers[layerName]);
+        }
+        console.log('[LAYER] Couche activée:', layerName);
+    } else {
+        if (map.hasLayer(layers[layerName])) {
+            map.removeLayer(layers[layerName]);
+        }
+        console.log('[LAYER] Couche désactivée:', layerName);
+    }
+}
+
+/**
+ * Initialise les contrôles de couches
+ */
+function initLayerControl() {
+    // Synchroniser les checkboxes avec l'état des couches
+    Object.keys(layers).forEach(layerName => {
+        const checkbox = document.getElementById('layer-' + layerName);
+        if (checkbox) {
+            checkbox.checked = map.hasLayer(layers[layerName]);
+        }
+    });
 }
 
 function clearAdvancedSpatialQuery() {
