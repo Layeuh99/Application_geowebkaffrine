@@ -7,12 +7,10 @@
 // ============================================
 // VARIABLES GLOBALES & PERFORMANCE
 // ============================================
-let measureControl;
 let locateControl;
 let layerControl;
 let currentBasemap = 'OSMStandard';
 let highlightLayer;
-let autolinker;
 let bounds_group;
 
 // Variable map sera initialisée par map-core-module ou localement
@@ -109,9 +107,6 @@ function initMap() {
         map = MapCore.map;
         console.log('[APP] Utilisation de la carte initialisée par map-core-module');
         
-        // Configurer l'autolinker pour les popups
-        autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
-        
         // Groupe de limites
         bounds_group = new L.featureGroup([]);
         
@@ -132,14 +127,6 @@ function initMap() {
         attributionControl: true
     });
 
-    // Hash pour les permaliens (vérifier si L.Hash est disponible)
-    if (typeof L.Hash !== 'undefined') {
-        new L.Hash(map);
-    }
-
-    // Configurer l'autolinker pour les popups
-    autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
-
     // Groupe de limites
     bounds_group = new L.featureGroup([]);
 
@@ -152,11 +139,13 @@ function initMap() {
 }
 
 function centerMap() {
-    // Forcer le recalcul de la taille
-    map.invalidateSize();
-    
-    // Centrer sur la rÃ©gion de Kaffrine
-    map.fitBounds([[13.721171213050045, -16.131926969286404], [14.821030838950062, -14.310367685713494]]);
+    // Vérifier que map est bien défini avant appel à invalidateSize()
+    if (map && typeof map.invalidateSize === 'function') {
+        map.invalidateSize();
+        
+        // Centrer sur la région de Kaffrine
+        map.fitBounds([[13.721171213050045, -16.131926969286404], [14.821030838950062, -14.310367685713494]]);
+    }
 }
 
 // ============================================
@@ -757,15 +746,15 @@ function initControls() {
         position: 'topright'
     }).addTo(map);
 
-    // ContrÃ´le de mesure
-    measureControl = new L.Control.Measure({
+    // Contrôle de mesure
+    const measureControlInstance = new L.Control.Measure({
         position: 'topright',
         primaryLengthUnit: 'meters',
         secondaryLengthUnit: 'kilometers',
         primaryAreaUnit: 'sqmeters',
         secondaryAreaUnit: 'hectares'
     });
-    measureControl.addTo(map);
+    measureControlInstance.addTo(map);
 
     // Style pour le bouton de mesure
     setTimeout(function() {
