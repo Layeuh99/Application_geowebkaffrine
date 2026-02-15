@@ -816,20 +816,22 @@
         <script src="js/leaflet-svg-shape-markers.min.js"></script>
         <script src="js/leaflet.rotatedMarker.js"></script>
         <script src="js/leaflet.pattern.js"></script>
-        <script src="js/leaflet.js.map"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css"/>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        
+        <!-- Modules d'application -->
         <script src="js/map-core-module.js"></script>
         <script src="js/guide-module.js"></script>
         <script src="js/metadata-module.js"></script>
         <script src="js/spatial-analysis-module.js"></script>
         <script src="js/analysis-improved.js"></script>
         <script src="js/routing-module.js"></script>
-        <script src="js/app-modern.js"></script>
-        <script src="js/rbush.min.js"></script>
-        <script src="js/labelgun.min.js"></script>
-        <script src="js/labels.js"></script>
-        <script src="js/leaflet.markercluster.js"></script>
-        <script src="js/leaflet-search.js"></script>
-        <script src="js/leaflet-measure.js"></script>
         
         <!-- Donnees -->
         <script src="data/Region_3.js"></script>
@@ -839,11 +841,11 @@
         <script src="data/Localites_7.js"></script>
         <script src="data/Ecoles_8.js"></script>
         
-<!-- Application moderne -->
-<script src="js/app-modern.js"></script>
+        <!-- Application principale -->
+        <script src="js/app-modern.js"></script>
 
 <!-- Service Worker Registration -->
-<!-- <script>
+<script>
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('sw.js?v=4')
@@ -851,8 +853,8 @@
                     console.log('[PWA] Service Worker registered:', registration.scope);
                 })
                 .catch((error) => {
-                    console.error('[PWA] Service Worker registration failed:', error);
+                    console.warn('[PWA] Service Worker registration failed:', error);
                 });
         });
     }
-</script> -->
+</script>

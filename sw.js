@@ -44,7 +44,17 @@ self.addEventListener('install', (event) => {
 
   event.waitUntil(
     caches.open(STATIC_CACHE)
-      .then((cache) => cache.addAll(STATIC_ASSETS))
+      .then((cache) => {
+        // Ajouter les ressources une par une pour éviter les erreurs
+        return Promise.allSettled(
+          STATIC_ASSETS.map(asset => 
+            cache.add(asset).catch(err => {
+              console.warn('[SW] Erreur cache pour', asset, ':', err);
+              return null; // Ignorer les erreurs individuelles
+            })
+          )
+        );
+      })
       .then(() => self.skipWaiting())
   );
 });

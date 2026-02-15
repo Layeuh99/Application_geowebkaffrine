@@ -20,9 +20,33 @@ let routingStep = 'start'; // 'start', 'end', 'complete'
  * Initialise le module de routage
  */
 function initRoutingModule() {
-    // Désactiver temporairement le module routing jusqu'à stabilisation
-    console.log('[ROUTING] Module de routage temporairement désactivé pour stabilisation');
-    return;
+    // Vérifier si Leaflet Routing Machine est disponible
+    if (typeof L !== 'undefined' && L.Routing) {
+        routingControl = L.Routing.control({
+            waypoints: [],
+            routeWhileDragging: false,
+            addWaypoints: false,
+            createMarker: () => null,
+            lineOptions: {
+                styles: [
+                    {color: '#667eea', weight: 6, opacity: 0.8},
+                    {color: 'white', weight: 4, opacity: 0.6},
+                    {color: '#667eea', weight: 2, opacity: 1}
+                ]
+            },
+            router: L.Routing.osrmv1({
+                serviceUrl: 'https://router.project-osrm.org/route/v1',
+                profile: 'driving'
+            }),
+            formatter: new L.Routing.Formatter({
+                language: 'fr',
+                units: 'metric'
+            })
+        });
+        console.log('[ROUTING] Module de routage initialisé avec succès');
+    } else {
+        console.warn('[ROUTING] Leaflet Routing Machine non disponible - module désactivé');
+    }
 }
 
 // ============================================

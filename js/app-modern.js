@@ -12,8 +12,9 @@ let layerControl;
 let currentBasemap = 'OSMStandard';
 let highlightLayer;
 let bounds_group;
+let measureControlInstance;
 
-// Variable map sera initialisée par map-core-module ou localement
+// Variable map sera initialisée UNE SEULE FOIS
 let map;
 
 // ðŸš€ Performance monitoring
@@ -102,30 +103,26 @@ document.addEventListener('DOMContentLoaded', function() {
 // INITIALISATION DE LA CARTE
 // ============================================
 function initMap() {
+    // Vérifier si la carte est déjà initialisée pour éviter les doubles déclarations
+    if (map) {
+        console.log('[APP] Carte déjà initialisée, utilisation de l\'instance existante');
+        return;
+    }
+    
     // Si la carte est déjà initialisée par map-core-module, l'utiliser
     if (typeof MapCore !== 'undefined' && MapCore.isInitialized) {
         map = MapCore.map;
         console.log('[APP] Utilisation de la carte initialisée par map-core-module');
-        
-        // Groupe de limites
-        bounds_group = new L.featureGroup([]);
-        
-        // Attribution
-        map.attributionControl.setPrefix(
-            '<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; ' +
-            '<a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; ' +
-            '<a href="https://qgis.org">QGIS</a>'
-        );
-        return;
+    } else {
+        // Créer la carte uniquement si map-core-module n'est pas présent
+        map = L.map('map', {
+            zoomControl: false,
+            maxZoom: 28,
+            minZoom: 1,
+            attributionControl: true
+        });
+        console.log('[APP] Création d\'une nouvelle instance de carte');
     }
-    
-    // Créer la carte uniquement si map-core-module n'est pas présent
-    map = L.map('map', {
-        zoomControl: false,
-        maxZoom: 28,
-        minZoom: 1,
-        attributionControl: true
-    });
 
     // Groupe de limites
     bounds_group = new L.featureGroup([]);
@@ -747,7 +744,7 @@ function initControls() {
     }).addTo(map);
 
     // Contrôle de mesure
-    const measureControlInstance = new L.Control.Measure({
+    measureControlInstance = new L.Control.Measure({
         position: 'topright',
         primaryLengthUnit: 'meters',
         secondaryLengthUnit: 'kilometers',
