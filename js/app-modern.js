@@ -1398,38 +1398,93 @@ function showWelcomeModal() {
 
 function closeWelcomeModal() {
     const modal = document.getElementById('welcomeModal');
-    modal.classList.remove('active');
+    if (modal) {
+        modal.classList.remove('active');
+        modal.style.display = 'none';
+    }
+    
+    // Restaurer complètement le scroll du body
+    document.body.classList.remove('modal-open');
+    document.body.style.overflow = 'auto';
+    document.body.style.position = 'static';
+    
+    // Forcer le recalcul de la carte
+    if (window.map) {
+        setTimeout(() => {
+            map.invalidateSize();
+            map.setView(map.getCenter(), map.getZoom());
+        }, 100);
+    }
+    
+    // Sauvegarder la préférence si coché
+    let dontShowCheckbox = document.getElementById('dontShowWelcome');
+    if (dontShowCheckbox) {
+        let dontShow = dontShowCheckbox.checked;
+        if (dontShow) {
+            localStorage.setItem('hideWelcome', 'true');
+        }
+    }
+    
+    // Nettoyer les classes résiduelles
+    document.body.classList.remove('welcome-open');
+    document.documentElement.style.overflow = '';
+}
+
+function showMetadata() {
+    // Fermer proprement le modal de bienvenue
+    const welcomeModal = document.getElementById('welcomeModal');
+    if (welcomeModal) {
+        welcomeModal.classList.remove('active');
+        welcomeModal.style.display = 'none';
+    }
     
     // Restaurer le scroll du body
     document.body.classList.remove('modal-open');
     document.body.style.overflow = 'auto';
-    
-    // Sauvegarder la préférence si coché
-    let dontShow = document.getElementById('dontShowWelcome').checked;
-    if (dontShow) {
-        localStorage.setItem('hideWelcome', 'true');
-    }
-}
-
-function showMetadata() {
-    // Fermer le modal de bienvenue
-    document.getElementById('welcomeModal').classList.remove('active');
+    document.body.style.position = 'static';
     
     // Ouvrir le modal des métadonnées
     let metadataModal = document.getElementById('metadataModal');
     if (metadataModal) {
         metadataModal.classList.add('active');
+        metadataModal.style.display = 'block';
     } else {
         console.warn('[MODAL] Modal des métadonnées non trouvé');
+    }
+    
+    // Forcer le recalcul de la carte
+    if (window.map) {
+        setTimeout(() => {
+            map.invalidateSize();
+        }, 100);
     }
 }
 
 function showHome() {
     resetZoom();
-    // Fermer tous les modals
+    
+    // Fermer proprement tous les modals
     document.querySelectorAll('.modal').forEach(function(modal) {
         modal.classList.remove('active');
+        modal.style.display = 'none';
     });
+    
+    // Restaurer complètement le scroll du body
+    document.body.classList.remove('modal-open');
+    document.body.style.overflow = 'auto';
+    document.body.style.position = 'static';
+    
+    // Nettoyer toutes les classes résiduelles
+    document.body.classList.remove('welcome-open', 'metadata-open', 'spatial-open', 'attribute-open');
+    document.documentElement.style.overflow = '';
+    
+    // Forcer le recalcul complet de la carte
+    if (window.map) {
+        setTimeout(() => {
+            map.invalidateSize();
+            map.setView(map.getCenter(), map.getZoom());
+        }, 100);
+    }
 }
 
 // ============================================
@@ -1491,11 +1546,22 @@ function toggleTheme() {
 
 function updateThemeIcon(theme) {
     let icon = document.getElementById('themeIcon');
+    let fabIcon = document.querySelector('#fabButton i');
+    
     if (icon) {
         if (theme === 'dark') {
             icon.className = 'fas fa-sun';
         } else {
             icon.className = 'fas fa-moon';
+        }
+    }
+    
+    // Mettre à jour l'icône du FAB aussi
+    if (fabIcon) {
+        if (theme === 'dark') {
+            fabIcon.className = 'fas fa-bolt';
+        } else {
+            fabIcon.className = 'fas fa-bolt';
         }
     }
 }

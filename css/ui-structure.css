@@ -1,0 +1,766 @@
+/* ============================================
+   CORRECTIONS MODALS ET PAGE DE BIENVENUE
+   ============================================ */
+
+/* Correction du blocage de la page de bienvenue */
+.welcome-modal {
+    z-index: 800 !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+}
+
+.welcome-modal:not(.active) {
+    display: none !important;
+}
+
+.welcome-content {
+    z-index: 801 !important;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Correction des modals généraux */
+.modal {
+    z-index: 700 !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+}
+
+.modal:not(.active) {
+    display: none !important;
+}
+
+.modal-content {
+    z-index: 701 !important;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Empêcher le blocage du body */
+.modal-open {
+    overflow: auto !important;
+    position: static !important;
+}
+
+/* Correction du panneau latéral - SANS TRANSFORM sur conteneur */
+.sidebar-left,
+.sidebar-right {
+    z-index: 400 !important;
+    position: fixed;
+    top: 0;
+    height: 100%;
+    background: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow: visible;
+    left: -100%;
+    transition: left 0.3s ease;
+}
+
+.sidebar-left:not(.collapsed) {
+    left: 0;
+}
+
+.sidebar-right {
+    right: -100%;
+    left: auto;
+}
+
+.sidebar-right:not(.collapsed) {
+    right: 0;
+}
+
+/* Structure du panneau */
+.panel-header {
+    background: #667eea;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 401 !important;
+    position: relative;
+}
+
+.panel-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.panel-header h3 i {
+    font-size: 1rem;
+}
+
+.panel-content {
+    padding: 20px;
+    overflow-y: auto;
+    height: calc(100% - 60px);
+    z-index: 400 !important;
+}
+
+/* Boutons du panneau */
+.panel-toggle,
+.panel-close-mobile {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    z-index: 402 !important;
+    pointer-events: auto !important;
+}
+
+.panel-toggle:hover,
+.panel-close-mobile:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Structure du menu dropdown */
+.dropdown-menu {
+    z-index: 501 !important;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    overflow: visible;
+    pointer-events: auto !important;
+}
+
+.dropdown-section {
+    padding: 10px 0;
+}
+
+.dropdown-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0 15px;
+    margin-bottom: 5px;
+}
+
+.dropdown-items {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-items a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+    pointer-events: auto !important;
+}
+
+.dropdown-items a:hover {
+    background: #f8f9ff;
+    color: #667eea;
+}
+
+.dropdown-items a i {
+    width: 16px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.dropdown-items a span {
+    font-weight: 500;
+}
+
+/* Responsive mobile */
+@media (max-width: 768px) {
+    .welcome-content,
+    .modal-content {
+        margin: 20px;
+        max-width: calc(100% - 40px);
+    }
+    
+    .panel-close-mobile {
+        display: flex !important;
+    }
+    
+    .dropdown-menu {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        height: auto;
+        max-height: 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        border-radius: 0;
+        box-shadow: none;
+    }
+    
+    .dropdown-menu.active {
+        max-height: 500px;
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+/* Thème sombre */
+.dark-theme .welcome-content,
+.dark-theme .modal-content {
+    background: #1a202c;
+    color: #e2e8f0;
+}
+
+.dark-theme .panel-header {
+    background: #2d3748;
+}
+
+.dark-theme .sidebar-left,
+.dark-theme .sidebar-right {
+    background: #1a202c;
+}
+
+.dark-theme .dropdown-menu {
+    background: #2d3748;
+    color: #e2e8f0;
+}
+
+.dark-theme .dropdown-items a {
+    color: #e2e8f0;
+}
+
+.dark-theme .dropdown-items a:hover {
+    background: #374151;
+}
+
+/* ============================================
+   ARCHITECTURE UI - STRUCTURE DES COUCHES Z-INDEX
+   ============================================ */
+
+/* 
+ * HIÉRARCHIE VISUELLE STRUCTURÉE
+ * Niveau 100 → Carte Leaflet
+ * Niveau 200 → Contrôles Leaflet  
+ * Niveau 300 → Boutons flottants
+ * Niveau 400 → Panneaux latéraux
+ * Niveau 500 → Barre supérieure
+ * Niveau 600 → Bouton Action Rapide (FAB)
+ * Niveau 700 → Modals
+ * Niveau 800 → Overlay global / tutoriel
+ */
+
+/* ============================================
+   NIVEAU 100 - CARTE LEAFLET
+   ============================================ */
+#map {
+    z-index: 100 !important;
+}
+
+.leaflet-container {
+    z-index: 100 !important;
+}
+
+/* ============================================
+   NIVEAU 200 - CONTRÔLES LEAFLET
+   ============================================ */
+.leaflet-control-container {
+    z-index: 200 !important;
+}
+
+.leaflet-control {
+    z-index: 200 !important;
+}
+
+.leaflet-control-zoom,
+.leaflet-control-attribution,
+.leaflet-control-scale {
+    z-index: 200 !important;
+}
+
+.leaflet-control-measure {
+    z-index: 200 !important;
+}
+
+.leaflet-control-locate {
+    z-index: 200 !important;
+}
+
+/* ============================================
+   NIVEAU 300 - BOUTONS FLOTTANTS
+   ============================================ */
+.floating-controls {
+    z-index: 300 !important;
+}
+
+.floating-controls .float-btn {
+    z-index: 300 !important;
+}
+
+.mobile-panel-buttons {
+    z-index: 300 !important;
+}
+
+.mobile-panel-btn {
+    z-index: 300 !important;
+}
+
+/* ============================================
+   NIVEAU 400 - PANNEAUX LATÉRAUX
+   ============================================ */
+.sidebar-left,
+.sidebar-right {
+    z-index: 400 !important;
+}
+
+.panel-header {
+    z-index: 401 !important;
+}
+
+.panel-content {
+    z-index: 400 !important;
+}
+
+.panel-toggle,
+.panel-close-mobile {
+    z-index: 402 !important;
+}
+
+/* ============================================
+   NIVEAU 500 - BARRE SUPÉRIEURE
+   ============================================ */
+.navbar {
+    z-index: 500 !important;
+}
+
+.navbar-brand {
+    z-index: 501 !important;
+}
+
+.navbar-menu {
+    z-index: 500 !important;
+}
+
+.dropdown {
+    z-index: 500 !important;
+}
+
+.dropdown-menu {
+    z-index: 501 !important;
+}
+
+.theme-toggle,
+.install-toggle,
+.navbar-toggle {
+    z-index: 502 !important;
+}
+
+/* ============================================
+   NIVEAU 600 - BOUTON ACTION RAPIDE (FAB)
+   ============================================ */
+.fab-button {
+    z-index: 600 !important;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+    pointer-events: auto;
+}
+
+.fab-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.fab-button:active {
+    transform: scale(0.95);
+}
+
+.fab-button i {
+    color: white;
+    font-size: 1.2rem;
+    transition: transform 0.2s ease;
+}
+
+.fab-menu {
+    z-index: 600 !important;
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: auto;
+}
+
+.fab-menu.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.fab-item {
+    background: white;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 160px;
+    transform-origin: right center;
+    pointer-events: auto;
+}
+
+.fab-item:hover {
+    background: #f8f9ff;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.25);
+}
+
+.fab-item:active {
+    box-shadow: 0 2px 6px rgba(102, 126, 234, 0.2);
+}
+
+.fab-item i {
+    color: #667eea;
+    font-size: 1rem;
+    width: 16px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.fab-item span {
+    color: #333;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+/* Animation d'entrée des items */
+.fab-menu.active .fab-item {
+    animation: fabItemSlideIn 0.3s ease forwards;
+}
+
+.fab-menu.active .fab-item:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.fab-menu.active .fab-item:nth-child(2) {
+    animation-delay: 0.05s;
+}
+
+.fab-menu.active .fab-item:nth-child(3) {
+    animation-delay: 0.1s;
+}
+
+.fab-menu.active .fab-item:nth-child(4) {
+    animation-delay: 0.15s;
+}
+
+@keyframes fabItemSlideIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   NIVEAU 700 - MODALS
+   ============================================ */
+.modal {
+    z-index: 700 !important;
+}
+
+.modal-content {
+    z-index: 701 !important;
+}
+
+.modal-close {
+    z-index: 702 !important;
+}
+
+/* ============================================
+   NIVEAU 800 - OVERLAY GLOBAL / TUTORIEL
+   ============================================ */
+.welcome-modal {
+    z-index: 800 !important;
+}
+
+.welcome-content {
+    z-index: 801 !important;
+}
+
+.tutorial-overlay {
+    z-index: 800 !important;
+}
+
+/* ============================================
+   NETTOYAGE CSS - SUPPRESSION DES CONFLITS
+   ============================================ */
+
+/* ============================================
+   HIÉRARCHIE Z-INDEX UNIQUE ET STRUCTURÉE
+   ============================================ */
+   
+/* Suppression des z-index arbitraires et doublons */
+.leaflet-top.leaflet-left,
+.leaflet-top.leaflet-right {
+    z-index: 200 !important;
+}
+
+/* Pas de z-index 9999, 10000, 10001 - utiliser la hiérarchie structurée */
+
+/* Correction des overflow problématiques */
+.modal {
+    overflow: visible !important;
+}
+
+.modal-content {
+    overflow: visible !important;
+}
+
+.sidebar-left,
+.sidebar-right {
+    overflow: visible !important;
+}
+
+/* Supprimer les overflow cachés qui bloquent le scroll */
+body {
+    overflow: auto !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+}
+
+html {
+    overflow: auto !important;
+}
+
+/* Correction des pointer-events */
+.dropdown-menu {
+    pointer-events: auto !important;
+}
+
+.fab-menu {
+    pointer-events: auto !important;
+}
+
+.fab-item {
+    pointer-events: auto !important;
+}
+
+/* Harmonisation des box-shadow */
+.fab-button,
+.fab-item,
+.modal-content,
+.dropdown-menu {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Harmonisation des border-radius */
+.fab-button {
+    border-radius: 50%;
+}
+
+.fab-item,
+.modal-content,
+.dropdown-menu {
+    border-radius: 12px;
+}
+
+/* ============================================
+   RESPONSIVE MOBILE
+   ============================================ */
+@media (max-width: 768px) {
+    .fab-button {
+        bottom: 15px;
+        right: 15px;
+        width: 50px;
+        height: 50px;
+    }
+    
+    .fab-menu {
+        bottom: 75px;
+        right: 15px;
+    }
+    
+    .fab-item {
+        padding: 10px 14px;
+        margin-bottom: 6px;
+        min-width: 140px;
+    }
+    
+    .fab-item i {
+        font-size: 0.9rem;
+        width: 14px;
+    }
+    
+    .fab-item span {
+        font-size: 0.85rem;
+    }
+    
+    /* Mobile panels */
+    .sidebar-left,
+    .sidebar-right {
+        z-index: 400 !important;
+        left: -100%;
+        transition: left 0.3s ease;
+    }
+    
+    .sidebar-right {
+        right: -100%;
+        left: auto;
+    }
+    
+    .sidebar-left:not(.collapsed) {
+        left: 0;
+    }
+    
+    .sidebar-right:not(.collapsed) {
+        right: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .fab-button {
+        bottom: 10px;
+        right: 10px;
+        width: 48px;
+        height: 48px;
+    }
+    
+    .fab-menu {
+        bottom: 68px;
+        right: 10px;
+    }
+    
+    .fab-item {
+        padding: 8px 12px;
+        min-width: 120px;
+    }
+    
+    .fab-item span {
+        font-size: 0.8rem;
+    }
+}
+
+/* ============================================
+   THÈME SOMBRE
+   ============================================ */
+.dark-theme .fab-item {
+    background: #2d3748;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme .fab-item:hover {
+    background: #374151;
+}
+
+.dark-theme .fab-item span {
+    color: #e5e7eb;
+}
+
+.dark-theme .modal-content {
+    background: #1a202c;
+    color: #e2e8f0;
+}
+
+.dark-theme .dropdown-menu {
+    background: #2d3748;
+    color: #e2e8f0;
+}
+
+/* ============================================
+   STABILISATION FINALE
+   ============================================ */
+
+/* Forcer le stacking context correct */
+body {
+    position: relative;
+    z-index: 1;
+}
+
+.app-container {
+    position: relative;
+    z-index: 50;
+}
+
+/* Éviter les transform qui créent de nouveaux contextes */
+.fab-button,
+.fab-menu,
+.modal,
+.dropdown-menu {
+    will-change: opacity, visibility;
+}
+
+/* Assurer que tous les éléments sont cliquables */
+.fab-button,
+.fab-item,
+.modal-close,
+.panel-toggle,
+.dropdown-toggle,
+.navbar-toggle,
+.theme-toggle,
+.install-toggle {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+/* Correction finale des débordements */
+.modal {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-content {
+    max-height: inherit;
+    overflow: visible;
+}
+
+/* Structure UI finale stabilisée */
+/* ============================================ */
