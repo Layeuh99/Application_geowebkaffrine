@@ -3167,6 +3167,91 @@ function executeAdvancedSpatialQuery() {
     });
 }
 
+function performAdvancedSpatialSearch(latlng, targetLayerName) {
+    console.log('[SPATIAL] Recherche démarrée', latlng, targetLayerName, 'type:', currentSpatialType, 'distance:', currentBufferDistance);
+    resetAllStyles();
+    
+    // Supprimer l'ancien buffer
+    if (currentBufferCircle) {
+        map.removeLayer(currentBufferCircle);
+        currentBufferCircle = null;
+    }
+    
+    let targetLayer = getLayerByName(targetLayerName);
+    if (!targetLayer) {
+        console.error('[SPATIAL] Couche non trouvée:', targetLayerName);
+        alert('Couche non trouvée');
+        return;
+    }
+    console.log('[SPATIAL] Couche trouvée, nombre d\'éléments:', Object.keys(targetLayer._layers || {}).length);
+    
+    currentSpatialResults = [];
+    let point = latlng;
+    let checkedCount = 0;
+    
+    // Créer le cercle de buffer si type buffer
+    if (currentSpatialType === 'buffer') {
+        currentBufferCircle = L.circle(point, {
+            radius: currentBufferDistance,
+            fillColor: '#667eea',
+            fillOpacity: 0.2,
+            color: '#667eea',
+            weight: 2
+        }).addTo(map);
+        console.log('[SPATIAL] Buffer créé avec distance:', currentBufferDistance);
+    }
+    
+    // Rechercher dans la couche
+    targetLayer.eachLayer(function(layer) {
+        let layerPoint = getLayerCenter(layer);
+        checkedCount++;
+        if (!layerPoint) {
+            console.log('[SPATIAL] Élément', checkedCount, 'sans position');
+            return;
+        }
+        
+        let distance = calculateDistance(
+            {lat: point.lat, lng: point.lng},
+            {lat: layerPoint.lat, lng: layerPoint.lng}
+        );
+        
+        let shouldInclude = false;
+        
+        if (currentSpatialType === 'buffer') {
+            shouldInclude = distance <= currentBufferDistance;
+        } else if (currentSpatialType === 'nearest') {
+            shouldInclude = true;
+        }
+        
+        if (shouldInclude) {
+            console.log('[SPATIAL] Élément trouvé à', Math.round(distance), 'm');
+            currentSpatialResults.push({
+                layer: layer,
+                distance: distance,
+                name: getFeatureName(layer)
+            });
+            highlightFeaturePermanent(layer);
+        }
+    });
+    
+    console.log('[SPATIAL] Total vérifié:', checkedCount, 'Trouvés:', currentSpatialResults.length);
+    
+    // Trier par distance
+    currentSpatialResults.sort((a, b) => a.distance - b.distance);
+    
+    // Limiter si nearest
+    if (currentSpatialType === 'nearest') {
+        let count = parseInt(document.getElementById('nearestCount').value);
+        currentSpatialResults = currentSpatialResults.slice(0, count);
+    }
+    
+    // Afficher les résultats
+    showAdvancedSpatialResults(targetLayerName);
+    
+    // Zoomer sur les résultats
+    zoomToSpatialResultsAdvanced();
+}
+
 function performClickSearch(latlng, targetLayerName) {
     resetAllStyles();
     
