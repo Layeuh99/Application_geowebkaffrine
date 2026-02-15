@@ -844,15 +844,26 @@
         <script src="js/app-modern.js"></script>
 
 <!-- Service Worker Registration -->
-<!-- Temporairement désactivé pour stabilisation -->
+<!-- Désactivation agressive du Service Worker -->
 <script>
     // Désactiver complètement le Service Worker existant
     if ('serviceWorker' in navigator) {
+        // Désactiver tous les Service Workers existants
         navigator.serviceWorker.getRegistrations().then(function(registrations) {
             for(let registration of registrations) {
-                console.log('[PWA] Désactivation du Service Worker existant:', registration.scope);
-                registration.unregister();
+                console.log('[PWA] Désactivation forcée du Service Worker:', registration.scope);
+                registration.unregister().then(function(success) {
+                    if (success) {
+                        console.log('[PWA] Service Worker désactivé avec succès');
+                    }
+                });
             }
         });
+        
+        // Empêcher l'enregistrement de nouveaux Service Workers
+        navigator.serviceWorker.register = function() {
+            console.log('[PWA] Tentative d\'enregistrement de Service Worker bloquée');
+            return Promise.reject(new Error('Service Worker désactivé pour stabilisation'));
+        };
     }
 </script>

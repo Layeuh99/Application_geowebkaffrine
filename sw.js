@@ -1,32 +1,27 @@
 // ============================================
-// SERVICE WORKER DÉSACTIVÉ - GéoWeb Kaffrine
+// SERVICE WORKER COMPLÈTEMENT DÉSACTIVÉ
 // ============================================
-// Ce fichier remplace sw.js pour désactiver complètement le Service Worker
 
-console.log('[SW] Service Worker désactivé pour stabilisation de l\'application');
+console.log('[SW] Service Worker désactivé - plus d\'interception des requêtes');
 
-// Désactiver tous les événements
+// Ne plus intercepter les requêtes - laisser passer directement
+self.addEventListener('fetch', (event) => {
+    // Ne rien faire - laisser le navigateur gérer normalement
+    return;
+});
+
+// Désactiver tous les autres événements
 self.addEventListener('install', (event) => {
-    console.log('[SW] Install event ignoré - Service Worker désactivé');
-    event.waitUntil(Promise.resolve());
+    console.log('[SW] Install désactivé');
+    self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
-    console.log('[SW] Activate event ignoré - Service Worker désactivé');
-    event.waitUntil(Promise.resolve());
+    console.log('[SW] Activate désactivé');
+    event.waitUntil(self.clients.claim());
 });
 
-self.addEventListener('fetch', (event) => {
-    console.log('[SW] Fetch event ignoré - Service Worker désactivé');
-    // Laisser passer les requêtes sans intervention
-    event.respondWith(fetch(event.request));
-});
-
-self.addEventListener('message', (event) => {
-    console.log('[SW] Message event ignoré - Service Worker désactivé');
-});
-
-// Nettoyer tous les caches existants
+// Nettoyer tous les caches
 self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys().then(cacheNames => {
