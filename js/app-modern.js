@@ -197,7 +197,6 @@ function initLayers() {
 
     // Ajouter le contrÃ´le des couches au panneau de gauche (avec délai pour s'assurer que tout est chargé)
     setTimeout(function() {
-        console.log('[INIT] Appel différé à initLayerControl...');
         initLayerControl();
     }, 500);
 }
@@ -211,20 +210,8 @@ function createPane(name, zIndex) {
 }
 
 function initDataLayers() {
-    console.log('[DATA LAYERS] Initialisation des couches de données...');
-    
-    // Vérifier que les données sont disponibles
-    console.log('[DATA LAYERS] Vérification des données GeoJSON:');
-    console.log('[DATA LAYERS] - geojsonData.Region:', geojsonData.Region ? '✅' : '❌');
-    console.log('[DATA LAYERS] - geojsonData.Departement:', geojsonData.Departement ? '✅' : '❌');
-    console.log('[DATA LAYERS] - geojsonData.Arrondissement:', geojsonData.Arrondissement ? '✅' : '❌');
-    console.log('[DATA LAYERS] - geojsonData.Routes:', geojsonData.Routes ? '✅' : '❌');
-    console.log('[DATA LAYERS] - geojsonData.Localites:', geojsonData.Localites ? '✅' : '❌');
-    console.log('[DATA LAYERS] - geojsonData.Ecoles:', geojsonData.Ecoles ? '✅' : '❌');
-    
     // Couche Region
     if (geojsonData.Region) {
-        console.log('[DATA LAYERS] Création de la couche Region...');
         layers.Region = L.geoJson(geojsonData.Region, {
             attribution: '',
             interactive: true,
@@ -250,17 +237,13 @@ function initDataLayers() {
         });
         bounds_group.addLayer(layers.Region);
         map.addLayer(layers.Region);
-        console.log('[DATA LAYERS] Couche Region ajoutée à la carte');
     } else {
-        console.warn('[DATA LAYERS] Données Region non trouvées - création d\'une couche vide');
         // Créer une couche vide pour éviter les erreurs
         layers.Region = L.layerGroup();
-        console.log('[DATA LAYERS] Couche Region vide créée');
     }
 
     // Couche Departement
     if (geojsonData.Departement) {
-        console.log('[DATA LAYERS] Création de la couche Departement...');
         layers.Departement = L.geoJson(geojsonData.Departement, {
             attribution: '',
             interactive: true,
@@ -274,17 +257,13 @@ function initDataLayers() {
         });
         bounds_group.addLayer(layers.Departement);
         map.addLayer(layers.Departement);
-        console.log('[DATA LAYERS] Couche Departement ajoutée à la carte');
     } else {
-        console.warn('[DATA LAYERS] Données Departement non trouvées - création d\'une couche vide');
         // Créer une couche vide pour éviter les erreurs
         layers.Departement = L.layerGroup();
-        console.log('[DATA LAYERS] Couche Departement vide créée');
     }
 
     // Couche Arrondissement
     if (geojsonData.Arrondissement) {
-        console.log('[DATA LAYERS] Création de la couche Arrondissement...');
         layers.Arrondissement = L.geoJson(geojsonData.Arrondissement, {
             attribution: '',
             interactive: true,
@@ -298,12 +277,9 @@ function initDataLayers() {
         });
         bounds_group.addLayer(layers.Arrondissement);
         map.addLayer(layers.Arrondissement);
-        console.log('[DATA LAYERS] Couche Arrondissement ajoutée à la carte');
     } else {
-        console.warn('[DATA LAYERS] Données Arrondissement non trouvées - création d\'une couche vide');
         // Créer une couche vide pour éviter les erreurs
         layers.Arrondissement = L.layerGroup();
-        console.log('[DATA LAYERS] Couche Arrondissement vide créée');
     }
 
     // Couche Routes
@@ -333,17 +309,13 @@ function initDataLayers() {
         });
         bounds_group.addLayer(layers.Routes);
         map.addLayer(layers.Routes);
-        console.log('[DATA LAYERS] Couche Routes ajoutée à la carte');
     } else {
-        console.warn('[DATA LAYERS] Données Routes non trouvées - création d\'une couche vide');
         // Créer une couche vide pour éviter les erreurs
         layers.Routes = L.layerGroup();
-        console.log('[DATA LAYERS] Couche Routes vide créée');
     }
 
     // Couche Localites (avec clustering)
     if (geojsonData.Localites) {
-        console.log('[DATA LAYERS] Création de la couche Localites...');
         layers.Localites = L.geoJson(geojsonData.Localites, {
             attribution: '',
             interactive: true,
@@ -378,21 +350,17 @@ function initDataLayers() {
         clusters.Localites.addLayer(layers.Localites);
         bounds_group.addLayer(layers.Localites);
         map.addLayer(clusters.Localites);
-        console.log('[DATA LAYERS] Couche Localites ajoutée à la carte');
     } else {
-        console.warn('[DATA LAYERS] Données Localites non trouvées - création d\'une couche vide');
         // Créer une couche vide pour éviter les erreurs
         layers.Localites = L.layerGroup();
         clusters.Localites = new L.MarkerClusterGroup({
             showCoverageOnHover: false,
             spiderfyDistanceMultiplier: 2
         });
-        console.log('[DATA LAYERS] Couche Localites vide créée');
     }
 
     // Couche Ecoles (avec clustering)
     if (geojsonData.Ecoles) {
-        console.log('[DATA LAYERS] Création de la couche Ecoles...');
         layers.Ecoles = L.geoJson(geojsonData.Ecoles, {
             attribution: '',
             interactive: true,
@@ -427,28 +395,14 @@ function initDataLayers() {
         clusters.Ecoles.addLayer(layers.Ecoles);
         bounds_group.addLayer(layers.Ecoles);
         map.addLayer(clusters.Ecoles);
-        console.log('[DATA LAYERS] Couche Ecoles ajoutée à la carte');
     } else {
-        console.warn('[DATA LAYERS] Données Ecoles non trouvées - création d\'une couche vide');
         // Créer une couche vide pour éviter les erreurs
         layers.Ecoles = L.layerGroup();
         clusters.Ecoles = new L.MarkerClusterGroup({
             showCoverageOnHover: false,
             spiderfyDistanceMultiplier: 2
         });
-        console.log('[DATA LAYERS] Couche Ecoles vide créée');
     }
-    
-    console.log('[DATA LAYERS] Initialisation des couches terminée');
-    console.log('[DATA LAYERS] Résumé des couches créées:');
-    console.log('[DATA LAYERS] - Region:', layers.Region ? '✅' : '❌');
-    console.log('[DATA LAYERS] - Departement:', layers.Departement ? '✅' : '❌');
-    console.log('[DATA LAYERS] - Arrondissement:', layers.Arrondissement ? '✅' : '❌');
-    console.log('[DATA LAYERS] - Routes:', layers.Routes ? '✅' : '❌');
-    console.log('[DATA LAYERS] - Localites:', layers.Localites ? '✅' : '❌');
-    console.log('[DATA LAYERS] - Ecoles:', layers.Ecoles ? '✅' : '❌');
-    console.log('[DATA LAYERS] - clusters.Localites:', clusters.Localites ? '✅' : '❌');
-    console.log('[DATA LAYERS] - clusters.Ecoles:', clusters.Ecoles ? '✅' : '❌');
 }
 
 // Styles pour les dÃ©partements
@@ -644,19 +598,6 @@ function addClassToPopupIfMedia(content, popup) {
 // CONTRÃ”LE DES COUCHES
 // ============================================
 function initLayerControl() {
-    console.log('[LAYER CONTROL] Initialisation du contrôle des couches...');
-    
-    // Vérifier que les couches existent
-    console.log('[LAYER CONTROL] Vérification des couches:');
-    console.log('[LAYER CONTROL] - layers.Region:', layers.Region ? '✅' : '❌');
-    console.log('[LAYER CONTROL] - layers.Departement:', layers.Departement ? '✅' : '❌');
-    console.log('[LAYER CONTROL] - layers.Arrondissement:', layers.Arrondissement ? '✅' : '❌');
-    console.log('[LAYER CONTROL] - layers.Routes:', layers.Routes ? '✅' : '❌');
-    console.log('[LAYER CONTROL] - layers.Localites:', layers.Localites ? '✅' : '❌');
-    console.log('[LAYER CONTROL] - layers.Ecoles:', layers.Ecoles ? '✅' : '❌');
-    console.log('[LAYER CONTROL] - clusters.Ecoles:', clusters.Ecoles ? '✅' : '❌');
-    console.log('[LAYER CONTROL] - clusters.Localites:', clusters.Localites ? '✅' : '❌');
-    
     let overlaysTree = [
         {label: '<i class="fas fa-graduation-cap" style="color: #b80808;"></i> Ecoles', layer: clusters.Ecoles || layers.Ecoles},
         {label: '<i class="fas fa-map-marker-alt" style="color: #535353;"></i> Localites', layer: clusters.Localites || layers.Localites},
@@ -679,23 +620,13 @@ function initLayerControl() {
 
     // Ajouter le contrÃ´le personnalisÃ© au panneau de gauche
     let layerControlContainer = document.getElementById('layerControlContainer');
-    console.log('[LAYER CONTROL] Conteneur trouvé:', layerControlContainer ? '✅' : '❌');
-    
     if (layerControlContainer) {
         // CrÃ©er une liste personnalisÃ©e des couches
-        console.log('[LAYER CONTROL] Création du contrôle personnalisé...');
         createCustomLayerControl(layerControlContainer, baseTree, overlaysTree);
-        console.log('[LAYER CONTROL] Contrôle personnalisé créé');
-    } else {
-        console.error('[LAYER CONTROL] Conteneur layerControlContainer non trouvé!');
     }
 }
 
 function createCustomLayerControl(container, baseTree, overlaysTree) {
-    console.log('[CUSTOM CONTROL] Création du contrôle personnalisé...');
-    console.log('[CUSTOM CONTROL] - baseTree:', baseTree.length, 'éléments');
-    console.log('[CUSTOM CONTROL] - overlaysTree:', overlaysTree.length, 'éléments');
-    
     // Vider le conteneur au cas où
     container.innerHTML = '';
     
@@ -705,7 +636,6 @@ function createCustomLayerControl(container, baseTree, overlaysTree) {
     baseSection.innerHTML = '<h4>Fonds de carte</h4>';
     
     baseTree.forEach(function(item) {
-        console.log('[CUSTOM CONTROL] Ajout fond de carte:', item.label);
         let div = document.createElement('div');
         div.className = 'layer-item';
         div.innerHTML = `
@@ -720,7 +650,6 @@ function createCustomLayerControl(container, baseTree, overlaysTree) {
     });
     
     container.appendChild(baseSection);
-    console.log('[CUSTOM CONTROL] Section fonds de carte ajoutée');
     
     // Couches de superposition
     let overlaySection = document.createElement('div');
@@ -728,7 +657,6 @@ function createCustomLayerControl(container, baseTree, overlaysTree) {
     overlaySection.innerHTML = '<h4>Couches thematiques</h4>';
     
     overlaysTree.forEach(function(item) {
-        console.log('[CUSTOM CONTROL] Ajout couche thématique:', item.label);
         let div = document.createElement('div');
         div.className = 'layer-item-with-opacity';
         let layerName = item.label.replace(/<[^>]*>/g, '').trim();
@@ -752,8 +680,6 @@ function createCustomLayerControl(container, baseTree, overlaysTree) {
     });
     
     container.appendChild(overlaySection);
-    console.log('[CUSTOM CONTROL] Section couches thématiques ajoutée');
-    console.log('[CUSTOM CONTROL] Contrôle personnalisé terminé. Contenu du conteneur:', container.innerHTML.length, 'caractères');
 }
 
 function changeBasemapByName(name) {
