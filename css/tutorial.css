@@ -142,7 +142,7 @@
     }
     
     .navbar-menu li a span {
-        display: none;
+        display: inline;
     }
     
     .navbar-menu li a {
