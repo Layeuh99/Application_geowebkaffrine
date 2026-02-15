@@ -1141,7 +1141,18 @@ function showAttributeQuery() {
 }
 
 function enableRoutingMode() {
-    alert('FonctionnalitÃ de routage en cours de dÃveloppement. Utilisez l\'outil de mesure pour calculer des distances.');
+    // Activer l'outil de mesure pour calculer les distances
+    let measureToggle = document.querySelector('.leaflet-control-measure-toggle');
+    if (measureToggle) {
+        measureToggle.click();
+        
+        // Afficher les instructions
+        setTimeout(() => {
+            alert('Mode itinéraire activé !\n\nCliquez sur la carte pour :\n1. Ajouter un point de départ\n2. Ajouter des points intermédiaires\n3. Voir les distances calculées\n\nUtilisez l\'outil de mesure qui vient de s\'activer.');
+        }, 500);
+    } else {
+        alert('Veuillez activer d\'abord les contrôles de la carte (F5 pour recharger)');
+    }
 }
 
 function closeModal(modalId) {
