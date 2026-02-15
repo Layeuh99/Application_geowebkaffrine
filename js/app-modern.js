@@ -1140,19 +1140,87 @@ function showAttributeQuery() {
     }
 }
 
+// ============================================
+// SYSTÈME DE ROUTAGE
+// ============================================
+let routingMode = false;
+let routingPoints = [];
+let routingLine = null;
+let routingMarkers = [];
+
 function enableRoutingMode() {
-    // Activer l'outil de mesure pour calculer les distances
-    let measureToggle = document.querySelector('.leaflet-control-measure-toggle');
-    if (measureToggle) {
-        measureToggle.click();
+    routingMode = true;
+    routingPoints = [];
+    clearRouting();
+    
+    // Instructions
+    alert('Mode itinéraire activé !\n\nCliquez sur deux points sur la carte :\n1. Point de départ (premier clic)\n2. Point d\'arrivée (deuxième clic)\n\nLe chemin sera automatiquement tracé.');
+    
+    // Activer les clics sur la carte
+    map.on('click', handleRoutingClick);
+}
+
+function handleRoutingClick(e) {
+    if (!routingMode) return;
+    
+    let point = e.latlng;
+    routingPoints.push(point);
+    
+    // Ajouter un marqueur
+    let marker = L.marker(point, {
+        icon: L.divIcon({
+            className: 'routing-marker',
+            html: `<div style="background: #667eea; color: white; border-radius: 50%; width: 12px; height: 12px; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: bold;">${routingPoints.length}</div>`,
+            iconSize: [12, 12]
+        })
+    }).addTo(map);
+    
+    routingMarkers.push(marker);
+    
+    if (routingPoints.length === 2) {
+        // Deux points cliqués, tracer le chemin
+        drawRoutingPath();
+        routingMode = false;
+        map.off('click', handleRoutingClick);
         
-        // Afficher les instructions
-        setTimeout(() => {
-            alert('Mode itinéraire activé !\n\nCliquez sur la carte pour :\n1. Ajouter un point de départ\n2. Ajouter des points intermédiaires\n3. Voir les distances calculées\n\nUtilisez l\'outil de mesure qui vient de s\'activer.');
-        }, 500);
-    } else {
-        alert('Veuillez activer d\'abord les contrôles de la carte (F5 pour recharger)');
+        // Afficher les informations
+        let distance = calculateDistance(
+            {lat: routingPoints[0].lat, lng: routingPoints[0].lng},
+            {lat: routingPoints[1].lat, lng: routingPoints[1].lng}
+        );
+        
+        alert(`Itinéraire créé !\n\nDistance : ${Math.round(distance)} m\n\nCliquez sur "Itinéraire" pour en créer un nouveau.`);
     }
+}
+
+function drawRoutingPath() {
+    if (routingPoints.length !== 2) return;
+    
+    // Tracer une ligne droite entre les deux points
+    routingLine = L.polyline(routingPoints, {
+        color: '#667eea',
+        weight: 4,
+        opacity: 0.8,
+        dashArray: '10, 10'
+    }).addTo(map);
+    
+    // Zoom sur l'itinéraire
+    let bounds = L.latLngBounds(routingPoints);
+    map.fitBounds(bounds.pad(0.1));
+}
+
+function clearRouting() {
+    // Supprimer les marqueurs existants
+    routingMarkers.forEach(marker => map.removeLayer(marker));
+    routingMarkers = [];
+    
+    // Supprimer la ligne
+    if (routingLine) {
+        map.removeLayer(routingLine);
+        routingLine = null;
+    }
+    
+    routingPoints = [];
 }
 
 function closeModal(modalId) {
