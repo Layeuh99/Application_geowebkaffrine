@@ -627,6 +627,10 @@ function initLayerControl() {
 }
 
 function createCustomLayerControl(container, baseTree, overlaysTree) {
+    console.log('[LAYER CONTROL] Création du contrôle personnalisé');
+    console.log('[LAYER CONTROL] Layers:', layers);
+    console.log('[LAYER CONTROL] Clusters:', clusters);
+    
     // Vider le conteneur au cas où
     container.innerHTML = '';
     
@@ -660,10 +664,26 @@ function createCustomLayerControl(container, baseTree, overlaysTree) {
         let div = document.createElement('div');
         div.className = 'layer-item-with-opacity';
         let layerName = item.label.replace(/<[^>]*>/g, '').trim();
+        
+        // Vérifier si la couche est actuellement sur la carte
+        let layerMap = {
+            'Ecoles': clusters.Ecoles || layers.Ecoles,
+            'Localites': clusters.Localites || layers.Localites,
+            'Routes': layers.Routes,
+            'Arrondissement': layers.Arrondissement,
+            'Departement': layers.Departement,
+            'Region': layers.Region
+        };
+        
+        let layer = layerMap[layerName];
+        let isChecked = layer && map.hasLayer(layer);
+        
+        console.log('[LAYER CONTROL] Couche:', layerName, 'Présente sur carte:', isChecked);
+        
         div.innerHTML = `
             <div class="layer-header">
                 <label>
-                    <input type="checkbox" checked onchange="toggleLayer('${layerName}', this.checked)">
+                    <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleLayer('${layerName}', this.checked)">
                     ${item.label}
                 </label>
             </div>
@@ -692,6 +712,8 @@ function changeBasemapByName(name) {
 }
 
 function toggleLayer(layerName, visible) {
+    console.log('[TOGGLE] Couche:', layerName, 'Visible:', visible);
+    
     let layerMap = {
         'Ecoles': clusters.Ecoles || layers.Ecoles,
         'Localites': clusters.Localites || layers.Localites,
@@ -702,16 +724,28 @@ function toggleLayer(layerName, visible) {
     };
     
     let layer = layerMap[layerName];
+    console.log('[TOGGLE] Layer trouvé:', layer ? 'oui' : 'non', layer);
+    
     if (layer) {
         if (visible) {
             if (!map.hasLayer(layer)) {
+                console.log('[TOGGLE] Ajout de la couche');
                 map.addLayer(layer);
+            } else {
+                console.log('[TOGGLE] Couche déjà présente');
             }
         } else {
             if (map.hasLayer(layer)) {
+                console.log('[TOGGLE] Suppression de la couche');
                 map.removeLayer(layer);
+            } else {
+                console.log('[TOGGLE] Couche déjà absente');
             }
         }
+    } else {
+        console.error('[TOGGLE] Couche non trouvée:', layerName);
+        console.log('[TOGGLE] Layers disponibles:', layers);
+        console.log('[TOGGLE] Clusters disponibles:', clusters);
     }
 }
 
