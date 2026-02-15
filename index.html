@@ -845,16 +845,14 @@
 
 <!-- Service Worker Registration -->
 <!-- Temporairement désactivé pour stabilisation -->
-<!-- <script>
+<script>
+    // Désactiver complètement le Service Worker existant
     if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js?v=4')
-                .then((registration) => {
-                    console.log('[PWA] Service Worker registered:', registration.scope);
-                })
-                .catch((error) => {
-                    console.warn('[PWA] Service Worker registration failed:', error);
-                });
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            for(let registration of registrations) {
+                console.log('[PWA] Désactivation du Service Worker existant:', registration.scope);
+                registration.unregister();
+            }
         });
     }
-</script> -->
+</script>
