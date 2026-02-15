@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostic Complet Modal - GéoWeb Kaffrine</title>
+    
+    <!-- Charger les CSS originaux -->
+    <link rel="stylesheet" href="css/app-modern.css?v=19">
+    <link rel="stylesheet" href="css/fullscreen-responsive.css?v=19">
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #dc3545, #6f42c1);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #dc3545;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .btn-success {
+            background: #28a745;
+        }
+        
+        .btn-warning {
+            background: #ffc107;
+            color: #000;
+        }
+        
+        .btn-info {
+            background: #17a2b8;
+        }
+        
+        .console-output {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 20px 0;
+            white-space: pre-wrap;
+        }
+        
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 5px solid #dc3545;
+        }
+        
+        .card h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .checklist {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .checklist li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+        
+        .check-icon {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .check-icon.success { color: #28a745; }
+        .check-icon.error { color: #dc3545; }
+        .check-icon.warning { color: #ffc107; }
+        .check-icon.info { color: #17a2b8; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Diagnostic Complet Modal</h1>
+            <p>Identification précise des problèmes du modal de bienvenue</p>
+        </div>
+        
+        <div class="content">
+            <div class="status warning">
+                <strong>⚠️ MODE DIAGNOSTIC ACTIVÉ</strong><br>
+                Cette page va analyser en détail pourquoi les corrections du modal ne s'appliquent pas.
+            </div>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>🔧 Actions de Diagnostic</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <button class="btn" onclick="runDiagnostic()">🔍 Lancer Diagnostic</button>
+                        <button class="btn btn-warning" onclick="forceFix()">🔨 Forcer Corrections</button>
+                        <button class="btn btn-success" onclick="testModal()">🧪 Tester Modal</button>
+                        <button class="btn btn-info" onclick="clearConsole()">🗑️ Vider Console</button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>📊 État Actuel</h3>
+                    <ul class="checklist">
+                        <li><span id="modalExists" class="check-icon warning">?</span> Modal trouvé</li>
+                        <li><span id="stylesApplied" class="check-icon warning">?</span> Styles CSS appliqués</li>
+                        <li><span id="bodyScroll" class="check-icon warning">?</span> Body scroll non bloqué</li>
+                        <li><span id="mobileMode" class="check-icon warning">?</span> Mode mobile détecté</li>
+                        <li><span id="touchSupport" class="check-icon warning">?</span> Touch support</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="status info">
+                <strong>📋 Console de Diagnostic</strong><br>
+                Les résultats du diagnostic apparaîtront ci-dessous et dans la console du navigateur (F12).
+            </div>
+            
+            <div id="consoleOutput" class="console-output">
+                En attente du diagnostic...
+                Cliquez sur "Lancer Diagnostic" pour commencer.
+            </div>
+            
+            <div class="card">
+                <h3>🎯 Actions Correctives</h3>
+                <p>Si le diagnostic révèle des problèmes, utilisez ces actions :</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;">
+                    <button class="btn btn-success" onclick="applyInlineStyles()">🎨 Appliquer Styles Inline</button>
+                    <button class="btn btn-warning" onclick="resetModal()">🔄 Réinitialiser Modal</button>
+                    <button class="btn" onclick="openOriginal()">📂 Ouvrir Originale</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de test (copie de l'original) -->
+    <div id="welcomeModal" class="modal welcome-modal">
+        <div class="modal-content">
+            <div class="welcome-header">
+                <button class="modal-close" onclick="closeTestModal()">×</button>
+                <h2>Bienvenue sur GéoWeb Kaffrine</h2>
+                <p class="welcome-subtitle">Plateforme interactive de visualisation et d'analyse géographique de la région de Kaffrine</p>
+            </div>
+            
+            <div class="tutorial-section">
+                <h3>🎓 Tutoriel Rapide</h3>
+                
+                <div class="tutorial-steps">
+                    <div class="tutorial-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>🗺️ Explorer la carte</h4>
+                            <p>Activez les couches thématiques pour visualiser les données disponibles (administratives, infrastructures, localités).</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tutorial-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>🔍 Rechercher des informations</h4>
+                            <p>Utilisez la fonction de recherche pour trouver un établissement scolaire ou une localité spécifique.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tutorial-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>📊 Analyser</h4>
+                            <p>Utilisez les outils d'analyse spatiale et de mesure pour étudier les zones et calculer des distances.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tutorial-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>🛣️ Calculer un itinéraire</h4>
+                            <p>Sélectionnez un point de départ et un point d'arrivée pour obtenir un trajet avec distance et temps.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tutorial-step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>📱 Navigation mobile</h4>
+                            <p>Le modal est maintenant optimisé pour mobile avec un scroll fluide et une navigation tactile intuitive.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="welcome-footer">
+                <button class="btn" onclick="closeTestModal()">
+                    🚀 Commencer l'exploration
+                </button>
+                <label style="margin-top: 15px; display: block;">
+                    <input type="checkbox" id="dontShowWelcome"> Ne plus afficher au prochain chargement
+                </label>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Charger le script de diagnostic -->
+    <script src="diagnostic-modal.js"></script>
+    
+    <script>
+        const consoleOutput = document.getElementById('consoleOutput');
+        
+        // Intercepter les logs du diagnostic
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        function addToConsole(message, type = 'log') {
+            const timestamp = new Date().toLocaleTimeString();
+            const prefix = type === 'error' ? '❌' : type === 'warn' ? '⚠️' : 'ℹ️';
+            consoleOutput.textContent += `[${timestamp}] ${prefix} ${message}\n`;
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+        
+        console.log = function(...args) {
+            addToConsole(args.join(' '), 'log');
+            originalLog.apply(console, args);
+        };
+        
+        console.error = function(...args) {
+            addToConsole(args.join(' '), 'error');
+            originalError.apply(console, args);
+        };
+        
+        console.warn = function(...args) {
+            addToConsole(args.join(' '), 'warn');
+            originalWarn.apply(console, args);
+        };
+        
+        function updateCheck(id, status, text) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.className = `check-icon ${status}`;
+                element.textContent = text;
+            }
+        }
+        
+        function runDiagnostic() {
+            consoleOutput.textContent = '=== DÉMARRAGE DU DIAGNOSTIC COMPLET ===\n';
+            
+            if (typeof diagnosticModal === 'function') {
+                diagnosticModal();
+                
+                // Mettre à jour les checks
+                setTimeout(() => {
+                    const modal = document.getElementById('welcomeModal');
+                    updateCheck('modalExists', modal ? 'success' : 'error', modal ? '✓' : '✗');
+                    
+                    const modalContent = modal ? modal.querySelector('.modal-content') : null;
+                    if (modalContent) {
+                        const computed = getComputedStyle(modalContent);
+                        const hasCorrectStyles = computed.maxHeight.includes('vh') && computed.overflowY === 'auto';
+                        updateCheck('stylesApplied', hasCorrectStyles ? 'success' : 'error', hasCorrectStyles ? '✓' : '✗');
+                    }
+                    
+                    const bodyScroll = getComputedStyle(document.body).overflow !== 'hidden';
+                    updateCheck('bodyScroll', bodyScroll ? 'success' : 'error', bodyScroll ? '✓' : '✗');
+                    
+                    const isMobile = window.innerWidth <= 768;
+                    updateCheck('mobileMode', isMobile ? 'success' : 'info', isMobile ? '✓' : '📱');
+                    
+                    const touchSupport = 'ontouchstart' in window;
+                    updateCheck('touchSupport', touchSupport ? 'success' : 'info', touchSupport ? '✓' : '🖱️');
+                }, 3000);
+            } else {
+                console.error('Fonction diagnosticModal non trouvée');
+            }
+        }
+        
+        function forceFix() {
+            consoleOutput.textContent += '\n=== APPLICATION FORCÉE DES CORRECTIONS ===\n';
+            
+            if (typeof forcerCorrectionsModal === 'function') {
+                forcerCorrectionsModal();
+            } else {
+                console.error('Fonction forcerCorrectionsModal non trouvée');
+            }
+        }
+        
+        function testModal() {
+            consoleOutput.textContent += '\n=== TEST COMPLET DU MODAL ===\n';
+            
+            if (typeof testModalComplet === 'function') {
+                testModalComplet();
+            } else {
+                console.error('Fonction testModalComplet non trouvée');
+            }
+        }
+        
+        function applyInlineStyles() {
+            consoleOutput.textContent += '\n=== APPLICATION DES STYLES INLINE ===\n';
+            
+            const modalContent = document.querySelector('.modal-content');
+            if (modalContent) {
+                // Appliquer les styles critiques
+                modalContent.style.cssText = `
+                    max-height: 85vh !important;
+                    overflow-y: auto !important;
+                    overflow-x: hidden !important;
+                    touch-action: auto !important;
+                    -webkit-overflow-scrolling: touch !important;
+                    height: auto !important;
+                `;
+                
+                document.body.style.cssText = `
+                    overflow: auto !important;
+                    overflow-x: hidden !important;
+                    overflow-y: auto !important;
+                `;
+                
+                console.log('✅ Styles inline appliqués avec succès');
+            } else {
+                console.error('❌ Modal content non trouvé');
+            }
+        }
+        
+        function resetModal() {
+            consoleOutput.textContent += '\n=== RÉINITIALISATION DU MODAL ===\n';
+            
+            const modal = document.getElementById('welcomeModal');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.style.cssText = '';
+                
+                const modalContent = modal.querySelector('.modal-content');
+                if (modalContent) {
+                    modalContent.style.cssText = '';
+                }
+                
+                document.body.style.cssText = '';
+                console.log('✅ Modal réinitialisé');
+            } else {
+                console.error('❌ Modal non trouvé');
+            }
+        }
+        
+        function closeTestModal() {
+            const modal = document.getElementById('welcomeModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                console.log('✅ Modal fermé');
+            }
+        }
+        
+        function clearConsole() {
+            consoleOutput.textContent = 'Console vidée.\n';
+        }
+        
+        function openOriginal() {
+            window.open('index.html', '_blank');
+        }
+        
+        // Diagnostic automatique au chargement
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                console.log('🚀 Page de diagnostic chargée');
+                console.log('Cliquez sur "Lancer Diagnostic" pour commencer l\'analyse');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
