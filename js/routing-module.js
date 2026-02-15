@@ -21,33 +21,32 @@ let routingStep = 'start'; // 'start', 'end', 'complete'
  */
 function initRoutingModule() {
     // Vérifier si Leaflet Routing Machine est disponible
-    if (typeof L.Routing === 'undefined') {
-        console.warn('Leaflet Routing Machine non disponible');
-        return;
+    if (typeof L !== 'undefined' && L.Routing) {
+        routingControl = L.Routing.control({
+            waypoints: [],
+            routeWhileDragging: false,
+            addWaypoints: false,
+            createMarker: () => null,
+            lineOptions: {
+                styles: [
+                    {color: '#667eea', weight: 6, opacity: 0.8},
+                    {color: 'white', weight: 4, opacity: 0.6},
+                    {color: '#667eea', weight: 2, opacity: 1}
+                ]
+            },
+            router: L.Routing.osrmv1({
+                serviceUrl: 'https://router.project-osrm.org/route/v1',
+                profile: 'driving'
+            }),
+            formatter: new L.Routing.Formatter({
+                language: 'fr',
+                units: 'metric'
+            })
+        });
+        console.log('[ROUTING] Module de routage initialisé');
+    } else {
+        console.warn('[ROUTING] Leaflet Routing Machine non disponible - utilisation du mode simplifié');
     }
-    
-    // Créer le contrôle de routage avec configuration OSRM
-    routingControl = L.Routing.control({
-        waypoints: [],
-        routeWhileDragging: false,
-        addWaypoints: false,
-        createMarker: () => null,
-        lineOptions: {
-            styles: [
-                {color: '#667eea', weight: 6, opacity: 0.8},
-                {color: 'white', weight: 4, opacity: 0.6},
-                {color: '#667eea', weight: 2, opacity: 1}
-            ]
-        },
-        router: L.Routing.osrmv1({
-            serviceUrl: 'https://router.project-osrm.org/route/v1',
-            profile: 'driving'
-        }),
-        formatter: new L.Routing.Formatter({
-            language: 'fr',
-            units: 'metric'
-        })
-    });
 }
 
 // ============================================

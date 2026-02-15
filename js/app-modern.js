@@ -16,6 +16,11 @@ let highlightLayer;
 let autolinker;
 let bounds_group;
 
+// Vérifier si la carte est déjà initialisée par map-core-module
+if (typeof MapCore !== 'undefined' && MapCore.map) {
+    map = MapCore.map;
+}
+
 // ðŸš€ Performance monitoring
 const PERFORMANCE = {
   startTime: performance.now(),
@@ -97,7 +102,13 @@ document.addEventListener('DOMContentLoaded', function() {
 // INITIALISATION DE LA CARTE
 // ============================================
 function initMap() {
-    // CrÃ©er la carte
+    // Si la carte est déjà initialisée par map-core-module, ne pas réinitialiser
+    if (typeof MapCore !== 'undefined' && MapCore.isInitialized) {
+        console.log('[APP] Carte déjà initialisée par map-core-module');
+        return;
+    }
+    
+    // Créer la carte
     map = L.map('map', {
         zoomControl: false,
         maxZoom: 28,
@@ -105,8 +116,10 @@ function initMap() {
         attributionControl: true
     });
 
-    // Hash pour les permaliens
-    new L.Hash(map);
+    // Hash pour les permaliens (vérifier si L.Hash est disponible)
+    if (typeof L.Hash !== 'undefined') {
+        new L.Hash(map);
+    }
 
     // Configurer l'autolinker pour les popups
     autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
