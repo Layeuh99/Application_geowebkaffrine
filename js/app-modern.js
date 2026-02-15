@@ -1133,10 +1133,15 @@ function showAttributeQuery() {
     let modal = document.getElementById('attributeQueryModal');
     if (modal) {
         modal.classList.add('active');
+        resetAttributeQuery();
     } else {
-        console.error('[ERROR] Modal attributeQueryModal non trouvÃ©');
+        console.error('[ERROR] Modal attributeQueryModal non trouvÃ');
         alert('Erreur: Le modal de requÃªte attributaire est introuvable');
     }
+}
+
+function enableRoutingMode() {
+    alert('FonctionnalitÃ de routage en cours de dÃveloppement. Utilisez l\'outil de mesure pour calculer des distances.');
 }
 
 function closeModal(modalId) {
