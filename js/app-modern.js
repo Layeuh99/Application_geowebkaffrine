@@ -7,7 +7,6 @@
 // ============================================
 // VARIABLES GLOBALES & PERFORMANCE
 // ============================================
-let map;
 let measureControl;
 let locateControl;
 let layerControl;
@@ -16,10 +15,8 @@ let highlightLayer;
 let autolinker;
 let bounds_group;
 
-// Vérifier si la carte est déjà initialisée par map-core-module
-if (typeof MapCore !== 'undefined' && MapCore.map) {
-    map = MapCore.map;
-}
+// Variable map sera initialisée par map-core-module ou localement
+let map;
 
 // ðŸš€ Performance monitoring
 const PERFORMANCE = {
@@ -102,13 +99,27 @@ document.addEventListener('DOMContentLoaded', function() {
 // INITIALISATION DE LA CARTE
 // ============================================
 function initMap() {
-    // Si la carte est déjà initialisée par map-core-module, ne pas réinitialiser
+    // Si la carte est déjà initialisée par map-core-module, l'utiliser
     if (typeof MapCore !== 'undefined' && MapCore.isInitialized) {
-        console.log('[APP] Carte déjà initialisée par map-core-module');
+        map = MapCore.map;
+        console.log('[APP] Utilisation de la carte initialisée par map-core-module');
+        
+        // Configurer l'autolinker pour les popups
+        autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        
+        // Groupe de limites
+        bounds_group = new L.featureGroup([]);
+        
+        // Attribution
+        map.attributionControl.setPrefix(
+            '<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; ' +
+            '<a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; ' +
+            '<a href="https://qgis.org">QGIS</a>'
+        );
         return;
     }
     
-    // Créer la carte
+    // Créer la carte uniquement si map-core-module n'est pas présent
     map = L.map('map', {
         zoomControl: false,
         maxZoom: 28,
