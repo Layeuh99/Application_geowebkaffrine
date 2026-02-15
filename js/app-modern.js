@@ -3079,31 +3079,34 @@ function clearAttrQuery() {
 // REQUÃŠTES SPATIALES AVANCÃ‰ES
 // ============================================
 let currentSpatialType = 'buffer';
-let currentBufferDistance = 1000; // 1km par dÃ©faut
+let currentBufferDistance = 1000; // 1km par dÃfaut
 let currentSpatialResults = [];
 let currentBufferCircle = null;
 
 function setSpatialQueryType(type) {
+    console.log('[SPATIAL] setSpatialQueryType appelÃ avec:', type);
     currentSpatialType = type;
     
-    // Mettre Ã  jour l'apparence des boutons
+    // Mettre Ã  jour les boutons
     document.querySelectorAll('.btn-spatial-type').forEach(btn => {
         btn.style.background = 'white';
         btn.style.color = '#333';
         btn.style.borderColor = '#e0e0e0';
     });
     
-    let btn = document.getElementById('btnType' + type.charAt(0).toUpperCase() + type.slice(1));
-    if (btn) {
-        btn.style.background = '#667eea';
-        btn.style.color = 'white';
-        btn.style.borderColor = '#667eea';
+    let activeBtn = document.getElementById('btnType' + type.charAt(0).toUpperCase() + type.slice(1));
+    if (activeBtn) {
+        activeBtn.style.background = '#667eea';
+        activeBtn.style.color = 'white';
+        activeBtn.style.borderColor = '#667eea';
     }
     
-    // Afficher les paramÃ¨tres appropriÃ©s
+    // Afficher les paramÃ¨tres appropriÃs
     document.getElementById('spatialBufferParams').style.display = (type === 'buffer') ? 'block' : 'none';
     document.getElementById('spatialNearestParams').style.display = (type === 'nearest') ? 'block' : 'none';
     document.getElementById('spatialExecute').style.display = (type === 'click') ? 'none' : 'block';
+    
+    console.log('[SPATIAL] ParamÃ¨tres affichÃs pour type:', type);
 }
 
 function setBufferDistance(dist) {
@@ -3126,12 +3129,15 @@ function setBufferDistance(dist) {
 }
 
 function executeAdvancedSpatialQuery() {
+    console.log('[SPATIAL] executeAdvancedSpatialQuery appelé');
     let targetLayerName = document.getElementById('spatialTargetLayer').value;
     
     if (!targetLayerName) {
-        alert('Veuillez sÃ©lectionner une couche Ã  rechercher');
+        alert('Veuillez sélectionner une couche à rechercher');
         return;
     }
+    
+    console.log('[SPATIAL] Type:', currentSpatialType, 'Couche:', targetLayerName);
     
     if (currentSpatialType === 'click') {
         startClickQueryAdvanced();
