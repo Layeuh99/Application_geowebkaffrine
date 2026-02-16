@@ -1030,9 +1030,61 @@
 
         <!-- Application principale -->
         <script src="js/app-modern.js"></script>
-        
-        <!-- Script FAB simplifié -->
-        <script src="js/fab-simple.js"></script>
+
+        <!-- Script FAB simple -->
+        <script>
+            function toggleFabMenu() {
+                const fabMenu = document.getElementById('fabMenu');
+                const fabButton = document.getElementById('fabButton');
+                
+                if (!fabMenu || !fabButton) return;
+                
+                if (fabMenu.classList.contains('active')) {
+                    fabMenu.classList.remove('active');
+                    fabMenu.style.opacity = '0';
+                    fabMenu.style.visibility = 'hidden';
+                    fabButton.innerHTML = '<i class="fas fa-bolt" style="color: white !important; font-size: 1.4rem !important;"></i>';
+                } else {
+                    fabMenu.classList.add('active');
+                    fabMenu.style.opacity = '1';
+                    fabMenu.style.visibility = 'visible';
+                    fabMenu.style.zIndex = '10000';
+                    fabButton.innerHTML = '<i class="fas fa-times" style="color: white !important; font-size: 1.4rem !important;"></i>';
+                    
+                    const items = fabMenu.querySelectorAll('.fab-item');
+                    items.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.style.transform = 'translateX(0)';
+                            item.style.opacity = '1';
+                        }, index * 50);
+                    });
+                }
+            }
+            
+            function closeFabMenu() {
+                const fabMenu = document.getElementById('fabMenu');
+                const fabButton = document.getElementById('fabButton');
+                
+                if (!fabMenu || !fabButton) return;
+                
+                fabMenu.classList.remove('active');
+                
+                const items = fabMenu.querySelectorAll('.fab-item');
+                items.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.transform = 'translateX(20px)';
+                        item.style.opacity = '0';
+                    }, index * 30);
+                });
+                
+                setTimeout(() => {
+                    fabMenu.style.opacity = '0';
+                    fabMenu.style.visibility = 'hidden';
+                }, items.length * 30 + 100);
+                
+                fabButton.innerHTML = '<i class="fas fa-bolt" style="color: white !important; font-size: 1.4rem !important;"></i>';
+            }
+        </script>
 
         <!-- Script pour afficher le FAB après chargement -->
         <script>
