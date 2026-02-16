@@ -994,6 +994,35 @@
         <script src="data/Localites_7.js"></script>
         <script src="data/Ecoles_8.js"></script>
 
+    <!-- Bouton d'action rapide flottant (FAB) -->
+    <div id="fabButton" class="fab-button" onclick="toggleFabMenu()">
+        <i class="fas fa-bolt"></i>
+    </div>
+    
+    <!-- Menu FAB radial -->
+    <div id="fabMenu" class="fab-menu">
+        <div class="fab-item" onclick="showSpatialQuery(); closeFabMenu();">
+            <i class="fas fa-map"></i>
+            <span>Analyser</span>
+        </div>
+        <div class="fab-item" onclick="enableRoutingMode(); closeFabMenu();">
+            <i class="fas fa-road"></i>
+            <span>Itinéraire</span>
+        </div>
+        <div class="fab-item" onclick="showAttributeQuery(); closeFabMenu();">
+            <i class="fas fa-search"></i>
+            <span>Rechercher</span>
+        </div>
+        <div class="fab-item" onclick="toggleMeasure(); closeFabMenu();">
+            <i class="fas fa-ruler-combined"></i>
+            <span>Mesurer</span>
+        </div>
+        <div class="fab-item" onclick="showMiniTutorial(); closeFabMenu();">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Tutoriel</span>
+        </div>
+    </div>
+
         <!-- Application principale -->
         <script src="js/app-modern.js"></script>
 
