@@ -1525,6 +1525,9 @@ let currentTutorialStep = 1;
 const totalTutorialSteps = 4;
 
 function showMiniTutorial() {
+    // Fermer d'abord le menu FAB pour éviter la confusion
+    closeFabMenu();
+    
     const modal = document.getElementById('miniTutorialModal');
     if (modal) {
         modal.classList.add('active');
