@@ -16,19 +16,17 @@
         <link rel="stylesheet" href="css/leaflet.css">
         <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
         <link rel="stylesheet" href="css/L.Control.Locate.min.css">
-        <link rel="stylesheet" href="css/app-modern.css?v=18">
-        <link rel="stylesheet" href="css/fab-simple.css">
         <link rel="stylesheet" href="css/MarkerCluster.css">
         <link rel="stylesheet" href="css/MarkerCluster.Default.css">
-        <link rel="stylesheet" href="css/leaflet-search.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <link rel="stylesheet" href="css/qgis2web.css">
-        <link rel="stylesheet" href="css/tutorial.css">
-        <link rel="stylesheet" href="css/metadata.css">
-        <link rel="stylesheet" href="css/app-modern.css?v=18">
+        
+        <!-- ARCHITECTURE UI STRUCTURELLE NETTOYÉE -->
+        <link rel="stylesheet" href="css/ui-structure-clean.css">
+        
+        <!-- Styles thématiques (sans conflits structurels) -->
         <link rel="stylesheet" href="css/dark-theme.css">
-        <link rel="stylesheet" href="css/mobile-responsive.css">
-        <link rel="stylesheet" href="css/fullscreen-responsive.css">
+        <link rel="stylesheet" href="css/metadata.css">
     </head>
     <body>
         <!-- Skip to content pour accessibilité -->
@@ -994,21 +992,39 @@
         <script src="data/Localites_7.js"></script>
         <script src="data/Ecoles_8.js"></script>
 
+        <!-- FAB STRUCTUREL PROPRE - SANS STACKING CONTEXT PARASITE -->
+        <button class="fab-button" id="fabButton" onclick="toggleFabMenu()" aria-label="Menu d'action rapide">
+            ⚡
+        </button>
+        
+        <div class="fab-menu" id="fabMenu">
+            <div class="fab-item" onclick="showSpatialQuery(); closeFabMenu();">
+                <span>🗺️</span>
+                <span>Analyser</span>
+            </div>
+            <div class="fab-item" onclick="enableRoutingMode(); closeFabMenu();">
+                <span>🛣️</span>
+                <span>Itinéraire</span>
+            </div>
+            <div class="fab-item" onclick="showAttributeQuery(); closeFabMenu();">
+                <span>🔍</span>
+                <span>Rechercher</span>
+            </div>
+            <div class="fab-item" onclick="toggleMeasure(); closeFabMenu();">
+                <span>📏</span>
+                <span>Mesurer</span>
+            </div>
+            <div class="fab-item" onclick="showMiniTutorial(); closeFabMenu();">
+                <span>🎓</span>
+                <span>Tutoriel</span>
+            </div>
+        </div>
+
+        <!-- Architecture UI structurelle propre -->
+        <script src="js/ui-structure-clean.js"></script>
+        
         <!-- Application principale -->
         <script src="js/app-modern.js"></script>
-
-        <!-- Script pour afficher le FAB après chargement -->
-        <script>
-            // Attendre que tout soit chargé avant d'afficher le FAB
-            window.addEventListener('load', function() {
-                setTimeout(function() {
-                    if (fabButton) {
-                        fabButton.style.display = 'flex';
-                        console.log('[FAB] Bouton d\'action rapide affiché');
-                    }
-                }, 1000); // Attendre 1 seconde
-            });
-        </script>
 
 <!-- Service Worker Registration -->
 <!-- Désactivation agressive du Service Worker -->

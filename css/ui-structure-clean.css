@@ -1,0 +1,593 @@
+/*
+ * REFACTORING STRUCTUREL UI - NETTOYAGE COMPLET
+ * ===============================================
+ * Architecture hiérarchique stricte - Z-index cohérents
+ * Suppression de tous les stacking contexts parasites
+ * Animations sans transform - Stabilité mobile garantie
+ */
+
+/* ============================================
+   BASE HIERARCHIQUE - STRUCTURE FONDAMENTALE
+   ============================================ */
+body {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.app-container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100vh;
+}
+
+/* ============================================
+   NIVEAU 100 - CARTE LEAFLET (BASE)
+   ============================================ */
+#map {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 100 !important;
+}
+
+.leaflet-container {
+    z-index: 100 !important;
+}
+
+/* Contrôles Leaflet - PAS DE TRANSFORM */
+.leaflet-control-container {
+    z-index: 200 !important;
+}
+
+.leaflet-control {
+    z-index: 200 !important;
+    position: relative !important;
+}
+
+.leaflet-control-zoom,
+.leaflet-control-attribution,
+.leaflet-control-scale,
+.leaflet-control-measure,
+.leaflet-control-locate {
+    z-index: 200 !important;
+}
+
+/* ============================================
+   NIVEAU 300 - BOUTONS FLOTTANTS (PAS DE TRANSFORM)
+   ============================================ */
+.floating-controls {
+    z-index: 300 !important;
+    position: fixed !important;
+}
+
+.floating-controls .float-btn {
+    z-index: 300 !important;
+    position: relative !important;
+    transition: opacity 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.mobile-panel-buttons {
+    z-index: 300 !important;
+    position: fixed !important;
+    bottom: 20px !important;
+    left: 50% !important;
+    margin-left: -50% !important;
+    width: auto !important;
+}
+
+.mobile-panel-btn {
+    z-index: 300 !important;
+    position: relative !important;
+    transition: opacity 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+/* ============================================
+   NIVEAU 400 - PANNEAUX LATÉRAUX (SANS TRANSFORM)
+   ============================================ */
+.sidebar-left,
+.sidebar-right {
+    position: fixed !important;
+    top: 0 !important;
+    height: 100% !important;
+    width: 320px !important;
+    z-index: 400 !important;
+    background: white !important;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1) !important;
+    transition: opacity 0.3s ease, visibility 0.3s ease !important;
+}
+
+.sidebar-left {
+    left: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+.sidebar-right {
+    right: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+.sidebar-left.active,
+.sidebar-right.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.panel-header {
+    z-index: 401 !important;
+    position: relative !important;
+    background: #667eea !important;
+    color: white !important;
+    padding: 15px 20px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+.panel-content {
+    z-index: 400 !important;
+    position: relative !important;
+    padding: 20px !important;
+    overflow-y: auto !important;
+    height: calc(100% - 60px) !important;
+}
+
+.panel-toggle,
+.panel-close-mobile {
+    z-index: 402 !important;
+    position: relative !important;
+    background: rgba(255,255,255,0.2) !important;
+    border: none !important;
+    color: white !important;
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: background 0.2s ease !important;
+}
+
+/* ============================================
+   NIVEAU 500 - BARRE SUPÉRIEURE (NAVBAR)
+   ============================================ */
+.navbar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 60px !important;
+    z-index: 500 !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 20px !important;
+}
+
+.navbar-brand {
+    z-index: 501 !important;
+    position: relative !important;
+    color: white !important;
+    font-weight: bold !important;
+    font-size: 1.2rem !important;
+}
+
+.navbar-menu {
+    z-index: 500 !important;
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 15px !important;
+}
+
+.dropdown {
+    z-index: 500 !important;
+    position: relative !important;
+}
+
+.dropdown-menu {
+    z-index: 501 !important;
+    position: absolute !important;
+    top: 100% !important;
+    right: 0 !important;
+    background: white !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+    min-width: 200px !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: opacity 0.2s ease, visibility 0.2s ease !important;
+}
+
+.dropdown.active .dropdown-menu {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.theme-toggle,
+.install-toggle,
+.navbar-toggle {
+    z-index: 502 !important;
+    position: relative !important;
+    background: rgba(255,255,255,0.2) !important;
+    border: none !important;
+    color: white !important;
+    width: 35px !important;
+    height: 35px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: background 0.2s ease !important;
+}
+
+/* ============================================
+   NIVEAU 600 - FAB (SANS STACKING CONTEXT PARASITE)
+   ============================================ */
+.fab-button {
+    z-index: 600 !important;
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4) !important;
+    color: white !important;
+    font-size: 1.5rem !important;
+    cursor: pointer !important;
+    transition: background 0.2s ease, box-shadow 0.2s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.fab-button:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%) !important;
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5) !important;
+}
+
+.fab-menu {
+    z-index: 600 !important;
+    position: fixed !important;
+    bottom: 80px !important;
+    right: 20px !important;
+    min-width: 200px !important;
+    background: white !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: opacity 0.3s ease, visibility 0.3s ease !important;
+}
+
+.fab-menu.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.fab-item {
+    padding: 15px 20px !important;
+    border-bottom: 1px solid #f0f0f0 !important;
+    cursor: pointer !important;
+    transition: background 0.2s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 15px !important;
+}
+
+.fab-item:hover {
+    background: #f8f9fa !important;
+}
+
+.fab-item:last-child {
+    border-bottom: none !important;
+}
+
+/* ============================================
+   NIVEAU 700 - MODALS
+   ============================================ */
+.modal {
+    z-index: 700 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0,0,0,0.5) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: opacity 0.3s ease, visibility 0.3s ease !important;
+}
+
+.modal.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.modal-content {
+    z-index: 701 !important;
+    position: relative !important;
+    background: white !important;
+    border-radius: 12px !important;
+    max-width: 90% !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    padding: 0 !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
+}
+
+.modal-close {
+    z-index: 702 !important;
+    position: absolute !important;
+    top: 15px !important;
+    right: 15px !important;
+    background: none !important;
+    border: none !important;
+    font-size: 1.5rem !important;
+    cursor: pointer !important;
+    color: #666 !important;
+    width: 30px !important;
+    height: 30px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    transition: background 0.2s ease !important;
+}
+
+.modal-close:hover {
+    background: #f0f0f0 !important;
+}
+
+/* ============================================
+   NIVEAU 800 - OVERLAY GLOBAL / TUTORIEL
+   ============================================ */
+.welcome-modal {
+    z-index: 800 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0,0,0,0.8) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: opacity 0.3s ease, visibility 0.3s ease !important;
+}
+
+.welcome-modal.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.welcome-content {
+    z-index: 801 !important;
+    position: relative !important;
+    background: white !important;
+    border-radius: 16px !important;
+    max-width: 600px !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    padding: 30px !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3) !important;
+}
+
+.tutorial-overlay {
+    z-index: 800 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    pointer-events: none !important;
+}
+
+/* ============================================
+   SUPPRESSION DES CONFLITS - RÈGLES STRICTES
+   ============================================ */
+
+/* INTERDICTION DES Z-INDEX ARBITRAIRES */
+[class*="z-index-9999"],
+[class*="z-index-10000"],
+[class*="z-index-10001"] {
+    z-index: auto !important;
+}
+
+/* SUPPRESSION DES TRANSFORM CRÉANT DES STACKING CONTEXTS */
+.sidebar-left *,
+.sidebar-right *,
+.fab-menu *,
+.dropdown-menu *,
+.modal-content * {
+    transform: none !important;
+}
+
+/* CORRECTION DES OVERFLOW CONFLICTS */
+body,
+.app-container,
+#map {
+    overflow: visible !important;
+}
+
+.sidebar-left,
+.sidebar-right,
+.modal,
+.welcome-modal {
+    overflow: hidden !important;
+}
+
+.panel-content,
+.modal-content,
+.welcome-content {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+/* POINTER-EVENTS CORRECTS */
+.fab-button,
+.fab-item,
+.theme-toggle,
+.install-toggle,
+.navbar-toggle,
+.panel-toggle,
+.panel-close-mobile,
+.mobile-panel-btn {
+    pointer-events: auto !important;
+}
+
+.modal,
+.welcome-modal {
+    pointer-events: auto !important;
+}
+
+/* ============================================
+   MOBILE PRIORITÉ ABSOLUE
+   ============================================ */
+@media (max-width: 768px) {
+    .sidebar-left,
+    .sidebar-right {
+        width: 85% !important;
+        max-width: 320px !important;
+    }
+    
+    .mobile-panel-buttons {
+        display: flex !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    .navbar {
+        padding: 0 15px !important;
+    }
+    
+    .navbar-brand {
+        font-size: 1rem !important;
+    }
+    
+    .fab-button {
+        width: 50px !important;
+        height: 50px !important;
+        bottom: 15px !important;
+        right: 15px !important;
+    }
+    
+    .fab-menu {
+        right: 15px !important;
+        min-width: 180px !important;
+    }
+    
+    .modal-content {
+        max-width: 95% !important;
+        margin: 20px !important;
+    }
+    
+    .welcome-content {
+        max-width: 95% !important;
+        margin: 20px !important;
+        padding: 20px !important;
+    }
+}
+
+/* ============================================
+   ÉTATS VISUELS COHÉRENTS
+   ============================================ */
+.hidden {
+    display: none !important;
+}
+
+.invisible {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+.visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* ============================================
+   ANIMATIONS SANS TRANSFORM
+   ============================================ */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideDown {
+    from { 
+        opacity: 0;
+        max-height: 0;
+    }
+    to { 
+        opacity: 1;
+        max-height: 300px;
+    }
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0;
+        max-height: 300px;
+    }
+    to { 
+        opacity: 1;
+        max-height: 0;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease;
+}
+
+.slide-down {
+    animation: slideDown 0.3s ease;
+}
+
+.slide-up {
+    animation: slideUp 0.3s ease;
+}
+
+/* ============================================
+   FORCAGE DU STACKING CONTEXT CORRECT
+   ============================================ */
+.leaflet-top.leaflet-left,
+.leaflet-top.leaflet-right {
+    z-index: 200 !important;
+}
+
+.leaflet-popup-pane {
+    z-index: 700 !important;
+}
+
+/* Suppression des contextes parasites créés par les bibliothèques externes */
+.leaflet-overlay-pane {
+    z-index: 150 !important;
+}
+
+.photon-geocoder {
+    z-index: 300 !important;
+}
+
+/* ============================================
+   FIN - ARCHITECTURE STABLE ET GARANTIE
+   ============================================ */
