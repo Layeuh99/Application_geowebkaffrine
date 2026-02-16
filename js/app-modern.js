@@ -1573,6 +1573,7 @@ document.addEventListener('click', function(event) {
         }
     }
 }
+}
 
 function updateTutorialStep() {
     // Masquer toutes les étapes
