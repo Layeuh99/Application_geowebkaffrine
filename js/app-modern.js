@@ -1486,19 +1486,33 @@ function closeFabMenu() {
     const fabMenu = document.getElementById('fabMenu');
     const fabButton = document.getElementById('fabButton');
     
-    if (!fabMenu || !fabButton) return;
+    console.log('[FAB] closeFabMenu appelée');
+    console.log('[FAB] fabMenu:', fabMenu);
+    console.log('[FAB] fabButton:', fabButton);
+    
+    if (!fabMenu || !fabButton) {
+        console.log('[FAB] Éléments non trouvés, retour');
+        return;
+    }
     
     // Vérifier si le menu est actif avant de fermer
-    if (!fabMenu.classList.contains('active')) return;
+    if (!fabMenu.classList.contains('active')) {
+        console.log('[FAB] Menu n\'est pas actif, retour');
+        return;
+    }
     
+    console.log('[FAB] Fermeture du menu...');
     fabMenu.classList.remove('active');
     
     // Animer les items du menu en sortie
     const items = fabMenu.querySelectorAll('.fab-item');
+    console.log('[FAB] Items trouvés:', items.length);
+    
     items.forEach((item, index) => {
         setTimeout(() => {
             item.style.transform = 'translateX(20px)';
             item.style.opacity = '0';
+            console.log(`[FAB] Item ${index} animé vers la sortie`);
         }, index * 30);
     });
     
@@ -1506,9 +1520,12 @@ function closeFabMenu() {
     setTimeout(() => {
         fabMenu.style.opacity = '0';
         fabMenu.style.visibility = 'hidden';
+        console.log('[FAB] Menu caché avec succès');
     }, items.length * 30 + 100);
     
-    fabButton.innerHTML = '<i class="fas fa-bolt" style="color: white !important; font-size: 1.4rem !important; text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important; transition: all 0.3s ease !important;"></i>';
+    // Remettre l'icône du bouton
+    fabButton.innerHTML = '<i class="fas fa-bolt fab-icon" style="color: white !important; font-size: 1.4rem !important; text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important; transition: all 0.3s ease !important;"></i>';
+    console.log('[FAB] Icône remise à fa-bolt');
 }
 
 // Fermer le FAB en cliquant ailleurs
