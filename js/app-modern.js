@@ -1458,13 +1458,18 @@ function toggleFabMenu() {
     const fabMenu = document.getElementById('fabMenu');
     const fabButton = document.getElementById('fabButton');
     
+    if (!fabMenu || !fabButton) return;
+    
     if (fabMenu.classList.contains('active')) {
+        // Le menu est déjà ouvert, on le ferme
         closeFabMenu();
     } else {
+        // Le menu est fermé, on l'ouvre
         fabMenu.classList.add('active');
         fabMenu.style.opacity = '1';
         fabMenu.style.visibility = 'visible';
-        fabButton.innerHTML = '<i class="fas fa-times" style="color: white !important; font-size: 1.4rem !important; text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important; transition: all 0.3s ease !important;"></i>';
+        fabMenu.style.zIndex = '1000'; // S'assurer que le menu est au-dessus
+        fabButton.innerHTML = '<i class="fas fa-times fab-icon" style="color: white !important; font-size: 1.4rem !important; text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important; transition: all 0.3s ease !important;"></i>';
         
         // Animer les items du menu
         const items = fabMenu.querySelectorAll('.fab-item');
