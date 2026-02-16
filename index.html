@@ -1026,6 +1026,32 @@
         <!-- Application principale -->
         <script src="js/app-modern.js"></script>
 
+        <!-- Initialisation de la carte -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log('[INIT] Démarrage de l\'initialisation...');
+                
+                // Cacher le welcome modal au cas où il serait visible
+                const welcomeModal = document.getElementById('welcomeModal');
+                if (welcomeModal) {
+                    welcomeModal.classList.remove('active');
+                    document.body.style.overflow = '';
+                    console.log('[INIT] Welcome modal caché');
+                }
+                
+                // Initialiser la carte avec map-core-module
+                if (typeof initializeMap === 'function') {
+                    console.log('[INIT] Utilisation de initializeMap()');
+                    initializeMap();
+                } else if (typeof initMap === 'function') {
+                    console.log('[INIT] Utilisation de initMap()');
+                    initMap();
+                } else {
+                    console.error('[INIT] Aucune fonction d\'initialisation trouvée');
+                }
+            });
+        </script>
+
 <!-- Service Worker Registration -->
 <!-- Désactivation agressive du Service Worker -->
 <script>
