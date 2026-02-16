@@ -369,6 +369,43 @@
     min-height: 60px !important;
 }
 
+/* Bouton clear routing spécial */
+.clear-routing-btn {
+    margin-left: 10px !important;
+    font-size: 0.85rem !important;
+    color: #999 !important;
+    opacity: 0.8 !important;
+}
+
+.clear-routing-btn:hover {
+    color: #666 !important;
+    background: rgba(255,0,0,0.05) !important;
+}
+
+/* ============================================
+   CONTRÔLES DE PANNEAUX
+   ============================================ */
+.panel-header-controls {
+    display: flex !important;
+    gap: 10px !important;
+}
+
+.panel-close-mobile {
+    display: none !important;
+    background: rgba(255,255,255,0.2) !important;
+    border: none !important;
+    color: white !important;
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    font-size: 1.2rem !important;
+}
+
+.metadata-btn {
+    margin-left: 10px !important;
+}
+
 /* ============================================
    FIN - NAVBAR STABLE ET PROPRE
    ============================================ */
