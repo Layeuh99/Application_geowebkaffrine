@@ -4025,8 +4025,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         const clickedDropdown = e.target.closest('.dropdown');
+        const clickedFAB = e.target.closest('#fabContainer') || e.target.closest('#fabButton') || e.target.closest('#fabMenu');
         
-        if (!clickedDropdown) {
+        if (!clickedDropdown && !clickedFAB) {
             console.log('[DROPDOWN] Click en dehors détecté sur mobile - fermeture de tous les dropdowns');
             dropdowns.forEach(function(dropdown, index) {
                 dropdown.classList.remove('active');
