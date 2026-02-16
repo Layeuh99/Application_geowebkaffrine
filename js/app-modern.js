@@ -1574,7 +1574,7 @@ document.addEventListener('click', function(event) {
             localStorage.setItem('hideMiniTutorial', 'true');
         }
     }
-}
+});
 
 function updateTutorialStep() {
     // Masquer toutes les étapes

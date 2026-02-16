@@ -67,7 +67,7 @@ function toggleFabMenu() {
         fabMenu.style.opacity = '1';
         fabMenu.style.visibility = 'visible';
         fabMenu.style.zIndex = '10000';
-        fabButton.innerHTML = '<i class="fas fa-times" style="color: white !important; font-size: 1.4rem !important;"></i>';
+        fabButton.innerHTML = '<span style="color: white !important; font-size: 1.8rem !important;">✖️</span>';
         
         const items = fabMenu.querySelectorAll('.fab-item');
         items.forEach((item, index) => {
@@ -100,33 +100,56 @@ function closeFabMenu() {
         fabMenu.style.visibility = 'hidden';
     }, items.length * 30 + 100);
     
-    fabButton.innerHTML = '<i class="fas fa-bolt" style="color: white !important; font-size: 1.4rem !important;"></i>';
+    fabButton.innerHTML = '<span style="color: white !important; font-size: 1.8rem !important;">⚡</span>';
 }
 
-// Fonctions du FAB
+// Fonctions FAB
 function showSpatialQuery() {
-    console.log('Recherche spatiale');
+    const modal = document.getElementById('spatialQueryModal');
+    if (modal) {
+        modal.classList.add('active');
+        modal.style.display = 'flex';
+    }
     closeFabMenu();
 }
 
 function enableRoutingMode() {
-    console.log('Mode itinéraire');
+    console.log('Mode itinéraire activé');
     closeFabMenu();
 }
 
 function showAttributeQuery() {
-    console.log('Recherche d\'attributs');
+    const modal = document.getElementById('attributeQueryModal');
+    if (modal) {
+        modal.classList.add('active');
+        modal.style.display = 'flex';
+    }
     closeFabMenu();
 }
 
 function toggleMeasure() {
-    console.log('Mesure');
+    const measureToggle = document.querySelector('.leaflet-control-measure-toggle');
+    if (measureToggle) {
+        measureToggle.click();
+    }
     closeFabMenu();
 }
 
 function showMiniTutorial() {
-    console.log('Mini tutoriel');
+    const modal = document.getElementById('miniTutorialModal');
+    if (modal) {
+        modal.classList.add('active');
+        modal.style.display = 'flex';
+    }
     closeFabMenu();
+}
+
+function closeMiniTutorial() {
+    const modal = document.getElementById('miniTutorialModal');
+    if (modal) {
+        modal.classList.remove('active');
+        modal.style.display = 'none';
+    }
 }
 
 // Écouteur de clic pour fermer le FAB
