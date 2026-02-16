@@ -995,31 +995,31 @@
         <script src="data/Ecoles_8.js"></script>
 
     <!-- Bouton d'action rapide flottant (FAB) -->
-    <div id="fabButton" class="fab-button" onclick="toggleFabMenu()" style="position: fixed !important; bottom: 20px !important; right: 20px !important; width: 56px !important; height: 56px !important; border-radius: 50% !important; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; border: none !important; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4) !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; z-index: 9999 !important;">
-        <i class="fas fa-bolt" style="color: white !important; font-size: 1.2rem !important;"></i>
+    <div id="fabButton" class="fab-button" onclick="toggleFabMenu()" style="position: fixed !important; bottom: 25px !important; right: 25px !important; width: 60px !important; height: 60px !important; border-radius: 50% !important; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; border: none !important; box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4), 0 2px 6px rgba(0, 0, 0, 0.1) !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; z-index: 9999 !important; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; transform-origin: center !important;">
+        <i class="fas fa-bolt" style="color: white !important; font-size: 1.4rem !important; text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important; transition: all 0.3s ease !important;"></i>
     </div>
     
     <!-- Menu FAB radial -->
-    <div id="fabMenu" class="fab-menu">
-        <div class="fab-item" onclick="showSpatialQuery(); closeFabMenu();">
-            <i class="fas fa-map"></i>
-            <span>Analyser</span>
+    <div id="fabMenu" class="fab-menu" style="position: fixed !important; bottom: 95px !important; right: 25px !important; opacity: 0 !important; visibility: hidden !important; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important; z-index: 9998 !important; transform-origin: bottom right !important;">
+        <div class="fab-item" onclick="showSpatialQuery(); closeFabMenu();" style="background: white !important; border-radius: 12px !important; padding: 14px 18px !important; margin-bottom: 10px !important; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08) !important; cursor: pointer !important; display: flex !important; align-items: center !important; gap: 14px !important; min-width: 160px !important; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; transform: translateX(20px) !important; opacity: 0 !important;">
+            <i class="fas fa-map" style="color: #667eea !important; font-size: 1.1rem !important; width: 20px !important; text-align: center !important; flex-shrink: 0 !important;"></i>
+            <span style="color: #333 !important; font-weight: 600 !important; font-size: 0.95rem !important;">Analyser</span>
         </div>
-        <div class="fab-item" onclick="enableRoutingMode(); closeFabMenu();">
-            <i class="fas fa-road"></i>
-            <span>Itinéraire</span>
+        <div class="fab-item" onclick="enableRoutingMode(); closeFabMenu();" style="background: white !important; border-radius: 12px !important; padding: 14px 18px !important; margin-bottom: 10px !important; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08) !important; cursor: pointer !important; display: flex !important; align-items: center !important; gap: 14px !important; min-width: 160px !important; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; transform: translateX(20px) !important; opacity: 0 !important;">
+            <i class="fas fa-road" style="color: #667eea !important; font-size: 1.1rem !important; width: 20px !important; text-align: center !important; flex-shrink: 0 !important;"></i>
+            <span style="color: #333 !important; font-weight: 600 !important; font-size: 0.95rem !important;">Itinéraire</span>
         </div>
-        <div class="fab-item" onclick="showAttributeQuery(); closeFabMenu();">
-            <i class="fas fa-search"></i>
-            <span>Rechercher</span>
+        <div class="fab-item" onclick="showAttributeQuery(); closeFabMenu();" style="background: white !important; border-radius: 12px !important; padding: 14px 18px !important; margin-bottom: 10px !important; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08) !important; cursor: pointer !important; display: flex !important; align-items: center !important; gap: 14px !important; min-width: 160px !important; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; transform: translateX(20px) !important; opacity: 0 !important;">
+            <i class="fas fa-search" style="color: #667eea !important; font-size: 1.1rem !important; width: 20px !important; text-align: center !important; flex-shrink: 0 !important;"></i>
+            <span style="color: #333 !important; font-weight: 600 !important; font-size: 0.95rem !important;">Rechercher</span>
         </div>
-        <div class="fab-item" onclick="toggleMeasure(); closeFabMenu();">
-            <i class="fas fa-ruler-combined"></i>
-            <span>Mesurer</span>
+        <div class="fab-item" onclick="toggleMeasure(); closeFabMenu();" style="background: white !important; border-radius: 12px !important; padding: 14px 18px !important; margin-bottom: 10px !important; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08) !important; cursor: pointer !important; display: flex !important; align-items: center !important; gap: 14px !important; min-width: 160px !important; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; transform: translateX(20px) !important; opacity: 0 !important;">
+            <i class="fas fa-ruler-combined" style="color: #667eea !important; font-size: 1.1rem !important; width: 20px !important; text-align: center !important; flex-shrink: 0 !important;"></i>
+            <span style="color: #333 !important; font-weight: 600 !important; font-size: 0.95rem !important;">Mesurer</span>
         </div>
-        <div class="fab-item" onclick="showMiniTutorial(); closeFabMenu();">
-            <i class="fas fa-graduation-cap"></i>
-            <span>Tutoriel</span>
+        <div class="fab-item" onclick="showMiniTutorial(); closeFabMenu();" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; border-radius: 12px !important; padding: 14px 18px !important; margin-bottom: 10px !important; box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3), 0 2px 8px rgba(102, 126, 234, 0.2) !important; cursor: pointer !important; display: flex !important; align-items: center !important; gap: 14px !important; min-width: 160px !important; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; transform: translateX(20px) !important; opacity: 0 !important;">
+            <i class="fas fa-graduation-cap" style="color: white !important; font-size: 1.1rem !important; width: 20px !important; text-align: center !important; flex-shrink: 0 !important;"></i>
+            <span style="color: white !important; font-weight: 600 !important; font-size: 0.95rem !important;">Tutoriel</span>
         </div>
     </div>
 

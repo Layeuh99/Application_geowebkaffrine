@@ -1499,7 +1499,18 @@ function toggleFabMenu() {
         closeFabMenu();
     } else {
         fabMenu.classList.add('active');
-        fabButton.innerHTML = '<i class="fas fa-times"></i>';
+        fabMenu.style.opacity = '1';
+        fabMenu.style.visibility = 'visible';
+        fabButton.innerHTML = '<i class="fas fa-times" style="color: white !important; font-size: 1.4rem !important; text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important; transition: all 0.3s ease !important;"></i>';
+        
+        // Animer les items du menu
+        const items = fabMenu.querySelectorAll('.fab-item');
+        items.forEach((item, index) => {
+            setTimeout(() => {
+                item.style.transform = 'translateX(0)';
+                item.style.opacity = '1';
+            }, index * 50);
+        });
     }
 }
 
@@ -1508,7 +1519,23 @@ function closeFabMenu() {
     const fabButton = document.getElementById('fabButton');
     
     fabMenu.classList.remove('active');
-    fabButton.innerHTML = '<i class="fas fa-bolt"></i>';
+    
+    // Animer les items du menu en sortie
+    const items = fabMenu.querySelectorAll('.fab-item');
+    items.forEach((item, index) => {
+        setTimeout(() => {
+            item.style.transform = 'translateX(20px)';
+            item.style.opacity = '0';
+        }, index * 30);
+    });
+    
+    // Cacher le menu après l'animation
+    setTimeout(() => {
+        fabMenu.style.opacity = '0';
+        fabMenu.style.visibility = 'hidden';
+    }, items.length * 30 + 100);
+    
+    fabButton.innerHTML = '<i class="fas fa-bolt" style="color: white !important; font-size: 1.4rem !important; text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important; transition: all 0.3s ease !important;"></i>';
 }
 
 // Fermer le FAB en cliquant ailleurs
