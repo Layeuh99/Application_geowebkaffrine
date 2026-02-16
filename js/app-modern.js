@@ -1542,6 +1542,8 @@ function closeFabMenu() {
 document.addEventListener('click', function(event) {
     const fabButton = document.getElementById('fabButton');
     const fabMenu = document.getElementById('fabMenu');
+    const modal = document.getElementById('miniTutorialModal');
+    const content = document.querySelector('.mini-tutorial-content');
     
     // Si le clic est sur le bouton FAB ou son menu, ne rien faire
     if (fabButton && (fabButton.contains(event.target) || event.target === fabButton)) {
