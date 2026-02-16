@@ -1516,8 +1516,18 @@ document.addEventListener('click', function(event) {
     const fabButton = document.getElementById('fabButton');
     const fabMenu = document.getElementById('fabMenu');
     
-    // Vérifier que les éléments existent avant de les utiliser
-    if (fabButton && fabMenu && !fabButton.contains(event.target) && !fabMenu.contains(event.target)) {
+    // Si le clic est sur le bouton FAB ou son menu, ne rien faire
+    if (fabButton && (fabButton.contains(event.target) || event.target === fabButton)) {
+        return;
+    }
+    
+    // Si le clic est sur le menu FAB, ne rien faire
+    if (fabMenu && fabMenu.contains(event.target)) {
+        return;
+    }
+    
+    // Sinon, si le menu est actif, le fermer
+    if (fabMenu && fabMenu.classList.contains('active')) {
         closeFabMenu();
     }
 });
