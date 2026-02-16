@@ -1455,16 +1455,23 @@ function closeWelcomeModal() {
 // ============================================
 
 function toggleFabMenu() {
+    console.log('[FAB] toggleFabMenu appelée');
+    
     const fabMenu = document.getElementById('fabMenu');
     const fabButton = document.getElementById('fabButton');
     
-    if (!fabMenu || !fabButton) return;
+    if (!fabMenu || !fabButton) {
+        console.log('[FAB] Éléments non trouvés, retour');
+        return;
+    }
+    
+    console.log('[FAB] État du menu avant toggle:', fabMenu.classList.contains('active'));
     
     if (fabMenu.classList.contains('active')) {
-        // Le menu est déjà ouvert, on le ferme
+        console.log('[FAB] Le menu est déjà ouvert, appel de closeFabMenu');
         closeFabMenu();
     } else {
-        // Le menu est fermé, on l'ouvre
+        console.log('[FAB] Le menu est fermé, appel d\'ouverture');
         fabMenu.classList.add('active');
         fabMenu.style.opacity = '1';
         fabMenu.style.visibility = 'visible';
@@ -1473,10 +1480,13 @@ function toggleFabMenu() {
         
         // Animer les items du menu
         const items = fabMenu.querySelectorAll('.fab-item');
+        console.log('[FAB] Items du menu:', items.length);
+        
         items.forEach((item, index) => {
             setTimeout(() => {
                 item.style.transform = 'translateX(0)';
                 item.style.opacity = '1';
+                console.log(`[FAB] Item ${index} affiché`);
             }, index * 50);
         });
     }
