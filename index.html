@@ -994,104 +994,14 @@
         <script src="data/Localites_7.js"></script>
         <script src="data/Ecoles_8.js"></script>
 
-    <!-- Conteneur isolé pour le FAB -->
-    <div id="fabContainer" style="position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; pointer-events: none !important; z-index: 9999 !important;">
-    </div>
-    
-    <!-- Bouton d'action rapide flottant (FAB) -->
-        <div id="fabButton" class="fab-button fab-element" onclick="toggleFabMenu()" style="position: fixed !important; bottom: 25px !important; right: 25px !important; width: 60px !important; height: 60px !important; border-radius: 50% !important; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; border: none !important; box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4), 0 2px 6px rgba(0, 0, 0, 0.1) !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; pointer-events: auto !important; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; transform-origin: center !important; z-index: 1001 !important;">
-            <span style="color: white !important; font-size: 1.8rem !important; text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important; transition: all 0.3s ease !important;">⚡</span>
-        </div>
-        
-        <!-- Menu FAB radial -->
-        <div id="fabMenu" class="fab-menu" style="position: absolute !important; bottom: 95px !important; right: 25px !important; opacity: 0 !important; visibility: hidden !important; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important; pointer-events: auto !important; transform-origin: bottom right !important; z-index: 10000 !important;">
-            <div class="fab-item" onclick="showSpatialQuery(); closeFabMenu();" style="background: white !important; border-radius: 12px !important; padding: 14px 18px !important; margin-bottom: 10px !important; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08) !important; cursor: pointer !important; display: flex !important; align-items: center !important; gap: 14px !important; min-width: 160px !important; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; transform: translateX(20px) !important; opacity: 0 !important; pointer-events: auto !important;">
-                <span style="color: #667eea !important; font-size: 1.3rem !important; width: 20px !important; text-align: center !important; flex-shrink: 0 !important;">🗺️</span>
-                <span style="color: #333 !important; font-weight: 600 !important; font-size: 0.95rem !important;">Analyser</span>
-            </div>
-            <div class="fab-item" onclick="enableRoutingMode(); closeFabMenu();" style="background: white !important; border-radius: 12px !important; padding: 14px 18px !important; margin-bottom: 10px !important; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08) !important; cursor: pointer !important; display: flex !important; align-items: center !important; gap: 14px !important; min-width: 160px !important; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; transform: translateX(20px) !important; opacity: 0 !important; pointer-events: auto !important;">
-                <span style="color: #667eea !important; font-size: 1.3rem !important; width: 20px !important; text-align: center !important; flex-shrink: 0 !important;">🛣️</span>
-                <span style="color: #333 !important; font-weight: 600 !important; font-size: 0.95rem !important;">Itinéraire</span>
-            </div>
-            <div class="fab-item" onclick="showAttributeQuery(); closeFabMenu();" style="background: white !important; border-radius: 12px !important; padding: 14px 18px !important; margin-bottom: 10px !important; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08) !important; cursor: pointer !important; display: flex !important; align-items: center !important; gap: 14px !important; min-width: 160px !important; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; transform: translateX(20px) !important; opacity: 0 !important; pointer-events: auto !important;">
-                <span style="color: #667eea !important; font-size: 1.3rem !important; width: 20px !important; text-align: center !important; flex-shrink: 0 !important;">🔍</span>
-                <span style="color: #333 !important; font-weight: 600 !important; font-size: 0.95rem !important;">Rechercher</span>
-            </div>
-            <div class="fab-item" onclick="toggleMeasure(); closeFabMenu();" style="background: white !important; border-radius: 12px !important; padding: 14px 18px !important; margin-bottom: 10px !important; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08) !important; cursor: pointer !important; display: flex !important; align-items: center !important; gap: 14px !important; min-width: 160px !important; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; transform: translateX(20px) !important; opacity: 0 !important; pointer-events: auto !important;">
-                <span style="color: #667eea !important; font-size: 1.3rem !important; width: 20px !important; text-align: center !important; flex-shrink: 0 !important;">📏</span>
-                <span style="color: #333 !important; font-weight: 600 !important; font-size: 0.95rem !important;">Mesurer</span>
-            </div>
-            <div class="fab-item" onclick="showMiniTutorial(); closeFabMenu();" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; border-radius: 12px !important; padding: 14px 18px !important; margin-bottom: 10px !important; box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3), 0 2px 8px rgba(102, 126, 234, 0.2) !important; cursor: pointer !important; display: flex !important; align-items: center !important; gap: 14px !important; min-width: 160px !important; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; transform: translateX(20px) !important; opacity: 0 !important; pointer-events: auto !important;">
-                <span style="color: white !important; font-size: 1.3rem !important; width: 20px !important; text-align: center !important; flex-shrink: 0 !important;">🎓</span>
-                <span style="color: white !important; font-weight: 600 !important; font-size: 0.95rem !important;">Tutoriel</span>
-            </div>
-        </div>
-    </div>
-
         <!-- Application principale -->
-        <script src="js/app-working.js"></script>
-
-        <!-- Script FAB simple -->
-        <script>
-            function toggleFabMenu() {
-                const fabMenu = document.getElementById('fabMenu');
-                const fabButton = document.getElementById('fabButton');
-                
-                if (!fabMenu || !fabButton) return;
-                
-                if (fabMenu.classList.contains('active')) {
-                    fabMenu.classList.remove('active');
-                    fabMenu.style.opacity = '0';
-                    fabMenu.style.visibility = 'hidden';
-                    fabButton.innerHTML = '<i class="fas fa-bolt" style="color: white !important; font-size: 1.4rem !important;"></i>';
-                } else {
-                    fabMenu.classList.add('active');
-                    fabMenu.style.opacity = '1';
-                    fabMenu.style.visibility = 'visible';
-                    fabMenu.style.zIndex = '10000';
-                    fabButton.innerHTML = '<i class="fas fa-times" style="color: white !important; font-size: 1.4rem !important;"></i>';
-                    
-                    const items = fabMenu.querySelectorAll('.fab-item');
-                    items.forEach((item, index) => {
-                        setTimeout(() => {
-                            item.style.transform = 'translateX(0)';
-                            item.style.opacity = '1';
-                        }, index * 50);
-                    });
-                }
-            }
-            
-            function closeFabMenu() {
-                const fabMenu = document.getElementById('fabMenu');
-                const fabButton = document.getElementById('fabButton');
-                
-                if (!fabMenu || !fabButton) return;
-                
-                fabMenu.classList.remove('active');
-                
-                const items = fabMenu.querySelectorAll('.fab-item');
-                items.forEach((item, index) => {
-                    setTimeout(() => {
-                        item.style.transform = 'translateX(20px)';
-                        item.style.opacity = '0';
-                    }, index * 30);
-                });
-                
-                setTimeout(() => {
-                    fabMenu.style.opacity = '0';
-                    fabMenu.style.visibility = 'hidden';
-                }, items.length * 30 + 100);
-                
-                fabButton.innerHTML = '<i class="fas fa-bolt" style="color: white !important; font-size: 1.4rem !important;"></i>';
-            }
-        </script>
+        <script src="js/app-modern.js"></script>
 
         <!-- Script pour afficher le FAB après chargement -->
         <script>
             // Attendre que tout soit chargé avant d'afficher le FAB
             window.addEventListener('load', function() {
                 setTimeout(function() {
-                    const fabButton = document.getElementById('fabButton');
                     if (fabButton) {
                         fabButton.style.display = 'flex';
                         console.log('[FAB] Bouton d\'action rapide affiché');
