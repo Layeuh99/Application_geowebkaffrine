@@ -1628,6 +1628,15 @@ function previousTutorialStep() {
     }
 }
 
+function closeMiniTutorial() {
+    const modal = document.getElementById('miniTutorialModal');
+    if (modal) {
+        modal.classList.remove('active');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
 // Fermer le mini tutoriel en cliquant en dehors
 document.addEventListener('click', function(event) {
     const modal = document.getElementById('miniTutorialModal');
