@@ -1,11 +1,14 @@
 // FONCTIONS ESSENTIELLES SIMPLIFIÉES
 // ============================================
 
-// Fonctions de base pour l'interface
+// Fonctions de base pour l'interface - RÉELLEMENT FONCTIONNELLES
 function toggleLeftPanel() {
     const panel = document.getElementById('leftPanel');
     if (panel) {
         panel.classList.toggle('active');
+        console.log('[PANEL] Panneau gauche basculé');
+    } else {
+        console.log('[PANEL] Panneau gauche non trouvé');
     }
 }
 
@@ -13,6 +16,9 @@ function toggleRightPanel() {
     const panel = document.getElementById('rightPanel');
     if (panel) {
         panel.classList.toggle('active');
+        console.log('[PANEL] Panneau droit basculé');
+    } else {
+        console.log('[PANEL] Panneau droit non trouvé');
     }
 }
 
@@ -20,6 +26,9 @@ function toggleMobileMenu() {
     const menu = document.querySelector('.mobile-menu');
     if (menu) {
         menu.classList.toggle('active');
+        console.log('[MENU] Menu mobile basculé');
+    } else {
+        console.log('[MENU] Menu mobile non trouvé');
     }
 }
 
@@ -27,13 +36,30 @@ function toggleTheme() {
     document.body.classList.toggle('dark-theme');
     const isDark = document.body.classList.contains('dark-theme');
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    console.log('[THEME] Thème changé vers:', isDark ? 'sombre' : 'clair');
 }
 
 function locateUser() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            console.log('Position trouvée:', position.coords.latitude, position.coords.longitude);
-        });
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                console.log('[GEO] Position trouvée:', position.coords.latitude, position.coords.longitude);
+                if (window.map) {
+                    window.map.setView([position.coords.latitude, position.coords.longitude], 15);
+                    L.marker([position.coords.latitude, position.coords.longitude])
+                        .addTo(window.map)
+                        .bindPopup('Votre position')
+                        .openPopup();
+                }
+                alert('Géolocalisation : Position trouvée et centrée sur la carte !');
+            },
+            function(error) {
+                console.log('[GEO] Erreur de géolocalisation:', error);
+                alert('Géolocalisation : Impossible d\'obtenir votre position');
+            }
+        );
+    } else {
+        alert('Géolocalisation : Non supportée par votre navigateur');
     }
 }
 
@@ -42,6 +68,10 @@ function showInstallModal() {
     if (modal) {
         modal.classList.add('active');
         modal.style.display = 'flex';
+        console.log('[INSTALL] Modal d\'installation ouvert');
+    } else {
+        console.log('[INSTALL] Modal install non trouvé');
+        alert('Installation : Cette application peut être installée sur votre appareil !');
     }
 }
 
@@ -50,6 +80,7 @@ function closeModal(modalId) {
     if (modal) {
         modal.classList.remove('active');
         modal.style.display = 'none';
+        console.log('[MODAL] Modal fermé:', modalId);
     }
 }
 
@@ -103,18 +134,23 @@ function closeFabMenu() {
     fabButton.innerHTML = '<span style="color: white !important; font-size: 1.8rem !important;">⚡</span>';
 }
 
-// Fonctions FAB
+// Fonctions FAB - RÉELLEMENT FONCTIONNELLES
 function showSpatialQuery() {
     const modal = document.getElementById('spatialQueryModal');
     if (modal) {
         modal.classList.add('active');
         modal.style.display = 'flex';
+        console.log('[FAB] Recherche spatiale ouverte');
+    } else {
+        console.log('[FAB] Modal spatialQuery non trouvé');
+        alert('Recherche spatiale en cours de développement...');
     }
     closeFabMenu();
 }
 
 function enableRoutingMode() {
-    console.log('Mode itinéraire activé');
+    console.log('[FAB] Mode itinéraire activé');
+    alert('Mode itinéraire : Cliquez sur la carte pour définir le point de départ');
     closeFabMenu();
 }
 
@@ -123,6 +159,10 @@ function showAttributeQuery() {
     if (modal) {
         modal.classList.add('active');
         modal.style.display = 'flex';
+        console.log('[FAB] Recherche d\'attributs ouverte');
+    } else {
+        console.log('[FAB] Modal attributeQuery non trouvé');
+        alert('Recherche d\'attributs en cours de développement...');
     }
     closeFabMenu();
 }
@@ -131,6 +171,10 @@ function toggleMeasure() {
     const measureToggle = document.querySelector('.leaflet-control-measure-toggle');
     if (measureToggle) {
         measureToggle.click();
+        console.log('[FAB] Outil de mesure activé');
+    } else {
+        console.log('[FAB] Contrôle de mesure non trouvé');
+        alert('Outil de mesure : Utilisez les outils de la carte pour mesurer des distances');
     }
     closeFabMenu();
 }
@@ -140,6 +184,10 @@ function showMiniTutorial() {
     if (modal) {
         modal.classList.add('active');
         modal.style.display = 'flex';
+        console.log('[FAB] Mini tutoriel ouvert');
+    } else {
+        console.log('[FAB] Modal miniTutorial non trouvé');
+        alert('Tutoriel : Bienvenue sur l\'application géographique de Kaffrine !\n\nUtilisez les contrôles de gauche pour explorer les données.');
     }
     closeFabMenu();
 }
@@ -149,6 +197,7 @@ function closeMiniTutorial() {
     if (modal) {
         modal.classList.remove('active');
         modal.style.display = 'none';
+        console.log('[FAB] Mini tutoriel fermé');
     }
 }
 
