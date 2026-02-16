@@ -1481,6 +1481,11 @@ function closeFabMenu() {
     const fabMenu = document.getElementById('fabMenu');
     const fabButton = document.getElementById('fabButton');
     
+    if (!fabMenu || !fabButton) return;
+    
+    // Vérifier si le menu est actif avant de fermer
+    if (!fabMenu.classList.contains('active')) return;
+    
     fabMenu.classList.remove('active');
     
     // Animer les items du menu en sortie
