@@ -3894,41 +3894,12 @@ function clearAdvancedSpatialQuery() {
     document.getElementById('spatialTargetLayer').value = '';
 }
 
-console.log('[PWA] RequÃtes avancÃes chargÃes');
+console.log('[PWA] Requêtes avancées chargées');
 
 // ============================================
 // FONCTIONS DU BOUTON D'ACTION RAPIDE (FAB)
 // ============================================
 let fabMenuOpen = false;
-
-function toggleFabMenu() {
-    const fabMenu = document.getElementById('fabMenu');
-    const fabButton = document.getElementById('fabButton');
-    
-    if (!fabMenu || !fabButton) return;
-    
-    fabMenuOpen = !fabMenuOpen;
-    
-    if (fabMenuOpen) {
-        // Ouvrir le menu
-        fabMenu.classList.add('active');
-        fabButton.innerHTML = '<i class="fas fa-times"></i>';
-        
-        // Fermer les dropdowns existants
-        document.querySelectorAll('.dropdown-menu').forEach(menu => {
-            menu.style.maxHeight = '0';
-            menu.style.opacity = '0';
-            menu.style.visibility = 'hidden';
-        });
-        document.querySelectorAll('.dropdown').forEach(dropdown => {
-            dropdown.classList.remove('active');
-        });
-    } else {
-        // Fermer le menu
-        fabMenu.classList.remove('active');
-        fabButton.innerHTML = '<i class="fas fa-bolt"></i>';
-    }
-}
 
 function closeFabMenu() {
     const fabMenu = document.getElementById('fabMenu');
