@@ -3993,11 +3993,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         const clickedDropdown = e.target.closest('.dropdown');
-        const clickedFAB = e.target.closest('#fabContainer') || 
-                           e.target.closest('#fabButton') || 
+        const clickedFAB = e.target.closest('.fab-element') || 
+                           e.target.closest('.fab-icon') || 
+                           e.target.closest('#fabContainer') || 
                            e.target.closest('#fabMenu') ||
-                           e.target.id === 'fabButton' ||
-                           e.target.id === 'fabMenu';
+                           e.target.classList.contains('fab-element') ||
+                           e.target.classList.contains('fab-icon');
         
         if (!clickedDropdown && !clickedFAB) {
             console.log('[DROPDOWN] Click en dehors détecté sur mobile - fermeture de tous les dropdowns');
