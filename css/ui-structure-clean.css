@@ -170,81 +170,10 @@ body {
 /* ============================================
    NIVEAU 500 - BARRE SUPÉRIEURE (NAVBAR)
    ============================================ */
-.navbar {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 60px !important;
-    z-index: 500 !important;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    padding: 0 20px !important;
-}
-
-.navbar-brand {
-    z-index: 501 !important;
-    position: relative !important;
-    color: white !important;
-    font-weight: bold !important;
-    font-size: 1.2rem !important;
-}
-
-.navbar-menu {
-    z-index: 500 !important;
-    position: relative !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 15px !important;
-}
-
-.dropdown {
-    z-index: 500 !important;
-    position: relative !important;
-}
-
-.dropdown-menu {
-    z-index: 501 !important;
-    position: absolute !important;
-    top: 100% !important;
-    right: 0 !important;
-    background: white !important;
-    border-radius: 8px !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
-    min-width: 200px !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-    transition: opacity 0.2s ease, visibility 0.2s ease !important;
-}
-
-.dropdown.active .dropdown-menu {
-    opacity: 1 !important;
-    visibility: visible !important;
-}
-
-.theme-toggle,
-.install-toggle,
-.navbar-toggle {
-    z-index: 502 !important;
-    position: relative !important;
-    background: rgba(255,255,255,0.2) !important;
-    border: none !important;
-    color: white !important;
-    width: 35px !important;
-    height: 35px !important;
-    border-radius: 50% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    cursor: pointer !important;
-    transition: background 0.2s ease !important;
-}
+/* Styles navbar déplacés vers navbar-clean.css pour éviter les conflits */
 
 /* ============================================
-   NIVEAU 600 - FAB (SANS STACKING CONTEXT PARASITE)
+   NIVEAU 600 - BOUTON ACTION RAPIDE (FAB)
    ============================================ */
 .fab-button {
     z-index: 600 !important;
@@ -481,18 +410,11 @@ body,
         max-width: 320px !important;
     }
     
-    .mobile-panel-buttons {
-        display: flex !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-    }
-    
-    .navbar {
-        padding: 0 15px !important;
-    }
-    
-    .navbar-brand {
-        font-size: 1rem !important;
+    .sidebar-left,
+    .sidebar-right {
+        z-index: 400 !important;
+        left: -100%;
+        transition: left 0.3s ease;
     }
     
     .fab-button {
