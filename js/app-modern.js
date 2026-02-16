@@ -1425,43 +1425,6 @@ function closeWelcomeModal() {
         }
     }
     
-    // Nettoyer les classes résiduelles
-    document.body.classList.remove('welcome-open');
-    document.documentElement.style.overflow = '';
-}
-
-function showMetadata() {
-    // Fermer proprement le modal de bienvenue
-    const welcomeModal = document.getElementById('welcomeModal');
-    if (welcomeModal) {
-        welcomeModal.classList.remove('active');
-        welcomeModal.style.display = 'none';
-    }
-    
-    // Restaurer le scroll du body
-    document.body.classList.remove('modal-open');
-    document.body.style.overflow = 'auto';
-    document.body.style.position = 'static';
-    
-    // Ouvrir le modal des métadonnées
-    let metadataModal = document.getElementById('metadataModal');
-    if (metadataModal) {
-        metadataModal.classList.add('active');
-        metadataModal.style.display = 'block';
-    } else {
-        console.warn('[MODAL] Modal des métadonnées non trouvé');
-    }
-    
-    // Forcer le recalcul de la carte
-    if (window.map) {
-        setTimeout(() => {
-            map.invalidateSize();
-        }, 100);
-    }
-}
-
-function showHome() {
-    resetZoom();
     
     // Fermer proprement tous les modals
     document.querySelectorAll('.modal').forEach(function(modal) {
