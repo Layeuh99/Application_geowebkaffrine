@@ -1543,43 +1543,18 @@ document.addEventListener('click', function(event) {
         return;
     }
     
+    // Si le clic est sur le contenu du mini tutoriel, ne rien faire
+    if (modal && content && modal.classList.contains('active') && content.contains(event.target)) {
+        return;
+    }
+    
     // Sinon, si le menu est actif, le fermer
     if (fabMenu && fabMenu.classList.contains('active')) {
         closeFabMenu();
     }
-});
-
-// ============================================
-// FONCTIONS MINI TUTORIEL
-// ============================================
-
-let currentTutorialStep = 1;
-const totalTutorialSteps = 4;
-
-function showMiniTutorial() {
-    // Fermer d'abord le menu FAB pour éviter la confusion
-    closeFabMenu();
     
-    const modal = document.getElementById('miniTutorialModal');
-    if (modal) {
-        modal.classList.add('active');
-        modal.style.display = 'flex';
-        currentTutorialStep = 1;
-        updateTutorialStep();
-        
-        // Empêcher le scroll du body
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-function closeMiniTutorial() {
-    const modal = document.getElementById('miniTutorialModal');
-    if (modal) {
-        modal.classList.remove('active');
-        modal.style.display = 'none';
-        
-        // Restaurer le scroll
-        document.body.style.overflow = 'auto';
+    // Fermer le mini tutoriel si il est actif
+    if (modal && modal.classList.contains('active')) {
         
         // Sauvegarder la préférence si coché
         const dontShowCheckbox = document.getElementById('dontShowMiniTutorial');
