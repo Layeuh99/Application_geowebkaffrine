@@ -16,6 +16,27 @@ function toggleRightPanel() {
     }
 }
 
+function toggleMobileMenu() {
+    const menu = document.querySelector('.mobile-menu');
+    if (menu) {
+        menu.classList.toggle('active');
+    }
+}
+
+function toggleTheme() {
+    document.body.classList.toggle('dark-theme');
+    const isDark = document.body.classList.contains('dark-theme');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+}
+
+function locateUser() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            console.log('Position trouvée:', position.coords.latitude, position.coords.longitude);
+        });
+    }
+}
+
 function showInstallModal() {
     const modal = document.getElementById('installModal');
     if (modal) {
