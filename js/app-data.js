@@ -53,51 +53,57 @@ function initLayers() {
 
 // Chargement des données
 function initDataLayers() {
+    console.log('[DATA] Chargement des données...');
+    
     // Couche Region
-    if (geojsonData.Region) {
-        layers.Region = L.geoJson(geojsonData.Region, {
+    if (typeof Region_3 !== 'undefined') {
+        layers.Region = L.geoJson(Region_3, {
             style: {
                 color: '#ff6b6b',
                 weight: 2,
                 fillOpacity: 0.3
             }
         }).addTo(map);
+        console.log('[DATA] Couche Region chargée');
     }
     
     // Couche Departement
-    if (geojsonData.Departement) {
-        layers.Departement = L.geoJson(geojsonData.Departement, {
+    if (typeof Departement_4 !== 'undefined') {
+        layers.Departement = L.geoJson(Departement_4, {
             style: {
                 color: '#4ecdc4',
                 weight: 2,
                 fillOpacity: 0.3
             }
         }).addTo(map);
+        console.log('[DATA] Couche Departement chargée');
     }
     
     // Couche Arrondissement
-    if (geojsonData.Arrondissement) {
-        layers.Arrondissement = L.geoJson(geojsonData.Arrondissement, {
+    if (typeof Arrondissement_5 !== 'undefined') {
+        layers.Arrondissement = L.geoJson(Arrondissement_5, {
             style: {
                 color: '#45b7d1',
                 weight: 1,
                 fillOpacity: 0.2
             }
         }).addTo(map);
+        console.log('[DATA] Couche Arrondissement chargée');
     }
     
     // Couche Routes
-    if (geojsonData.Routes) {
-        layers.Routes = L.geoJson(geojsonData.Routes, {
+    if (typeof Routes_6 !== 'undefined') {
+        layers.Routes = L.geoJson(Routes_6, {
             style: {
                 color: '#666',
                 weight: 2
             }
         }).addTo(map);
+        console.log('[DATA] Couche Routes chargée');
     }
     
     // Cluster pour les Localites
-    if (geojsonData.Localites) {
+    if (typeof Localites_7 !== 'undefined') {
         clusters.Localites = L.markerClusterGroup({
             iconCreateFunction: function(cluster) {
                 return L.divIcon({
@@ -108,7 +114,7 @@ function initDataLayers() {
             }
         });
         
-        L.geoJson(geojsonData.Localites, {
+        L.geoJson(Localites_7, {
             pointToLayer: function(feature, latlng) {
                 return L.marker(latlng);
             }
@@ -117,10 +123,11 @@ function initDataLayers() {
         });
         
         clusters.Localites.addTo(map);
+        console.log('[DATA] Couche Localites chargée avec clusters');
     }
     
     // Cluster pour les Ecoles
-    if (geojsonData.Ecoles) {
+    if (typeof Ecoles_8 !== 'undefined') {
         clusters.Ecoles = L.markerClusterGroup({
             iconCreateFunction: function(cluster) {
                 return L.divIcon({
@@ -131,7 +138,7 @@ function initDataLayers() {
             }
         });
         
-        L.geoJson(geojsonData.Ecoles, {
+        L.geoJson(Ecoles_8, {
             pointToLayer: function(feature, latlng) {
                 return L.marker(latlng);
             }
@@ -140,9 +147,10 @@ function initDataLayers() {
         });
         
         clusters.Ecoles.addTo(map);
+        console.log('[DATA] Couche Ecoles chargée avec clusters');
     }
     
-    console.log('[DATA] Couches de données chargées');
+    console.log('[DATA] Toutes les couches de données chargées avec succès');
 }
 
 // Contrôle des couches
@@ -175,6 +183,13 @@ function initLayerControl() {
 function initializeApp() {
     console.log('[APP] Initialisation de l\'application...');
     
+    // Attendre que les données soient chargées
+    if (typeof Region_3 === 'undefined' || typeof Departement_4 === 'undefined') {
+        console.log('[APP] En attente des données...');
+        setTimeout(initializeApp, 500);
+        return;
+    }
+    
     initMap();
     initLayers();
     initDataLayers();
@@ -185,8 +200,6 @@ function initializeApp() {
 
 // Démarrer l'application quand le DOM est chargé
 document.addEventListener('DOMContentLoaded', function() {
-    // Attendre que les données soient chargées
-    setTimeout(function() {
-        initializeApp();
-    }, 500);
+    console.log('[APP] DOM chargé, démarrage de l\'initialisation...');
+    initializeApp();
 });
