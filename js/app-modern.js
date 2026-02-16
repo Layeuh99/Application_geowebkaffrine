@@ -1516,7 +1516,8 @@ document.addEventListener('click', function(event) {
     const fabButton = document.getElementById('fabButton');
     const fabMenu = document.getElementById('fabMenu');
     
-    if (!fabButton.contains(event.target) && !fabMenu.contains(event.target)) {
+    // Vérifier que les éléments existent avant de les utiliser
+    if (fabButton && fabMenu && !fabButton.contains(event.target) && !fabMenu.contains(event.target)) {
         closeFabMenu();
     }
 });
@@ -1617,7 +1618,7 @@ document.addEventListener('click', function(event) {
     const modal = document.getElementById('miniTutorialModal');
     const content = document.querySelector('.mini-tutorial-content');
     
-    if (modal && modal.classList.contains('active') && 
+    if (modal && content && modal.classList.contains('active') && 
         !content.contains(event.target) && 
         !event.target.closest('.fab-item')) {
         closeMiniTutorial();
