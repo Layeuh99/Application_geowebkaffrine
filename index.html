@@ -24,7 +24,6 @@
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <link rel="stylesheet" href="css/qgis2web.css">
         <link rel="stylesheet" href="css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="css/mobile-ui.css">
         
         <!-- ARCHITECTURE UI STRUCTURELLE NETTOYÉE -->
         <link rel="stylesheet" href="css/ui-structure-clean.css">
@@ -457,87 +456,6 @@
             </button>
         </div>
 
-        <!-- Mobile Bottom Bar -->
-        <div class="mobile-bottom-bar" aria-label="Navigation mobile">
-            <button class="mobile-bottom-btn" data-sheet-target="sheetLayers">
-                <i class="fas fa-layer-group"></i>
-                <span>Couches</span>
-            </button>
-            <button class="mobile-bottom-btn" data-sheet-target="sheetAnalysis">
-                <i class="fas fa-chart-line"></i>
-                <span>Analyse</span>
-            </button>
-            <button class="mobile-bottom-btn" data-sheet-target="sheetSearch">
-                <i class="fas fa-search"></i>
-                <span>Recherche</span>
-            </button>
-            <button class="mobile-bottom-btn" data-sheet-target="sheetRoute">
-                <i class="fas fa-route"></i>
-                <span>Itinéraire</span>
-            </button>
-            <button class="mobile-bottom-btn" data-sheet-target="sheetInfo">
-                <i class="fas fa-info-circle"></i>
-                <span>Info</span>
-            </button>
-        </div>
-
-        <!-- Mobile Sheets -->
-        <div id="mobileSheetBackdrop" class="mobile-sheet-backdrop"></div>
-
-        <div id="sheetLayers" class="mobile-sheet">
-            <div class="mobile-sheet-header">
-                <strong>Couches</strong>
-                <button class="mobile-sheet-close" aria-label="Fermer">✕</button>
-            </div>
-            <div class="mobile-sheet-body">
-                <div id="mobileLayerControl"></div>
-                <div id="mobileBasemapControl"></div>
-                <div id="mobileLegendControl"></div>
-            </div>
-        </div>
-
-        <div id="sheetAnalysis" class="mobile-sheet">
-            <div class="mobile-sheet-header">
-                <strong>Analyse</strong>
-                <button class="mobile-sheet-close" aria-label="Fermer">✕</button>
-            </div>
-            <div class="mobile-sheet-body">
-                <button class="btn btn-primary" onclick="showSpatialQuery()">Analyse spatiale</button>
-                <button class="btn btn-secondary" onclick="toggleMeasure()">Mesure</button>
-                <button class="btn btn-secondary" onclick="showAttributeQuery()">Requête attributaire</button>
-            </div>
-        </div>
-
-        <div id="sheetSearch" class="mobile-sheet">
-            <div class="mobile-sheet-header">
-                <strong>Recherche</strong>
-                <button class="mobile-sheet-close" aria-label="Fermer">✕</button>
-            </div>
-            <div class="mobile-sheet-body">
-                <button class="btn btn-primary" onclick="showAttributeQuery()">Ouvrir recherche</button>
-            </div>
-        </div>
-
-        <div id="sheetRoute" class="mobile-sheet">
-            <div class="mobile-sheet-header">
-                <strong>Itinéraire</strong>
-                <button class="mobile-sheet-close" aria-label="Fermer">✕</button>
-            </div>
-            <div class="mobile-sheet-body">
-                <button class="btn btn-primary" onclick="enableRoutingMode()">Démarrer itinéraire</button>
-            </div>
-        </div>
-
-        <div id="sheetInfo" class="mobile-sheet">
-            <div class="mobile-sheet-header">
-                <strong>Infos</strong>
-                <button class="mobile-sheet-close" aria-label="Fermer">✕</button>
-            </div>
-            <div class="mobile-sheet-body">
-                <button class="btn btn-primary" onclick="showMetadata()">Métadonnées</button>
-                <button class="btn btn-secondary" onclick="showAbout()">À propos</button>
-            </div>
-        </div>
 
         <!-- Modal Mini Tutoriel -->
         <div id="miniTutorialModal" class="modal mini-tutorial-modal">
@@ -1109,7 +1027,6 @@
         
         <!-- Application principale -->
         <script src="js/app-modern.js"></script>
-        <script src="js/mobile-ui.js"></script>
 
         <!-- Initialisation de la carte -->
         <script>

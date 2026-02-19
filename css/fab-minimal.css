@@ -17,7 +17,7 @@
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
-    z-index: 1000;
+    z-index: 650;
 }
 
 .fab-button:hover {
@@ -37,12 +37,20 @@
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
-    z-index: 999;
+    z-index: 650;
 }
 
 .fab-menu.active {
     opacity: 1;
     visibility: visible;
+}
+
+@media (max-width: 768px) {
+    .fab-button,
+    .fab-menu,
+    .fab-button:hover {
+        transform: none !important;
+    }
 }
 
 .fab-item {

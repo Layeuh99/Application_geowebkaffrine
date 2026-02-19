@@ -76,7 +76,7 @@
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
-    z-index: 9999 !important;
+    z-index: 650 !important;
 }
 
 .fab-button:hover {
@@ -96,12 +96,20 @@
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
-    z-index: 9998 !important;
+    z-index: 650 !important;
 }
 
 .fab-menu.active {
     opacity: 1;
     visibility: visible;
+}
+
+@media (max-width: 768px) {
+    .fab-button,
+    .fab-menu,
+    .fab-button:hover {
+        transform: none !important;
+    }
 }
 
 .fab-item {
@@ -150,7 +158,7 @@ body {
    ============================================ */
 
 .mini-tutorial-modal {
-    z-index: 1001 !important;
+    z-index: 700 !important;
 }
 
 .mini-tutorial-content {

@@ -1,5 +1,5 @@
-/* ============================================
-   GéoWeb Kaffrine - Application Moderne
+﻿/* ============================================
+   GÃ©oWeb Kaffrine - Application Moderne
    Styles principaux
    ============================================ */
 
@@ -14,18 +14,18 @@ html, body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     height: 100%;
     overflow-x: hidden; /* Uniquement horizontal */
-    overflow-y: auto; /* Permettre le défilement vertical */
+    overflow-y: auto; /* Permettre le dÃ©filement vertical */
     background-color: #f5f5f5;
 }
 
-/* S'assurer que le body peut toujours défiler */
+/* S'assurer que le body peut toujours dÃ©filer */
 body {
     position: relative;
     min-height: 100vh;
 }
 
 /* ============================================
-   STYLES DES CONTRÔLES DE COUCHES
+   STYLES DES CONTRÃ”LES DE COUCHES
    ============================================ */
 .layer-item {
     display: flex;
@@ -91,7 +91,7 @@ body {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     padding: 0 20px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    z-index: 1000;
+    z-index: 500;
     height: 60px;
     display: flex;
     align-items: center;
@@ -264,7 +264,7 @@ body {
     visibility: hidden;
     transform: translateY(-10px);
     transition: all 0.3s ease;
-    z-index: 1001;
+    z-index: 500;
     margin-top: 8px;
     padding: 8px 0;
     overflow: hidden;
@@ -426,7 +426,7 @@ body.dark-theme .dropdown-submenu .dropdown-toggle:hover {
     cursor: pointer;
     transition: all 0.3s ease;
     margin-left: 10px;
-    display: none; /* Caché par défaut, affiché sur mobile */
+    display: none; /* CachÃ© par dÃ©faut, affichÃ© sur mobile */
 }
 
 .install-toggle:hover {
@@ -446,7 +446,7 @@ body.dark-theme .dropdown-submenu .dropdown-toggle:hover {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1500;
+    z-index: 500;
     gap: 15px;
 }
 
@@ -571,7 +571,7 @@ body.dark-theme .type-btn:hover {
 }
 
 /* ============================================
-   PANNEAUX LATÉRAUX
+   PANNEAUX LATÃ‰RAUX
    ============================================ */
 .sidebar-left,
 .sidebar-right {
@@ -599,14 +599,14 @@ body.dark-theme .type-btn:hover {
     visibility: visible !important;
 }
 
-/* Sur mobile, la classe visible ne doit pas interférer avec le transform */
+/* Sur mobile, la classe visible ne doit pas interfÃ©rer avec le transform */
 @media (max-width: 768px) {
     .sidebar-left.visible {
-        transform: translateX(-100%) !important;
+        transform: none !important;
     }
     
     .sidebar-left.visible.active {
-        transform: translateX(0) !important;
+        transform: none !important;
     }
 }
 
@@ -699,7 +699,7 @@ body.dark-theme .type-btn:hover {
 }
 
 /* ============================================
-   BARRE DE STATUT - RÉDUITE
+   BARRE DE STATUT - RÃ‰DUITE
    ============================================ */
 .status-bar {
     background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
@@ -725,7 +725,7 @@ body.dark-theme .type-btn:hover {
 }
 
 /* ============================================
-   CONTRÔLE DES COUCHES - Styles personnalisés
+   CONTRÃ”LE DES COUCHES - Styles personnalisÃ©s
    ============================================ */
 .layer-section {
     margin-bottom: 20px;
@@ -772,7 +772,7 @@ body.dark-theme .type-btn:hover {
 }
 
 /* ============================================
-   CONTRÔLE DE TRANSPARENCE (OPACITÉ)
+   CONTRÃ”LE DE TRANSPARENCE (OPACITÃ‰)
    ============================================ */
 .layer-item-with-opacity {
     margin-bottom: 15px;
@@ -863,7 +863,7 @@ body.dark-theme .type-btn:hover {
 }
 
 /* ============================================
-   CONTRÔLE DES COUCHES (Leaflet)
+   CONTRÃ”LE DES COUCHES (Leaflet)
    ============================================ */
 #layerControlContainer .leaflet-control-layers {
     position: static !important;
@@ -963,7 +963,7 @@ body.dark-theme .type-btn:hover {
 }
 
 /* ============================================
-   LÉGENDE
+   LÃ‰GENDE
    ============================================ */
 .legend-section h4 {
     color: #333;
@@ -1055,7 +1055,7 @@ z-index: 500;
 }
 
 /* ============================================
-   MODALS - DÉFINI DANS fullscreen-responsive.css
+   MODALS - DÃ‰FINI DANS fullscreen-responsive.css
    ============================================ */
 
 .modal-content {
@@ -1221,7 +1221,7 @@ z-index: 500;
 }
 
 /* ============================================
-   RECHERCHE ATTRIBUTAIRE SIMPLIFIÉE
+   RECHERCHE ATTRIBUTAIRE SIMPLIFIÃ‰E
    ============================================ */
 .attr-simple .modal-content {
     max-width: 420px;
@@ -1350,7 +1350,7 @@ z-index: 500;
 }
 
 /* ============================================
-   REQUÊTES SPATIALES AVANCÉES
+   REQUÃŠTES SPATIALES AVANCÃ‰ES
    ============================================ */
 .spatial-advanced .modal-content {
     max-width: 500px;
@@ -1374,7 +1374,7 @@ z-index: 500;
     font-size: 0.95rem;
 }
 
-/* Types de requête */
+/* Types de requÃªte */
 .query-types {
     display: flex;
     flex-direction: column;
@@ -1451,7 +1451,7 @@ z-index: 500;
     font-size: 1.2rem;
 }
 
-/* Paramètres */
+/* ParamÃ¨tres */
 .params-section {
     background: #f8f9fa;
     padding: 15px;
@@ -1531,7 +1531,7 @@ select {
     font-size: 0.9rem;
 }
 
-/* Résultats */
+/* RÃ©sultats */
 .spatial-results {
     background: #f8f9fa;
     border-radius: 12px;
@@ -1590,7 +1590,7 @@ select {
 }
 
 /* ============================================
-   REQUÊTES ULTRA-SIMPLES
+   REQUÃŠTES ULTRA-SIMPLES
    ============================================ */
 .ultra-simple .modal-content {
     max-width: 400px;
@@ -1705,7 +1705,7 @@ select {
 }
 
 /* ============================================
-   FORMULAIRES DE REQUÊTE SIMPLIFIÉS
+   FORMULAIRES DE REQUÃŠTE SIMPLIFIÃ‰S
    ============================================ */
 .simple-query .modal-content {
     max-width: 450px;
@@ -1718,7 +1718,7 @@ select {
     font-size: 0.95rem;
 }
 
-/* Cartes de requête spatiale */
+/* Cartes de requÃªte spatiale */
 .simple-query-options {
     display: flex;
     flex-direction: column;
@@ -1785,7 +1785,7 @@ select {
     margin-bottom: 10px;
 }
 
-/* Recherche unifiée */
+/* Recherche unifiÃ©e */
 .unified-search {
     margin-bottom: 20px;
 }
@@ -1913,7 +1913,7 @@ select {
     color: #667eea;
 }
 
-/* Résultats de recherche */
+/* RÃ©sultats de recherche */
 .search-results-info {
     background: #e8f5e9;
     border: 1px solid #4caf50;
@@ -1945,7 +1945,7 @@ select {
 }
 
 /* ============================================
-   FORMULAIRES DE REQUÊTE (ancien style - gardé pour compatibilité)
+   FORMULAIRES DE REQUÃŠTE (ancien style - gardÃ© pour compatibilitÃ©)
    ============================================ */
 .query-form {
     padding: 20px;
@@ -2010,16 +2010,19 @@ select {
 /* ============================================
    RESPONSIVE DESIGN
    ============================================ */
-@media (max-width: 1024px) {
-    .sidebar-left,
-    .sidebar-right {
-        width: 250px;
-    }
-}
+
 
 @media (max-width: 768px) {
+    .navbar {
+        height: 56px !important;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 500;
+    }
+
     .navbar-menu {
-        display: none;
+        display: none !important;
         position: absolute;
         top: 60px;
         left: 0;
@@ -2029,12 +2032,12 @@ select {
         align-items: stretch;
         padding: 10px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        z-index: 999;
+        z-index: 500;
         max-height: 80vh; /* Limiter la hauteur pour permettre le scroll */
         overflow-y: auto; /* Permettre le scroll dans le menu mobile */
     }
     
-    /* S'assurer que le body peut défiler même avec le menu mobile ouvert */
+    /* S'assurer que le body peut dÃ©filer mÃªme avec le menu mobile ouvert */
     body {
         overflow-y: auto !important;
         position: relative;
@@ -2105,6 +2108,25 @@ select {
     .navbar-menu li a span {
         display: inline;
         flex: 1;
+    }
+
+    .map-container {
+        height: 100dvh !important;
+        padding-top: 56px;
+    }
+
+    #map {
+        height: 100dvh !important;
+    }
+
+    .sidebar-left,
+    .sidebar-right {
+        transform: none !important;
+        width: 100% !important;
+        height: 100dvh !important;
+        top: 0;
+        z-index: 600;
+        transition: none !important;
     }
     
     .navbar-menu li a:hover {
@@ -2334,31 +2356,10 @@ select {
     }
 }
 
-@media (max-width: 480px) {
-    .navbar-brand {
-        font-size: 1.1rem;
-    }
 
-    .navbar-brand i {
-        font-size: 1.3rem;
-    }
-
-    .status-bar {
-        flex-direction: column;
-        text-align: center;
-        padding: 5px;
-    }
-
-    .status-left,
-    .status-center,
-    .status-right {
-        width: 100%;
-        justify-content: center;
-    }
-}
 
 /* ============================================
-   SCROLLBAR PERSONNALISÉ
+   SCROLLBAR PERSONNALISÃ‰
    ============================================ */
 .panel-content::-webkit-scrollbar,
 .modal-content::-webkit-scrollbar {
@@ -2555,30 +2556,13 @@ select {
     background: rgba(255,255,255,0.3);
 }
 
-@media (max-width: 600px) {
-    .welcome-features {
-        grid-template-columns: 1fr;
-    }
-    
-    .welcome-header h2 {
-        font-size: 1.4rem;
-    }
-    
-    .logo-container {
-        width: 35px;
-        height: 35px;
-    }
-    
-    .brand-text {
-        font-size: 1.1rem;
-    }
-}
+
 
 /* ============================================
-   AMÉLIORATIONS RESPONSIVES MODERNES v2.0
+   AMÃ‰LIORATIONS RESPONSIVES MODERNES v2.0
    ============================================ */
 
-/* 📱 Points d'arrêt modernes */
+/* ðŸ“± Points d'arrÃªt modernes */
 :root {
   --mobile-breakpoint: 480px;
   --tablet-breakpoint: 768px;
@@ -2586,7 +2570,7 @@ select {
   --large-breakpoint: 1440px;
 }
 
-/* 🎨 Container fluide */
+/* ðŸŽ¨ Container fluide */
 .app-container {
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -2594,95 +2578,16 @@ select {
   min-height: 100vh;
 }
 
-/* 📊 Tablette : équilibre desktop/mobile */
-@media (min-width: 481px) and (max-width: 767px) {
-  .app-container {
-    grid-template-columns: 280px 1fr 280px;
-  }
-  
-  .sidebar-left,
-  .sidebar-right {
-    width: 280px;
-    position: relative;
-    transform: none;
-  }
-  
-  .map-container {
-    min-height: 500px;
-  }
-  
-  .navbar-menu {
-    display: flex;
-    position: static;
-    background: none;
-    box-shadow: none;
-    padding: 0;
-  }
-  
-  .navbar-menu li {
-    position: static;
-  }
-  
-  .mobile-panel-buttons {
-    display: flex;
-  }
-  
-  .floating-controls {
-    bottom: 20px;
-    right: 20px;
-  }
-}
+/* ðŸ“Š Tablette : Ã©quilibre desktop/mobile */
 
-/* 🖥️ Desktop : espace et fonctionnalités complètes */
-@media (min-width: 1025px) {
-  .app-container {
-    grid-template-columns: 320px 1fr 320px;
-  }
-  
-  .sidebar-left,
-  .sidebar-right {
-    width: 320px;
-  }
-  
-  .navbar {
-    padding: 0 20px;
-  }
-  
-  .navbar-menu {
-    gap: 15px;
-  }
-  
-  .navbar-menu a {
-    padding: 12px 20px;
-    border-radius: 8px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2);
-  }
-  
-  .navbar-menu a:hover {
-    background-color: rgba(255,255,255,0.15);
-    transform: translateY(-2px);
-  }
-}
 
-/* 🖥️ Grand écran : optimisations */
-@media (min-width: 1441px) {
-  .app-container {
-    grid-template-columns: 350px 1fr 350px;
-    max-width: 1600px;
-    margin: 0 auto;
-  }
-  
-  .sidebar-left,
-  .sidebar-right {
-    width: 350px;
-  }
-  
-  .panel-content {
-    font-size: 1.05rem;
-  }
-}
+/* ðŸ–¥ï¸ Desktop : espace et fonctionnalitÃ©s complÃ¨tes */
 
-/* 🌙 Mode sombre : améliorations responsive */
+
+/* ðŸ–¥ï¸ Grand Ã©cran : optimisations */
+
+
+/* ðŸŒ™ Mode sombre : amÃ©liorations responsive */
 @media (max-width: 768px) {
   body.dark-theme .navbar-menu li {
     background: rgba(30, 30, 40, 0.95);
@@ -2693,21 +2598,8 @@ select {
   }
 }
 
-/* 🎯 Animations et transitions modernes */
-@media (prefers-reduced-motion: no-motion) {
-  .sidebar-left,
-  .sidebar-right,
-  .navbar-menu a,
-  .mobile-panel-btn {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2);
-  }
-}
+/* ðŸŽ¯ Animations et transitions modernes */
 
-@media (prefers-reduced-motion: reduce) {
-  .sidebar-left,
-  .sidebar-right,
-  .navbar-menu a,
-  .mobile-panel-btn {
-    transition: none;
-  }
-}
+
+
+

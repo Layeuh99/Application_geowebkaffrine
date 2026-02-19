@@ -1,4 +1,4 @@
-/* ============================================
+﻿/* ============================================
    CSS PLEIN ECRAN ET RESPONSIVE COMPLET
    ============================================ */
 
@@ -13,7 +13,7 @@ html, body {
     width: 100%;
     height: 100%;
     overflow-x: hidden; /* Uniquement horizontal */
-    overflow-y: auto; /* Permettre le défilement vertical */
+    overflow-y: auto; /* Permettre le dÃ©filement vertical */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -25,7 +25,7 @@ html, body {
     width: 100vw;
     height: 100vh;
     overflow-x: hidden; /* Uniquement horizontal */
-    overflow-y: auto; /* Permettre le défilement vertical */
+    overflow-y: auto; /* Permettre le dÃ©filement vertical */
     position: relative;
 }
 
@@ -110,7 +110,7 @@ html, body {
     position: relative;
     height: 100%;
     overflow-x: hidden; /* Uniquement horizontal */
-    overflow-y: auto; /* Permettre le défilement vertical */
+    overflow-y: auto; /* Permettre le dÃ©filement vertical */
 }
 
 #map {
@@ -178,7 +178,7 @@ html, body {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1000;
+    z-index: 500;
     gap: 15px;
     background: rgba(255,255,255,0.95);
     padding: 12px 20px;
@@ -210,13 +210,7 @@ html, body {
    ============================================ */
 
 /* Tablette */
-@media (max-width: 1024px) {
-    .sidebar-left,
-    .sidebar-right {
-        width: 280px;
-        min-width: 280px;
-    }
-}
+
 
 /* Mobile */
 @media (max-width: 768px) {
@@ -233,11 +227,11 @@ html, body {
         bottom: 0;
         width: 100%;
         max-width: 100%;
-        height: 100vh;
-        z-index: 10000;
+        height: 100dvh !important;
+        z-index: 600;
         background: white;
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
+        transform: none !important;
+        transition: none !important;
         display: flex;
         flex-direction: column;
     }
@@ -245,12 +239,12 @@ html, body {
     .sidebar-right {
         left: auto;
         right: 0;
-        transform: translateX(100%);
+        transform: none !important;
     }
     
     .sidebar-left.active,
     .sidebar-right.active {
-        transform: translateX(0);
+        transform: none !important;
     }
     
     /* Afficher les boutons de fermeture sur mobile */
@@ -330,30 +324,8 @@ html, body {
     }
 }
 
-/* Très petit mobile */
-@media (max-width: 480px) {
-    .mobile-panel-buttons {
-        gap: 10px;
-        padding: 10px 15px;
-    }
-    
-    .mobile-panel-btn {
-        width: 45px;
-        height: 45px;
-        font-size: 1rem;
-    }
-    
-    .floating-controls {
-        bottom: 80px;
-        right: 10px;
-    }
-    
-    .float-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
-}
+/* TrÃ¨s petit mobile */
+
 
 /* ============================================
    MODALS - PLEIN ECRAN SUR MOBILE
@@ -366,7 +338,7 @@ html, body {
     right: 0;
     bottom: 0;
     background: rgba(0,0,0,0.6);
-    z-index: 10000;
+    z-index: 700;
     align-items: center;
     justify-content: center;
     padding: 20px;
@@ -409,9 +381,9 @@ body.modal-open {
         touch-action: auto;
     }
     
-    /* Correction spécifique pour le modal de bienvenue sur mobile */
+    /* Correction spÃ©cifique pour le modal de bienvenue sur mobile */
     .welcome-modal .modal-content {
-        max-height: 85vh;
+        max-height: 90vh;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         touch-action: auto;
@@ -429,9 +401,10 @@ body.modal-open {
     right: 0;
     bottom: 0;
     background: rgba(0,0,0,0.4);
-    z-index: 150;
+    z-index: 800;
 }
 
 .panel-overlay.active {
     display: block;
 }
+

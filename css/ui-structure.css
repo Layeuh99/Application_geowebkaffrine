@@ -1,4 +1,4 @@
-/* ============================================
+﻿/* ============================================
    CORRECTIONS MODALS ET PAGE DE BIENVENUE
    ============================================ */
 
@@ -31,7 +31,7 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* Correction des modals généraux */
+/* Correction des modals gÃ©nÃ©raux */
 .modal {
     z-index: 700 !important;
     position: fixed;
@@ -60,13 +60,13 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* Empêcher le blocage du body */
+/* EmpÃªcher le blocage du body */
 .modal-open {
     overflow: auto !important;
     position: static !important;
 }
 
-/* Correction du panneau latéral - SANS TRANSFORM sur conteneur */
+/* Correction du panneau latÃ©ral - SANS TRANSFORM sur conteneur */
 .sidebar-left,
 .sidebar-right {
     z-index: 400 !important;
@@ -236,7 +236,7 @@
     }
 }
 
-/* Thème sombre */
+/* ThÃ¨me sombre */
 .dark-theme .welcome-content,
 .dark-theme .modal-content {
     background: #1a202c;
@@ -270,15 +270,15 @@
    ============================================ */
 
 /* 
- * HIÉRARCHIE VISUELLE STRUCTURÉE
- * Niveau 100 → Carte Leaflet
- * Niveau 200 → Contrôles Leaflet  
- * Niveau 300 → Boutons flottants
- * Niveau 400 → Panneaux latéraux
- * Niveau 500 → Barre supérieure
- * Niveau 600 → Bouton Action Rapide (FAB)
- * Niveau 700 → Modals
- * Niveau 800 → Overlay global / tutoriel
+ * HIÃ‰RARCHIE VISUELLE STRUCTURÃ‰E
+ * Niveau 100 â†’ Carte Leaflet
+ * Niveau 200 â†’ ContrÃ´les Leaflet  
+ * Niveau 300 â†’ Boutons flottants
+ * Niveau 400 â†’ Panneaux latÃ©raux
+ * Niveau 500 â†’ Barre supÃ©rieure
+ * Niveau 600 â†’ Bouton Action Rapide (FAB)
+ * Niveau 700 â†’ Modals
+ * Niveau 800 â†’ Overlay global / tutoriel
  */
 
 /* ============================================
@@ -293,7 +293,7 @@
 }
 
 /* ============================================
-   NIVEAU 200 - CONTRÔLES LEAFLET
+   NIVEAU 200 - CONTRÃ”LES LEAFLET
    ============================================ */
 .leaflet-control-container {
     z-index: 200 !important;
@@ -337,7 +337,7 @@
 }
 
 /* ============================================
-   NIVEAU 400 - PANNEAUX LATÉRAUX
+   NIVEAU 400 - PANNEAUX LATÃ‰RAUX
    ============================================ */
 .sidebar-left,
 .sidebar-right {
@@ -358,7 +358,7 @@
 }
 
 /* ============================================
-   NIVEAU 500 - BARRE SUPÉRIEURE
+   NIVEAU 500 - BARRE SUPÃ‰RIEURE
    ============================================ */
 .navbar {
     z-index: 500 !important;
@@ -480,7 +480,7 @@
     font-size: 0.9rem;
 }
 
-/* Animation d'entrée des items */
+/* Animation d'entrÃ©e des items */
 .fab-menu.active .fab-item {
     animation: fabItemSlideIn 0.3s ease forwards;
 }
@@ -545,7 +545,7 @@
    ============================================ */
 
 /* ============================================
-   HIÉRARCHIE Z-INDEX UNIQUE ET STRUCTURÉE
+   HIÃ‰RARCHIE Z-INDEX UNIQUE ET STRUCTURÃ‰E
    ============================================ */
    
 /* Suppression des z-index arbitraires et doublons */
@@ -554,9 +554,9 @@
     z-index: 200 !important;
 }
 
-/* Pas de z-index 9999, 10000, 10001 - utiliser la hiérarchie structurée */
+/* Pas de z-index 9999, 10000, 10001 - utiliser la hiÃ©rarchie structurÃ©e */
 
-/* Correction des overflow problématiques */
+/* Correction des overflow problÃ©matiques */
 .modal {
     overflow: visible !important;
 }
@@ -570,7 +570,7 @@
     overflow: visible !important;
 }
 
-/* Supprimer les overflow cachés qui bloquent le scroll */
+/* Supprimer les overflow cachÃ©s qui bloquent le scroll */
 body {
     overflow: auto !important;
     overflow-x: visible !important;
@@ -666,31 +666,10 @@ html {
     }
 }
 
-@media (max-width: 480px) {
-    .fab-button {
-        bottom: 10px;
-        right: 10px;
-        width: 48px;
-        height: 48px;
-    }
-    
-    .fab-menu {
-        bottom: 68px;
-        right: 10px;
-    }
-    
-    .fab-item {
-        padding: 8px 12px;
-        min-width: 120px;
-    }
-    
-    .fab-item span {
-        font-size: 0.8rem;
-    }
-}
+
 
 /* ============================================
-   THÈME SOMBRE
+   THÃˆME SOMBRE
    ============================================ */
 .dark-theme .fab-item {
     background: #2d3748;
@@ -730,7 +709,7 @@ body {
     z-index: 50;
 }
 
-/* Éviter les transform qui créent de nouveaux contextes */
+/* Ã‰viter les transform qui crÃ©ent de nouveaux contextes */
 .fab-button,
 .fab-menu,
 .modal,
@@ -738,7 +717,7 @@ body {
     will-change: opacity, visibility;
 }
 
-/* Assurer que tous les éléments sont cliquables */
+/* Assurer que tous les Ã©lÃ©ments sont cliquables */
 .fab-button,
 .fab-item,
 .modal-close,
@@ -751,7 +730,7 @@ body {
     cursor: pointer !important;
 }
 
-/* Correction finale des débordements */
+/* Correction finale des dÃ©bordements */
 .modal {
     max-height: 90vh;
     overflow-y: auto;
@@ -762,5 +741,6 @@ body {
     overflow: visible;
 }
 
-/* Structure UI finale stabilisée */
+/* Structure UI finale stabilisÃ©e */
 /* ============================================ */
+
