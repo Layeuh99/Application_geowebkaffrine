@@ -1,5 +1,7 @@
 // Mobile bottom sheet controller
 (function () {
+    window.MOBILE_UI_ENABLED = true;
+
     function isMobile() {
         return window.innerWidth <= 768;
     }

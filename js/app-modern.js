@@ -15,6 +15,7 @@ let measureControlInstance;
 // Variable map globale unique
 let map = null;
 window.map = null;
+const isMobileUIActive = () => window.MOBILE_UI_ENABLED && window.innerWidth <= 768;
 
 // Mini tutoriel
 let currentTutorialStep = 1;
@@ -1049,11 +1050,13 @@ function togglePanel(panelId, otherPanelId) {
 }
 
 function toggleLeftPanel() {
+    if (isMobileUIActive()) return;
     console.log('[TOGGLE] toggleLeftPanel appele');
     togglePanel('sidebarLeft', 'sidebarRight');
 }
 
 function toggleRightPanel() {
+    if (isMobileUIActive()) return;
     console.log('[TOGGLE] toggleRightPanel appele');
     togglePanel('sidebarRight', 'sidebarLeft');
 }
@@ -1502,6 +1505,7 @@ function closeWelcomeModal() {
 // ============================================
 
 function toggleFabMenu() {
+    if (isMobileUIActive()) return;
     console.log('[FAB] toggleFabMenu appelée');
     
     const fabMenu = document.getElementById('fabMenu');
@@ -3959,6 +3963,7 @@ document.addEventListener('click', function(e) {
 // GESTION DES DROPDOWNS AMÉLIORÉE
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
+    if (isMobileUIActive()) return;
     console.log('[DROPDOWN] Initialisation des dropdowns améliorés...');
     
     // Gestion des dropdowns principaux
