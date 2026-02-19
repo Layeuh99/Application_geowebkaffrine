@@ -95,12 +95,14 @@ body {
     align-items: center !important;
     gap: 12px !important;
     padding: 0 16px !important;
+    transform: none !important;
 }
 
 .mobile-panel-btn {
     z-index: 300 !important;
     position: relative !important;
     transition: opacity 0.2s ease, box-shadow 0.2s ease !important;
+    transform: none !important;
 }
 
 /* ============================================
@@ -333,6 +335,7 @@ body {
     max-width: 600px !important;
     max-height: calc(100vh - 32px) !important;
     overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
     padding: 30px !important;
     box-shadow: 0 20px 40px rgba(0,0,0,0.3) !important;
     display: flex !important;
