@@ -16,6 +16,10 @@ let measureControlInstance;
 let map = null;
 window.map = null;
 
+// Mini tutoriel
+let currentTutorialStep = 1;
+let totalTutorialSteps = 4;
+
 // ðŸš€ Performance monitoring
 const PERFORMANCE = {
   startTime: performance.now(),
@@ -1112,6 +1116,20 @@ function showAbout() {
     document.getElementById('aboutModal').classList.add('active');
 }
 
+function showHome() {
+    // Retour à l'état principal sans modifier la logique Leaflet
+    document.querySelectorAll('.modal').forEach(function(modal) {
+        modal.classList.remove('active');
+    });
+    closeLeftPanel();
+    closeRightPanel();
+    if (window.map) {
+        setTimeout(function() {
+            map.invalidateSize();
+        }, 100);
+    }
+}
+
 function showInstallModal() {
     document.getElementById('installModal').classList.add('active');
 }
@@ -1134,6 +1152,38 @@ function showAttributeQuery() {
     } else {
         console.error('[ERROR] Modal attributeQueryModal non trouvÃ');
         alert('Erreur: Le modal de requÃªte attributaire est introuvable');
+    }
+}
+
+function showMiniTutorial() {
+    const modal = document.getElementById('miniTutorialModal');
+    if (!modal) {
+        alert('Tutoriel : Bienvenue sur GÃ©oWeb Kaffrine !\n\nExplorez les donnÃ©es gÃ©ographiques avec les panneaux latÃ©raux et les outils d\'analyse.');
+        closeFabMenu();
+        return;
+    }
+
+    modal.classList.add('active');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+
+    const steps = document.querySelectorAll('[id^="tutorialStep"]');
+    totalTutorialSteps = steps.length || 4;
+    currentTutorialStep = 1;
+    updateTutorialStep();
+    closeFabMenu();
+}
+
+function resetAttributeQuery() {
+    if (typeof clearAttributeQuery === 'function') {
+        clearAttributeQuery();
+    }
+    if (typeof clearAttrQuery === 'function') {
+        clearAttrQuery();
+    }
+    const results = document.getElementById('attrResults');
+    if (results) {
+        results.style.display = 'none';
     }
 }
 
