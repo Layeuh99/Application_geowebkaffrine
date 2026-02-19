@@ -12,8 +12,9 @@ let highlightLayer;
 let bounds_group;
 let measureControlInstance;
 
-// Variable map sera initialisée UNE SEULE FOIS
-let map;
+// Variable map globale unique
+let map = null;
+window.map = null;
 
 // ðŸš€ Performance monitoring
 const PERFORMANCE = {
@@ -104,23 +105,19 @@ function initMap() {
     // Vérifier si la carte est déjà initialisée pour éviter les doubles déclarations
     if (map) {
         console.log('[APP] Carte déjà initialisée, utilisation de l\'instance existante');
+        window.map = map;
         return;
     }
-    
-    // Si la carte est déjà initialisée par map-core-module, l'utiliser
-    if (typeof MapCore !== 'undefined' && MapCore.isInitialized) {
-        map = MapCore.map;
-        console.log('[APP] Utilisation de la carte initialisée par map-core-module');
-    } else {
-        // Créer la carte uniquement si map-core-module n'est pas présent
-        map = L.map('map', {
-            zoomControl: false,
-            maxZoom: 28,
-            minZoom: 1,
-            attributionControl: true
-        });
-        console.log('[APP] Création d\'une nouvelle instance de carte');
-    }
+
+    // Créer une seule instance Leaflet
+    map = L.map('map', {
+        zoomControl: false,
+        maxZoom: 28,
+        minZoom: 1,
+        attributionControl: true
+    });
+    window.map = map;
+    console.log('[APP] Création d\'une nouvelle instance de carte');
 
     // Groupe de limites
     bounds_group = new L.featureGroup([]);
@@ -1475,7 +1472,7 @@ function toggleFabMenu() {
         fabMenu.classList.add('active');
         fabMenu.style.opacity = '1';
         fabMenu.style.visibility = 'visible';
-        fabMenu.style.zIndex = '1000'; // S'assurer que le menu est au-dessus
+        fabMenu.style.zIndex = '600'; // Respecte l'architecture z-index
         fabButton.innerHTML = '<i class="fas fa-times fab-icon" style="color: white !important; font-size: 1.4rem !important; text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important; transition: all 0.3s ease !important;"></i>';
         
         // Animer les items du menu
@@ -1484,7 +1481,6 @@ function toggleFabMenu() {
         
         items.forEach((item, index) => {
             setTimeout(() => {
-                item.style.transform = 'translateX(0)';
                 item.style.opacity = '1';
                 console.log(`[FAB] Item ${index} affiché`);
             }, index * 50);
@@ -1520,7 +1516,6 @@ function closeFabMenu() {
     
     items.forEach((item, index) => {
         setTimeout(() => {
-            item.style.transform = 'translateX(20px)';
             item.style.opacity = '0';
             console.log(`[FAB] Item ${index} animé vers la sortie`);
         }, index * 30);
@@ -3152,7 +3147,7 @@ function showLocationNotification(lat, lng, accuracy) {
         padding: 15px 20px;
         border-radius: 10px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        z-index: 10000;
+        z-index: 700;
         font-family: 'Segoe UI', sans-serif;
         animation: slideIn 0.3s ease;
     `;
@@ -3243,7 +3238,7 @@ function showNotification(message, type = 'info') {
         padding: 12px 20px;
         border-radius: 8px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        z-index: 10000;
+        z-index: 700;
         font-family: 'Segoe UI', sans-serif;
         animation: slideIn 0.3s ease;
     `;
@@ -3263,12 +3258,12 @@ function showNotification(message, type = 'info') {
 const geoStyles = document.createElement('style');
 geoStyles.textContent = `
     @keyframes slideIn {
-        from { transform: translateX(100%); opacity: 0; }
-        to { transform: translateX(0); opacity: 1; }
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
     @keyframes slideOut {
-        from { transform: translateX(0); opacity: 1; }
-        to { transform: translateX(100%); opacity: 0; }
+        from { opacity: 1; }
+        to { opacity: 0; }
     }
     
     .user-location-marker {
@@ -3276,8 +3271,8 @@ geoStyles.textContent = `
     }
     
     @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.2); }
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.65; }
     }
 `;
 document.head.appendChild(geoStyles);
@@ -3898,25 +3893,13 @@ console.log('[PWA] Requêtes avancées chargées');
 // ============================================
 // FONCTIONS DU BOUTON D'ACTION RAPIDE (FAB)
 // ============================================
-let fabMenuOpen = false;
-
-function closeFabMenu() {
-    const fabMenu = document.getElementById('fabMenu');
-    const fabButton = document.getElementById('fabButton');
-    
-    if (fabMenu && fabMenuOpen) {
-        fabMenuOpen = false;
-        fabMenu.classList.remove('active');
-        fabButton.innerHTML = '<i class="fas fa-bolt"></i>';
-    }
-}
-
 // Fermer le menu FAB si clic en dehors
 document.addEventListener('click', function(e) {
     const fabButton = document.getElementById('fabButton');
     const fabMenu = document.getElementById('fabMenu');
     
-    if (fabMenuOpen && fabButton && fabMenu && 
+    if (fabButton && fabMenu &&
+        fabMenu.classList.contains('active') &&
         !fabButton.contains(e.target) && !fabMenu.contains(e.target)) {
         closeFabMenu();
     }
@@ -3949,14 +3932,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log('[DROPDOWN] MouseEnter sur desktop');
                     menu.style.opacity = '1';
                     menu.style.visibility = 'visible';
-                    menu.style.transform = 'translateY(0)';
+                    menu.style.pointerEvents = 'auto';
                 });
                 
                 dropdown.addEventListener('mouseleave', function() {
                     console.log('[DROPDOWN] MouseLeave sur desktop');
                     menu.style.opacity = '0';
                     menu.style.visibility = 'hidden';
-                    menu.style.transform = 'translateY(-10px)';
+                    menu.style.pointerEvents = 'none';
                 });
             }
             
@@ -4063,14 +4046,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         menu.style.maxHeight = '0';
                         menu.style.opacity = '0';
                         menu.style.visibility = 'hidden';
-                        menu.style.transform = 'none';
+                        menu.style.pointerEvents = 'none';
                         console.log(`[DROPDOWN] Dropdown ${index + 1} réinitialisé pour mobile`);
                     } else {
                         // Mode desktop : utiliser les styles hover
                         dropdown.classList.remove('active');
                         menu.style.opacity = '0';
                         menu.style.visibility = 'hidden';
-                        menu.style.transform = 'translateY(-10px)';
+                        menu.style.pointerEvents = 'none';
                         console.log(`[DROPDOWN] Dropdown ${index + 1} réinitialisé pour desktop`);
                     }
                 }

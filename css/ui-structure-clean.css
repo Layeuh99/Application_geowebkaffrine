@@ -132,7 +132,7 @@ body {
 }
 
 .panel-header {
-    z-index: 401 !important;
+    z-index: 400 !important;
     position: relative !important;
     background: #667eea !important;
     color: white !important;
@@ -152,7 +152,7 @@ body {
 
 .panel-toggle,
 .panel-close-mobile {
-    z-index: 402 !important;
+    z-index: 400 !important;
     position: relative !important;
     background: rgba(255,255,255,0.2) !important;
     border: none !important;
@@ -262,7 +262,7 @@ body {
 }
 
 .modal-content {
-    z-index: 701 !important;
+    z-index: 700 !important;
     position: relative !important;
     background: white !important;
     border-radius: 12px !important;
@@ -274,7 +274,7 @@ body {
 }
 
 .modal-close {
-    z-index: 702 !important;
+    z-index: 700 !important;
     position: absolute !important;
     top: 15px !important;
     right: 15px !important;
@@ -321,7 +321,7 @@ body {
 }
 
 .welcome-content {
-    z-index: 801 !important;
+    z-index: 800 !important;
     position: relative !important;
     background: white !important;
     border-radius: 16px !important;
@@ -514,7 +514,7 @@ body,
 
 /* Suppression des contextes parasites créés par les bibliothèques externes */
 .leaflet-overlay-pane {
-    z-index: 150 !important;
+    z-index: 100 !important;
 }
 
 .photon-geocoder {

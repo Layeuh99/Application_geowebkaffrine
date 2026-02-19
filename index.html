@@ -23,6 +23,7 @@
         <link rel="stylesheet" href="css/MarkerCluster.Default.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
         
         <!-- ARCHITECTURE UI STRUCTURELLE NETTOYÉE -->
         <link rel="stylesheet" href="css/ui-structure-clean.css">
@@ -978,15 +979,6 @@
         <script src="js/rbush.min.js"></script>
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
-        
-        <!-- Modules d'application -->
-        <script src="js/map-core-module.js"></script>
-        <script src="js/guide-module.js"></script>
-        <script src="js/metadata-module.js"></script>
-        <script src="js/spatial-analysis-module.js"></script>
-        <script src="js/analysis-improved.js"></script>
-        <!-- <script src="js/routing-module.js"></script> --> <!-- Désactivé car dépend de Leaflet Routing Machine -->
-        
         <!-- Donnees -->
         <script src="data/Region_3.js"></script>
         <script src="data/Departement_4.js"></script>
@@ -994,6 +986,13 @@
         <script src="data/Routes_6.js"></script>
         <script src="data/Localites_7.js"></script>
         <script src="data/Ecoles_8.js"></script>
+
+        <!-- Modules d'application (app-core) -->
+        <script src="js/guide-module.js"></script>
+        <script src="js/metadata-module.js"></script>
+        <script src="js/spatial-analysis-module.js"></script>
+        <script src="js/analysis-improved.js"></script>
+        <!-- <script src="js/routing-module.js"></script> --> <!-- Désactivé car dépend de Leaflet Routing Machine -->
 
         <!-- FAB STRUCTUREL PROPRE - SANS STACKING CONTEXT PARASITE -->
         <button class="fab-button" id="fabButton" onclick="toggleFabMenu()" aria-label="Menu d'action rapide">
@@ -1024,7 +1023,6 @@
         </div>
 
         <!-- Architecture UI structurelle propre -->
-        <script src="js/ui-structure-clean.js"></script>
         
         <!-- Application principale -->
         <script src="js/app-modern.js"></script>
@@ -1041,17 +1039,7 @@
                     document.body.style.overflow = '';
                     console.log('[INIT] Welcome modal caché');
                 }
-                
-                // Initialiser la carte avec map-core-module
-                if (typeof initializeMap === 'function') {
-                    console.log('[INIT] Utilisation de initializeMap()');
-                    initializeMap();
-                } else if (typeof initMap === 'function') {
-                    console.log('[INIT] Utilisation de initMap()');
-                    initMap();
-                } else {
-                    console.error('[INIT] Aucune fonction d\'initialisation trouvée');
-                }
+                // L'initialisation de carte est gérée dans js/app-modern.js
             });
         </script>
 

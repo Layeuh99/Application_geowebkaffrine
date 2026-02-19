@@ -42,7 +42,7 @@
     align-items: center !important;
     gap: 12px !important;
     cursor: pointer !important;
-    z-index: 501 !important;
+    z-index: 500 !important;
     
     /* Positionnement */
     position: relative !important;
@@ -162,7 +162,7 @@
     border-radius: 8px !important;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
     min-width: 200px !important;
-    z-index: 501 !important;
+    z-index: 500 !important;
     
     /* État caché par défaut */
     opacity: 0 !important;
@@ -244,7 +244,7 @@
     
     /* Positionnement */
     position: relative !important;
-    z-index: 502 !important;
+    z-index: 500 !important;
     
     /* Suppression des conflits */
     transform: none !important;
