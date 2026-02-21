@@ -473,15 +473,20 @@ body,
     .navbar {
         height: 56px !important;
         padding: 0 10px !important;
-        display: flex !important;
+        display: grid !important;
+        grid-template-columns: auto 1fr auto !important;
         align-items: center !important;
-        justify-content: space-between !important;
-        gap: 4px !important;
+        justify-content: stretch !important;
+        gap: 6px !important;
         overflow-x: hidden !important;
     }
 
     .navbar-brand {
         flex: 0 0 auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        justify-self: start !important;
     }
 
     .brand-text {
@@ -489,19 +494,19 @@ body,
     }
 
     .navbar-menu {
-        display: flex !important;
-        flex-direction: row !important;
-        flex: 1 1 auto !important;
+        display: grid !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
         min-width: 0 !important;
         align-items: center !important;
-        justify-content: center !important;
-        gap: 6px !important;
+        justify-content: stretch !important;
+        gap: 4px !important;
         max-width: 100% !important;
         overflow: visible !important;
         white-space: nowrap !important;
         position: static !important;
         padding: 0 !important;
         margin: 0 !important;
+        justify-self: stretch !important;
     }
 
     .navbar-menu .dropdown {
@@ -515,15 +520,22 @@ body,
     }
 
     .navbar-menu li {
-        width: auto !important;
+        width: 100% !important;
         height: auto !important;
         font-size: 13px !important;
         white-space: nowrap !important;
-        flex: 0 0 auto !important;
+        display: flex !important;
+        justify-content: center !important;
     }
 
-    .navbar-menu li a {
-        padding: 6px 8px !important;
+    .navbar-menu li a,
+    .dropdown-toggle {
+        width: 100% !important;
+        justify-content: center !important;
+        text-align: center !important;
+        padding: 6px 6px !important;
+        border-radius: 6px !important;
+        font-size: 12.5px !important;
     }
 
     .dropdown-toggle {
@@ -532,6 +544,12 @@ body,
         align-items: center !important;
         gap: 0 !important;
         line-height: 1.2 !important;
+    }
+
+    .dropdown-toggle span {
+        display: block !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
     }
 
     .dropdown-toggle > i:first-child {
@@ -544,26 +562,30 @@ body,
 
     .theme-toggle {
         flex: 0 0 auto !important;
+        width: 32px !important;
+        height: 32px !important;
+        justify-self: end !important;
     }
 
     .dropdown-menu {
         position: absolute !important;
         width: 200px !important;
-        max-width: calc(100vw - 20px) !important;
+        max-width: calc(100vw - 16px) !important;
         font-size: 13px !important;
         top: calc(100% + 6px) !important;
         left: 50% !important;
         right: auto !important;
         transform: translateX(-50%) !important;
+        z-index: 650 !important;
     }
 
-    .navbar-menu li:first-child .dropdown-menu {
+    .navbar-menu li:nth-child(1) .dropdown-menu {
         left: 0 !important;
         right: auto !important;
         transform: none !important;
     }
 
-    .navbar-menu li:last-child .dropdown-menu {
+    .navbar-menu li:nth-child(4) .dropdown-menu {
         left: auto !important;
         right: 0 !important;
         transform: none !important;
