@@ -306,7 +306,7 @@
         MapModule.zoomOut();
         break;
       case "full-extent":
-        MapModule.resetHome();
+        window.location.reload();
         break;
       default:
         break;
