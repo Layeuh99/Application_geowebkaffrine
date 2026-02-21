@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   "use strict";
 
   let map = null;
@@ -49,12 +49,12 @@
   function layerDefinitions() {
     const c = stylePalette();
     return [
-      { key: "Region", label: "Region", dataVar: "json_Region_3", type: "polygon", style: colorStyle(c.outline, c.region, 2), legend: c.region },
-      { key: "Departement", label: "Departement", dataVar: "json_Departement_4", type: "polygon", style: colorStyle(c.outline, c.departement, 1.5), legend: c.departement },
+      { key: "Region", label: "Région", dataVar: "json_Region_3", type: "polygon", style: colorStyle(c.outline, c.region, 2), legend: c.region },
+      { key: "Departement", label: "Département", dataVar: "json_Departement_4", type: "polygon", style: colorStyle(c.outline, c.departement, 1.5), legend: c.departement },
       { key: "Arrondissement", label: "Arrondissement", dataVar: "json_Arrondissement_5", type: "polygon", style: colorStyle(c.outline, c.arrondissement, 1), legend: c.arrondissement },
       { key: "Routes", label: "Routes", dataVar: "json_Routes_6", type: "line", style: { color: c.routes, opacity: 0.95, weight: 2 }, legend: c.routes },
-      { key: "Localites", label: "Localites", dataVar: "json_Localites_7", type: "point", style: { radius: 4, color: c.outline, fillColor: c.localites, fillOpacity: 0.85, opacity: 1, weight: 1 }, legend: c.localites },
-      { key: "Ecoles", label: "Ecoles", dataVar: "json_Ecoles_8", type: "point", style: { radius: 5, color: c.outline, fillColor: c.ecoles, fillOpacity: 0.9, opacity: 1, weight: 1 }, legend: c.ecoles }
+      { key: "Localites", label: "Localités", dataVar: "json_Localites_7", type: "point", style: { radius: 4, color: c.outline, fillColor: c.localites, fillOpacity: 0.85, opacity: 1, weight: 1 }, legend: c.localites },
+      { key: "Ecoles", label: "Écoles", dataVar: "json_Ecoles_8", type: "point", style: { radius: 5, color: c.outline, fillColor: c.ecoles, fillOpacity: 0.9, opacity: 1, weight: 1 }, legend: c.ecoles }
     ];
   }
 
@@ -97,7 +97,7 @@
     map.removeLayer(basemaps[activeBasemap]);
     basemaps[type].addTo(map);
     activeBasemap = type;
-    setStatus(type === "toner" ? "Fond contraste active" : "Fond OSM active");
+    setStatus(type === "toner" ? "Fond contraste actif" : "Fond OSM actif");
   }
 
   function toLayer(def) {
@@ -178,7 +178,7 @@
 
   function resetHome() {
     ensureMap().fitBounds(fullExtent);
-    setStatus("Vue complete chargee");
+    setStatus("Vue complète chargée");
   }
 
   function zoomIn() { ensureMap().zoomIn(); }
@@ -201,13 +201,13 @@
     }
     const toggle = document.querySelector(".leaflet-control-measure-toggle");
     if (toggle) toggle.click();
-    setStatus("Outil mesure active");
+    setStatus("Outil de mesure actif");
   }
 
   function startRouting() {
     routeMode = true;
     routePoints = [];
-    setStatus("Itineraire: selectionnez 2 points sur la carte");
+    setStatus("Itinéraire: sélectionnez 2 points sur la carte");
   }
 
   function clearRouting() {
@@ -217,13 +217,13 @@
       map.removeLayer(routeLayer);
       routeLayer = null;
     }
-    setStatus("Itineraire reinitialise");
+    setStatus("Itinéraire réinitialisé");
   }
 
   function startAdvancedAnalysis(config) {
     analysisMode = true;
     analysisConfig = config;
-    setStatus("Analyse avancee: cliquez un point sur la carte");
+    setStatus("Analyse avancée: cliquez sur un point de la carte");
   }
 
   function clearAnalysis() {
@@ -235,7 +235,7 @@
     analysisMarker = null;
     analysisCircle = null;
     analysisLayer = null;
-    setStatus("Analyse nettoyee");
+    setStatus("Analyse nettoyée");
   }
 
   function onMapClick(event) {
@@ -251,7 +251,7 @@
   function handleRoutingClick(event) {
     routePoints.push(event.latlng);
     if (routePoints.length < 2) {
-      setStatus("Itineraire: selectionnez le point d'arrivee");
+      setStatus("Itinéraire: sélectionnez le point d'arrivée");
       return;
     }
     if (routeLayer) map.removeLayer(routeLayer);
@@ -261,7 +261,7 @@
     }).addTo(map);
 
     const distanceMeters = routePoints[0].distanceTo(routePoints[1]);
-    setStatus("Distance: " + distanceMeters.toFixed(0) + " m");
+    setStatus("Distance : " + distanceMeters.toFixed(0) + " m");
     routeMode = false;
     routePoints = [];
   }
@@ -337,7 +337,7 @@
       })
     }).addTo(map);
 
-    const summary = selected.length + " resultat(s) dans " + radius + " m";
+    const summary = selected.length + " résultat(s) dans " + radius + " m";
     setStatus(summary);
     if (window.UIModule && window.UIModule.onAnalysisResult) {
       window.UIModule.onAnalysisResult(summary, selected.slice(0, 5));
@@ -345,16 +345,16 @@
   }
 
   function featureName(feature) {
-    if (!feature || !feature.properties) return "Feature";
+    if (!feature || !feature.properties) return "Entité";
     const p = feature.properties;
-    return p.NOM || p.Nom || p.nom || p.arr || p.dept || p.Region || p.Code || "Feature";
+    return p.NOM || p.Nom || p.nom || p.arr || p.dept || p.Region || p.Code || "Entité";
   }
 
   function updateScaleText() {
     if (!map) return;
     const scaleEl = document.getElementById("scaleText");
     if (!scaleEl) return;
-    scaleEl.textContent = "Zoom: " + map.getZoom();
+    scaleEl.textContent = "Niveau de zoom : " + map.getZoom();
   }
 
   function setStatus(text) {
@@ -385,7 +385,7 @@
     link.click();
     link.remove();
     URL.revokeObjectURL(url);
-    setStatus("Export GeoJSON termine");
+    setStatus("Export GeoJSON terminé");
   }
 
   function dashboardStats() {
@@ -423,3 +423,6 @@
     setStatus
   };
 })();
+
+
+

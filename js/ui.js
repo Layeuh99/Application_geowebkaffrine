@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   "use strict";
 
   const state = {
@@ -204,7 +204,7 @@
   function updateNetworkLabel() {
     const net = byId("networkText");
     if (!net) return;
-    net.textContent = navigator.onLine ? "Online" : "Offline";
+    net.textContent = navigator.onLine ? "En ligne" : "Hors ligne";
   }
 
   function executeInstall() {
@@ -227,7 +227,7 @@
       MapModule.setLayerVisibility(key, toggle.checked);
       renderLegend();
       renderDashboard();
-      addActivity((toggle.checked ? "Activation " : "Desactivation ") + key);
+      addActivity((toggle.checked ? "Activation " : "Désactivation ") + key);
       return;
     }
     const opacity = event.target.closest("[data-layer-opacity]");
@@ -236,7 +236,7 @@
       const value = Number(opacity.value) / 100;
       MapModule.setLayerOpacity(key, value);
       renderLayersPanel();
-      addActivity("Opacite " + key + " = " + Math.round(value * 100) + "%");
+      addActivity("Opacité " + key + " = " + Math.round(value * 100) + "%");
     }
   }
 
@@ -244,12 +244,12 @@
     switch (actionName) {
       case "home":
         MapModule.resetHome();
-        addActivity("Vue complete");
+        addActivity("Vue complète");
         break;
       case "dashboard":
         renderDashboard();
         openDashboard();
-        addActivity("Ouverture command center");
+        addActivity("Ouverture centre de commande");
         break;
       case "layers":
         renderLayersPanel();
@@ -259,21 +259,21 @@
       case "legend":
         renderLegend();
         openPanel("legendPanel");
-        addActivity("Ouverture legende");
+        addActivity("Ouverture légende");
         break;
       case "analysis":
-        MapModule.setStatus("Analyse spatiale prete");
-        toast("Analyse spatiale prete", "ok");
-        addActivity("Preparation analyse spatiale");
+        MapModule.setStatus("Analyse spatiale prête");
+        toast("Analyse spatiale prête", "ok");
+        addActivity("Préparation analyse spatiale");
         break;
       case "analysis-modal":
         openModal("analysisModal");
-        addActivity("Ouverture analyse avancee");
+        addActivity("Ouverture analyse avancée");
         break;
       case "routing":
         MapModule.startRouting();
-        toast("Cliquez 2 points pour tracer l'itineraire", "ok");
-        addActivity("Mode itineraire");
+        toast("Cliquez sur 2 points pour tracer l'itinéraire", "ok");
+        addActivity("Mode itinéraire");
         break;
       case "measure":
         MapModule.toggleMeasure();
@@ -285,7 +285,7 @@
         break;
       case "metadata":
         openModal("metadataModal");
-        addActivity("Ouverture metadonnees");
+        addActivity("Ouverture métadonnées");
         break;
       case "install":
         executeInstall();
@@ -328,13 +328,13 @@
       limit: Number(limit.value)
     });
     closeModal("analysisModal");
-    addActivity("Analyse avancee en attente de point carte");
+    addActivity("Analyse avancée en attente d'un point sur la carte");
   }
 
   function clearAnalysis() {
     MapModule.clearAnalysis();
     const result = byId("analysisResult");
-    if (result) result.textContent = "Aucun resultat.";
+    if (result) result.textContent = "Aucun résultat.";
     addActivity("Nettoyage analyse");
   }
 
@@ -366,6 +366,10 @@
         toggleMobileMenu();
         return;
       }
+      if (event.target.id === "installButton") {
+        executeInstall();
+        return;
+      }
       if (event.target.id === "fabButton") {
         toggleFab();
         return;
@@ -376,7 +380,7 @@
         MapModule.refreshThemeStyles();
         renderLegend();
         renderDashboard();
-        addActivity("Changement theme");
+        addActivity("Changement thème");
         return;
       }
       if (event.target.id === "closeMetadata") {
@@ -432,20 +436,18 @@
     window.addEventListener("beforeinstallprompt", (event) => {
       event.preventDefault();
       state.deferredInstallPrompt = event;
-      const banner = byId("installToast");
-      if (banner) banner.classList.add("show");
-      addActivity("Prompt installation disponible");
+      addActivity("Installation disponible");
     });
 
     window.addEventListener("online", () => {
       const net = byId("networkText");
-      if (net) net.textContent = "Online";
-      toast("Connexion retablie", "ok");
+      if (net) net.textContent = "En ligne";
+      toast("Connexion rétablie", "ok");
     });
 
     window.addEventListener("offline", () => {
       const net = byId("networkText");
-      if (net) net.textContent = "Offline";
+      if (net) net.textContent = "Hors ligne";
       toast("Mode hors-ligne actif", "warn");
     });
 
@@ -472,8 +474,8 @@
       "<strong>" + summary + "</strong><br>" +
       topList.map((item) => {
         const n = item.feature && item.feature.properties
-          ? (item.feature.properties.NOM || item.feature.properties.arr || item.feature.properties.dept || "Feature")
-          : "Feature";
+          ? (item.feature.properties.NOM || item.feature.properties.arr || item.feature.properties.dept || "Entité")
+          : "Entité";
         return n + " - " + Math.round(item.distance) + " m";
       }).join("<br>");
     addActivity(summary);
@@ -490,7 +492,7 @@
     if (themeBtn) {
       themeBtn.textContent = ThemeModule.getCurrentTheme() === "dark" ? "Sombre" : "Clair";
     }
-    addActivity("Interface initialisee");
+    addActivity("Interface initialisée");
   }
 
   window.UIModule = {
@@ -501,3 +503,5 @@
     executeAction: handleMenuAction
   };
 })();
+
+

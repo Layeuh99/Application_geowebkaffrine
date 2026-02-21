@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   "use strict";
 
   function registerServiceWorker() {
@@ -29,7 +29,7 @@
     MapModule.initMap();
     MapModule.initLayers();
     UIModule.initUI();
-    MapModule.setStatus("Application chargee");
+    MapModule.setStatus("Application chargée");
 
     setTimeout(() => MapModule.invalidateSize(), 250);
     setInterval(() => {
@@ -45,3 +45,4 @@
 
   document.addEventListener("DOMContentLoaded", boot);
 })();
+

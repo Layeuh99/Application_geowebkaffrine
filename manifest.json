@@ -1,7 +1,7 @@
-{
+﻿{
   "name": "GeoWeb Kaffrine",
   "short_name": "GeoWeb",
-  "description": "SIG web moderne pour la region de Kaffrine.",
+  "description": "SIG web moderne pour la région de Kaffrine.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -27,7 +27,7 @@
     {
       "name": "Couches",
       "short_name": "Couches",
-      "description": "Acces rapide au panneau couches",
+      "description": "Accès rapide au panneau couches",
       "url": "./index.html?action=layers",
       "icons": [
         {
@@ -37,9 +37,9 @@
       ]
     },
     {
-      "name": "Analyse avancee",
+      "name": "Analyse avancée",
       "short_name": "Analyse",
-      "description": "Demarrer une analyse spatiale",
+      "description": "Démarrer une analyse spatiale",
       "url": "./index.html?action=analysis",
       "icons": [
         {
@@ -50,3 +50,4 @@
     }
   ]
 }
+

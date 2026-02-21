@@ -1,20 +1,22 @@
-:root {
-  --bg-main: #120909;
-  --bg-navbar: #1b0f0f;
-  --bg-panel: #1f1414;
-  --bg-hover: #2a1a1a;
+﻿:root {
+  --bg-main: #0b1020;
+  --bg-navbar: #111827;
+  --bg-panel: #141c2f;
+  --bg-hover: #1b2740;
 
-  --primary: #ff3c00;
-  --secondary: #ff7a00;
-  --accent: #ffae00;
+  --primary: #00f5ff;
+  --secondary: #8b5cf6;
+  --accent: #ff00c8;
 
-  --text-main: #f5f5f5;
-  --text-muted: #c9b2b2;
+  --text-main: #e6faff;
+  --text-muted: #9ca3af;
 
-  --border-color: rgba(255, 90, 0, 0.2);
-  --ring-color: rgba(255, 174, 0, 0.5);
-  --glow-soft: 0 0 0 1px rgba(255, 122, 0, 0.14), 0 8px 24px rgba(255, 60, 0, 0.2);
-  --glow-strong: 0 0 0 1px rgba(255, 174, 0, 0.22), 0 12px 30px rgba(255, 122, 0, 0.32);
+  --border-color: rgba(0, 245, 255, 0.25);
+  --ring-color: rgba(0, 245, 255, 0.5);
+  --glow-cyan: 0 0 12px rgba(0, 245, 255, 0.7);
+  --glow-magenta: 0 0 12px rgba(255, 0, 200, 0.6);
+  --glow-soft: 0 0 0 1px rgba(0, 245, 255, 0.16), 0 10px 24px rgba(0, 0, 0, 0.35);
+  --glow-strong: 0 0 0 1px rgba(139, 92, 246, 0.26), 0 14px 32px rgba(0, 245, 255, 0.18);
 
   /* Mapping vers l'architecture existante */
   --bg: var(--bg-main);
@@ -23,34 +25,33 @@
   --surface-elevated: var(--bg-hover);
   --text: var(--text-main);
   --muted: var(--text-muted);
-  --primary-strong: #d63100;
-  --on-primary: #fff4ea;
+  --primary-strong: #6d40cc;
+  --on-primary: #001318;
   --border: var(--border-color);
-  --overlay: rgba(18, 9, 9, 0.62);
-  --shadow-soft: 0 8px 20px rgba(0, 0, 0, 0.28);
-  --shadow-strong: 0 16px 36px rgba(0, 0, 0, 0.42);
+  --overlay: rgba(9, 13, 26, 0.7);
+  --shadow-soft: 0 8px 20px rgba(0, 0, 0, 0.3);
+  --shadow-strong: 0 16px 36px rgba(0, 0, 0, 0.46);
 }
 
 body {
-  background: radial-gradient(circle at top left, #2a0f0f, #120909 70%);
+  background: radial-gradient(circle at top right, #111827, #0b1020 70%);
   color: var(--text-main);
 }
 
 .ambient-bg {
   background:
-    radial-gradient(circle at 18% 14%, rgba(255, 60, 0, 0.16), transparent 38%),
-    radial-gradient(circle at 82% 10%, rgba(255, 122, 0, 0.12), transparent 35%),
-    radial-gradient(circle at 72% 84%, rgba(255, 174, 0, 0.08), transparent 32%),
+    radial-gradient(circle at 78% 12%, rgba(0, 245, 255, 0.16), transparent 36%),
+    radial-gradient(circle at 20% 82%, rgba(139, 92, 246, 0.16), transparent 36%),
+    radial-gradient(circle at 50% 14%, rgba(255, 0, 200, 0.12), transparent 32%),
     var(--bg-main);
 }
 
 .navbar {
-  background: linear-gradient(90deg, #1b0f0f, #2a1111);
+  background: linear-gradient(90deg, #111827, #0f172a);
   border-bottom: 1px solid var(--border-color);
   box-shadow: var(--glow-soft);
 }
 
-.navbar-menu li a,
 .nav-menu li .nav-btn,
 .brand-text,
 .brand-subtext {
@@ -58,12 +59,11 @@ body {
   transition: 0.3s ease;
 }
 
-.navbar-menu li a:hover,
 .nav-menu li .nav-btn:hover,
 .dropdown.open .nav-btn {
-  color: var(--accent);
-  text-shadow: 0 0 6px var(--primary);
-  box-shadow: inset 0 0 0 1px rgba(255, 122, 0, 0.2);
+  color: var(--primary);
+  text-shadow: var(--glow-cyan);
+  box-shadow: inset 0 0 0 1px rgba(0, 245, 255, 0.25);
 }
 
 .sidebar-left,
@@ -76,20 +76,41 @@ body {
 }
 
 .panel-header {
-  background: linear-gradient(90deg, #2a1414, #3a1515);
+  background: linear-gradient(90deg, #1f2937, #111827);
   border-bottom: 1px solid var(--border-color);
-  box-shadow: inset 0 -1px 0 rgba(255, 122, 0, 0.12);
+}
+
+button,
+.btn,
+.icon-btn,
+.menu-action,
+.nav-btn,
+.quick-btn,
+.fab-item {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border: none;
+  color: #000;
+  box-shadow: var(--glow-soft);
+}
+
+button:hover,
+.btn:hover,
+.icon-btn:hover,
+.menu-action:hover,
+.nav-btn:hover,
+.quick-btn:hover,
+.fab-item:hover {
+  box-shadow: var(--glow-cyan);
 }
 
 .fab-button {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  box-shadow: 0 0 15px rgba(255, 60, 0, 0.5);
-  color: #fff;
-  border: 1px solid rgba(255, 174, 0, 0.38);
+  background: linear-gradient(135deg, var(--accent), var(--secondary));
+  box-shadow: var(--glow-magenta);
+  color: #130013;
 }
 
 .fab-button:hover {
-  box-shadow: 0 0 25px rgba(255, 120, 0, 0.8);
+  box-shadow: 0 0 18px rgba(255, 0, 200, 0.75);
 }
 
 .dropdown-menu,
@@ -100,9 +121,8 @@ body {
 .install-toast,
 .toast,
 .data-quick-bar {
-  background: #1a1010;
+  background: #0f172a;
   border: 1px solid var(--border-color);
-  box-shadow: var(--glow-soft);
 }
 
 .dropdown-menu li:hover,
@@ -110,13 +130,12 @@ body {
 .mobile-menu .menu-action:hover,
 .fab-menu .menu-action:hover,
 .fab-menu .fab-item:hover {
-  background: var(--bg-hover);
-  box-shadow: inset 2px 0 0 var(--secondary);
+  background: rgba(0, 245, 255, 0.1);
 }
 
 .mobile-bottom-bar,
 .bottom-bar {
-  background: linear-gradient(90deg, #1b0f0f, #2a1111);
+  background: linear-gradient(90deg, #111827, #0f172a);
   border-top: 1px solid var(--border-color);
   color: var(--text-main);
 }
@@ -128,13 +147,9 @@ body {
 
 .mobile-bottom-bar button:hover,
 .bottom-bar button:hover {
-  color: var(--accent);
+  color: var(--primary);
 }
 
-.icon-btn,
-.menu-action,
-.nav-btn,
-.quick-btn,
 .kpi-card,
 .layer-row,
 .analysis-result,
@@ -142,64 +157,7 @@ body {
 .analysis-form select {
   background: var(--bg-panel);
   color: var(--text-main);
-  border-color: var(--border-color);
-  box-shadow: var(--glow-soft);
-}
-
-/* Boutons fantaisistes "Volcanic Command" */
-.icon-btn,
-.nav-btn,
-.menu-action,
-.quick-btn,
-.fab-item {
-  border: 1px solid rgba(255, 122, 0, 0.35);
-  background:
-    linear-gradient(180deg, rgba(255, 174, 0, 0.08) 0%, rgba(255, 60, 0, 0.04) 100%),
-    linear-gradient(135deg, #2b1717 0%, #1c1111 100%);
-  color: var(--text-main);
-  border-radius: 14px;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 210, 170, 0.18),
-    0 0 0 1px rgba(255, 122, 0, 0.12),
-    0 8px 20px rgba(0, 0, 0, 0.34);
-}
-
-.icon-btn:hover,
-.nav-btn:hover,
-.menu-action:hover,
-.quick-btn:hover,
-.fab-item:hover {
-  background:
-    linear-gradient(180deg, rgba(255, 193, 77, 0.14) 0%, rgba(255, 122, 0, 0.08) 100%),
-    linear-gradient(135deg, #342020 0%, #221414 100%);
-  color: var(--accent);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 230, 190, 0.2),
-    0 0 0 1px rgba(255, 174, 0, 0.22),
-    0 10px 26px rgba(255, 90, 0, 0.3);
-}
-
-.icon-btn:active,
-.nav-btn:active,
-.menu-action:active,
-.quick-btn:active,
-.fab-item:active {
-  background:
-    linear-gradient(180deg, rgba(255, 174, 0, 0.18) 0%, rgba(255, 60, 0, 0.1) 100%),
-    linear-gradient(135deg, #2a1919 0%, #1a1010 100%);
-  color: #ffd7a6;
-}
-
-.install-actions .icon-btn,
-.analysis-actions .icon-btn {
-  font-weight: 700;
-  letter-spacing: 0.2px;
-}
-
-.icon-btn:hover,
-.menu-action:hover {
-  background: var(--bg-hover);
-  box-shadow: var(--glow-strong);
+  border: 1px solid var(--border-color);
 }
 
 .kpi-card h3,
@@ -209,21 +167,11 @@ body {
   color: var(--text-muted);
 }
 
-.kpi-card p,
-.panel-header h2,
-.dashboard-head h2 {
-  color: var(--text-main);
-}
-
-.analysis-form input::placeholder {
-  color: var(--text-muted);
-}
-
 .analysis-result strong,
 .status-ok,
 .status-warn,
 .status-danger {
-  text-shadow: 0 0 8px rgba(255, 122, 0, 0.25);
+  text-shadow: var(--glow-cyan);
 }
 
 .icon-btn:focus-visible,
@@ -239,32 +187,84 @@ body {
 }
 
 .leaflet-container {
-  filter: saturate(1.05) contrast(1.05);
+  filter: contrast(1.1) saturate(1.1);
 }
 
 .leaflet-tile {
-  filter: brightness(0.9) contrast(1.1);
+  filter: brightness(0.85) contrast(1.15);
 }
 
-/* Variante sombre toujours coherente avec le theme volcanique */
 body.dark-theme {
-  --bg-main: #0f0606;
-  --bg-navbar: #160b0b;
-  --bg-panel: #1a1010;
-  --bg-hover: #291616;
-  --primary: #ff4a12;
-  --secondary: #ff8a1f;
-  --accent: #ffc14d;
-  --text-main: #fff0e8;
-  --text-muted: #d7b7a6;
-  --border-color: rgba(255, 106, 0, 0.3);
-  --ring-color: rgba(255, 193, 77, 0.62);
-  --glow-soft: 0 0 0 1px rgba(255, 122, 0, 0.2), 0 10px 28px rgba(0, 0, 0, 0.46);
-  --glow-strong: 0 0 0 1px rgba(255, 193, 77, 0.35), 0 14px 34px rgba(0, 0, 0, 0.6);
-  --primary-strong: #de3a0c;
-  --overlay: rgba(9, 3, 3, 0.72);
+  --bg-main: #080d1a;
+  --bg-navbar: #0d1426;
+  --bg-panel: #111a31;
+  --bg-hover: #1a2442;
+  --primary: #30faff;
+  --secondary: #9f74ff;
+  --accent: #ff3ad8;
+  --text-main: #ecfbff;
+  --text-muted: #a7b0c5;
+  --border-color: rgba(48, 250, 255, 0.35);
+  --ring-color: rgba(48, 250, 255, 0.6);
+  --glow-cyan: 0 0 14px rgba(48, 250, 255, 0.82);
+  --glow-magenta: 0 0 14px rgba(255, 58, 216, 0.72);
 }
 
-body.dark-theme .leaflet-tile {
-  filter: brightness(0.82) contrast(1.16) saturate(1.06);
+/* Variantes optionnelles: appliquer sur <body> */
+/* body class="theme-neo-low"    -> glow discret */
+/* body class="theme-neo-ultra"  -> glow intense */
+body.theme-neo-low {
+  --border-color: rgba(0, 245, 255, 0.18);
+  --glow-cyan: 0 0 7px rgba(0, 245, 255, 0.42);
+  --glow-magenta: 0 0 7px rgba(255, 0, 200, 0.36);
+  --glow-soft: 0 0 0 1px rgba(0, 245, 255, 0.1), 0 8px 18px rgba(0, 0, 0, 0.28);
+  --glow-strong: 0 0 0 1px rgba(139, 92, 246, 0.18), 0 10px 24px rgba(0, 245, 255, 0.14);
+}
+
+body.theme-neo-ultra {
+  --border-color: rgba(0, 245, 255, 0.38);
+  --glow-cyan: 0 0 18px rgba(0, 245, 255, 0.92);
+  --glow-magenta: 0 0 18px rgba(255, 0, 200, 0.85);
+  --glow-soft: 0 0 0 1px rgba(0, 245, 255, 0.26), 0 12px 28px rgba(0, 0, 0, 0.42);
+  --glow-strong: 0 0 0 1px rgba(255, 0, 200, 0.32), 0 16px 34px rgba(0, 245, 255, 0.3);
+}
+
+
+/* Barre rapide données: icônes seules (sans contours) */
+.data-quick-bar {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.data-quick-bar .quick-btn {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  min-width: 48px;
+  min-height: 48px;
+  padding: 0;
+  border-radius: 0;
+  color: var(--text-main);
+}
+
+.data-quick-bar .quick-btn:hover,
+.data-quick-bar .quick-btn:focus-visible {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: var(--primary);
+  outline: none;
+}
+
+/* Taille des 3 icônes rapides (plus grandes) */
+.data-quick-bar .quick-btn {
+  font-size: 28px;
+  line-height: 1;
+}
+
+@media (max-width: 768px) {
+  .data-quick-bar .quick-btn {
+    font-size: 30px;
+  }
 }
