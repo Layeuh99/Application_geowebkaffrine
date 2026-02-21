@@ -7,6 +7,38 @@ body.dark-theme {
 
 body.dark-theme .navbar {
     background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+body.dark-theme .dropdown-toggle:hover,
+body.dark-theme .dropdown.active .dropdown-toggle {
+    background: rgba(255,255,255,0.14) !important;
+}
+
+body.dark-theme .dropdown-menu {
+    background: #101a33;
+    border: 1px solid #22355f;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.45);
+}
+
+body.dark-theme .dropdown-title {
+    color: #98a2b3 !important;
+}
+
+body.dark-theme .dropdown-items a {
+    color: #e5e7eb !important;
+}
+
+body.dark-theme .dropdown-items a:hover {
+    background: #1a2a4d !important;
+    color: #f9fafb !important;
+}
+
+body.dark-theme .theme-toggle,
+body.dark-theme .install-toggle,
+body.dark-theme .navbar-toggle {
+    background: rgba(255,255,255,0.1) !important;
+    border-color: rgba(255,255,255,0.2) !important;
 }
 
 body.dark-theme .sidebar-left,
