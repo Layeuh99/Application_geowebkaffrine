@@ -1,64 +1,155 @@
+:root {
+  --bg-main: #120909;
+  --bg-navbar: #1b0f0f;
+  --bg-panel: #1f1414;
+  --bg-hover: #2a1a1a;
+
+  --primary: #ff3c00;
+  --secondary: #ff7a00;
+  --accent: #ffae00;
+
+  --text-main: #f5f5f5;
+  --text-muted: #c9b2b2;
+
+  --border-color: rgba(255, 90, 0, 0.2);
+
+  /* Mapping vers l'architecture existante */
+  --bg: var(--bg-main);
+  --surface: var(--bg-navbar);
+  --surface-alt: var(--bg-panel);
+  --surface-elevated: var(--bg-hover);
+  --text: var(--text-main);
+  --muted: var(--text-muted);
+  --primary-strong: #d63100;
+  --on-primary: #fff4ea;
+  --border: var(--border-color);
+  --overlay: rgba(18, 9, 9, 0.62);
+  --shadow-soft: 0 8px 20px rgba(0, 0, 0, 0.28);
+  --shadow-strong: 0 16px 36px rgba(0, 0, 0, 0.42);
+}
+
+body {
+  background: radial-gradient(circle at top left, #2a0f0f, #120909 70%);
+  color: var(--text-main);
+}
+
+.navbar {
+  background: linear-gradient(90deg, #1b0f0f, #2a1111);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.navbar-menu li a,
+.nav-menu li .nav-btn,
+.brand-text,
+.brand-subtext {
+  color: var(--text-main);
+  transition: 0.3s ease;
+}
+
+.navbar-menu li a:hover,
+.nav-menu li .nav-btn:hover,
+.dropdown.open .nav-btn {
+  color: var(--accent);
+  text-shadow: 0 0 6px var(--primary);
+}
+
+.sidebar-left,
+.sidebar-right,
+.panel-left,
+.panel-right,
+.panel {
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border-color);
+}
+
+.panel-header {
+  background: linear-gradient(90deg, #2a1414, #3a1515);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.fab-button {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow: 0 0 15px rgba(255, 60, 0, 0.5);
+}
+
+.fab-button:hover {
+  box-shadow: 0 0 25px rgba(255, 120, 0, 0.8);
+}
+
+.dropdown-menu,
+.mobile-menu,
+.fab-menu,
+.modal-content,
+.dashboard,
+.install-toast,
+.toast {
+  background: #1a1010;
+  border: 1px solid var(--border-color);
+}
+
+.dropdown-menu li:hover,
+.dropdown-menu .menu-action:hover,
+.mobile-menu .menu-action:hover,
+.fab-menu .menu-action:hover,
+.fab-menu .fab-item:hover {
+  background: var(--bg-hover);
+}
+
+.mobile-bottom-bar,
+.bottom-bar {
+  background: linear-gradient(90deg, #1b0f0f, #2a1111);
+  border-top: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+
+.mobile-bottom-bar button,
+.bottom-bar button {
+  color: var(--text-main);
+}
+
+.mobile-bottom-bar button:hover,
+.bottom-bar button:hover {
+  color: var(--accent);
+}
+
+.icon-btn,
+.menu-action,
+.nav-btn,
+.kpi-card,
+.layer-row,
+.analysis-result,
+.analysis-form input,
+.analysis-form select {
+  background: var(--bg-panel);
+  color: var(--text-main);
+  border-color: var(--border-color);
+}
+
+.icon-btn:hover,
+.menu-action:hover {
+  background: var(--bg-hover);
+}
+
+.leaflet-container {
+  filter: saturate(1.05) contrast(1.05);
+}
+
+.leaflet-tile {
+  filter: brightness(0.9) contrast(1.1);
+}
+
+/* Variante sombre toujours coherente avec le theme volcanique */
 body.dark-theme {
-  --bg: #0b1221;
-  --surface: #111b33;
-  --surface-alt: #172445;
-  --surface-elevated: #1a2a4f;
-  --text: #e8efff;
-  --muted: #a4b3cf;
-  --primary: #4f8dff;
-  --primary-strong: #2d63d2;
-  --on-primary: #ffffff;
-  --border: #273a64;
-  --shadow-soft: 0 8px 20px rgba(2, 6, 23, 0.36);
-  --shadow-strong: 0 18px 38px rgba(2, 6, 23, 0.56);
-  --overlay: rgba(2, 6, 23, 0.64);
-  --ok: #34d399;
-  --warn: #fbbf24;
-  --danger: #f87171;
-}
-
-body.dark-theme .ambient-bg {
-  background:
-    radial-gradient(circle at 15% 20%, rgba(79, 141, 255, 0.18), transparent 38%),
-    radial-gradient(circle at 80% 10%, rgba(52, 211, 153, 0.14), transparent 35%),
-    radial-gradient(circle at 70% 80%, rgba(251, 191, 36, 0.1), transparent 34%),
-    var(--bg);
-}
-
-body.dark-theme .navbar,
-body.dark-theme .dashboard,
-body.dark-theme .panel,
-body.dark-theme .modal-content,
-body.dark-theme .fab-menu,
-body.dark-theme .mobile-menu,
-body.dark-theme .install-toast,
-body.dark-theme .toast {
-  background: linear-gradient(180deg, var(--surface) 0%, var(--surface-elevated) 100%);
-}
-
-body.dark-theme .nav-btn,
-body.dark-theme .menu-action,
-body.dark-theme .icon-btn,
-body.dark-theme .layer-row,
-body.dark-theme .kpi-card,
-body.dark-theme .analysis-result {
-  background: var(--surface-alt);
-}
-
-body.dark-theme .menu-action:hover,
-body.dark-theme .icon-btn:hover,
-body.dark-theme .nav-btn:hover,
-body.dark-theme .dropdown.open .nav-btn {
-  background: var(--surface-elevated);
-}
-
-body.dark-theme .brand-subtext,
-body.dark-theme .bottom-bar {
-  color: var(--muted);
-}
-
-body.dark-theme .analysis-form input,
-body.dark-theme .analysis-form select {
-  background: var(--surface-alt);
-  color: var(--text);
+  --bg-main: #0f0606;
+  --bg-navbar: #160b0b;
+  --bg-panel: #1a1010;
+  --bg-hover: #291616;
+  --primary: #ff4a12;
+  --secondary: #ff8a1f;
+  --accent: #ffc14d;
+  --text-main: #fff0e8;
+  --text-muted: #d7b7a6;
+  --border-color: rgba(255, 106, 0, 0.3);
+  --primary-strong: #de3a0c;
+  --overlay: rgba(9, 3, 3, 0.72);
 }
