@@ -2,12 +2,15 @@ body.dark-theme {
   --bg: #0b1221;
   --surface: #111b33;
   --surface-alt: #172445;
+  --surface-elevated: #1a2a4f;
   --text: #e8efff;
   --muted: #a4b3cf;
   --primary: #4f8dff;
   --primary-strong: #2d63d2;
   --on-primary: #ffffff;
   --border: #273a64;
+  --shadow-soft: 0 8px 20px rgba(2, 6, 23, 0.36);
+  --shadow-strong: 0 18px 38px rgba(2, 6, 23, 0.56);
   --overlay: rgba(2, 6, 23, 0.64);
   --ok: #34d399;
   --warn: #fbbf24;
@@ -20,4 +23,42 @@ body.dark-theme .ambient-bg {
     radial-gradient(circle at 80% 10%, rgba(52, 211, 153, 0.14), transparent 35%),
     radial-gradient(circle at 70% 80%, rgba(251, 191, 36, 0.1), transparent 34%),
     var(--bg);
+}
+
+body.dark-theme .navbar,
+body.dark-theme .dashboard,
+body.dark-theme .panel,
+body.dark-theme .modal-content,
+body.dark-theme .fab-menu,
+body.dark-theme .mobile-menu,
+body.dark-theme .install-toast,
+body.dark-theme .toast {
+  background: linear-gradient(180deg, var(--surface) 0%, var(--surface-elevated) 100%);
+}
+
+body.dark-theme .nav-btn,
+body.dark-theme .menu-action,
+body.dark-theme .icon-btn,
+body.dark-theme .layer-row,
+body.dark-theme .kpi-card,
+body.dark-theme .analysis-result {
+  background: var(--surface-alt);
+}
+
+body.dark-theme .menu-action:hover,
+body.dark-theme .icon-btn:hover,
+body.dark-theme .nav-btn:hover,
+body.dark-theme .dropdown.open .nav-btn {
+  background: var(--surface-elevated);
+}
+
+body.dark-theme .brand-subtext,
+body.dark-theme .bottom-bar {
+  color: var(--muted);
+}
+
+body.dark-theme .analysis-form input,
+body.dark-theme .analysis-form select {
+  background: var(--surface-alt);
+  color: var(--text);
 }

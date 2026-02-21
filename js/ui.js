@@ -371,7 +371,8 @@
         return;
       }
       if (event.target.id === "themeToggle") {
-        ThemeModule.toggleTheme();
+        const current = ThemeModule.toggleTheme();
+        event.target.textContent = current === "dark" ? "Sombre" : "Clair";
         MapModule.refreshThemeStyles();
         renderLegend();
         renderDashboard();
@@ -485,6 +486,10 @@
     renderLegend();
     renderDashboard();
     updateNetworkLabel();
+    const themeBtn = byId("themeToggle");
+    if (themeBtn) {
+      themeBtn.textContent = ThemeModule.getCurrentTheme() === "dark" ? "Sombre" : "Clair";
+    }
     addActivity("Interface initialisee");
   }
 

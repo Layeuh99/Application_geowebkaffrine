@@ -29,6 +29,7 @@
   overflow: auto;
   border-radius: 14px;
   display: none;
+  box-shadow: var(--shadow-strong);
 }
 
 .dashboard.open {
@@ -59,6 +60,7 @@
   background: var(--surface-alt);
   border-radius: 12px;
   padding: 10px;
+  box-shadow: var(--shadow-soft);
 }
 
 .kpi-card h3 {
@@ -122,6 +124,7 @@
   display: none;
   overflow: auto;
   border-radius: 12px;
+  box-shadow: var(--shadow-strong);
 }
 
 .panel.open {
@@ -186,6 +189,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
+  box-shadow: var(--shadow-strong);
 }
 
 .analysis-form {
@@ -228,6 +232,7 @@
   padding: 8px;
   margin-bottom: 8px;
   background: var(--surface-alt);
+  box-shadow: var(--shadow-soft);
 }
 
 .layer-top {
@@ -278,7 +283,7 @@
   padding: 10px;
   border-radius: 12px;
   color: var(--text);
-  box-shadow: 0 8px 16px rgba(23, 31, 56, 0.1);
+  box-shadow: var(--shadow-strong);
 }
 
 .install-toast {
@@ -293,6 +298,7 @@
   border-radius: 12px;
   padding: 10px;
   display: none;
+  box-shadow: var(--shadow-strong);
 }
 
 .install-toast.show {

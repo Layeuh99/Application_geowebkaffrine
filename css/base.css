@@ -2,12 +2,15 @@
   --bg: #eef3ff;
   --surface: #ffffff;
   --surface-alt: #f6f9ff;
+  --surface-elevated: #ffffff;
   --text: #1d2840;
   --muted: #5a6785;
   --primary: #1e5eff;
   --primary-strong: #1c48ba;
   --on-primary: #ffffff;
   --border: #d6def2;
+  --shadow-soft: 0 8px 20px rgba(21, 33, 66, 0.08);
+  --shadow-strong: 0 16px 34px rgba(21, 33, 66, 0.16);
   --overlay: rgba(15, 23, 42, 0.42);
   --ok: #0f9f64;
   --warn: #b7791f;
@@ -37,12 +40,18 @@ body {
   color: var(--text);
   background: var(--bg);
   line-height: 1.35;
+  transition: background-color 220ms ease, color 220ms ease;
 }
 
 button,
 input,
 select {
   font: inherit;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
 }
 
 #app {
@@ -71,10 +80,12 @@ select {
   color: var(--text);
   cursor: pointer;
   border-radius: 12px;
+  box-shadow: var(--shadow-soft);
 }
 
 .icon-btn:hover {
   background: var(--surface-alt);
+  box-shadow: var(--shadow-strong);
 }
 
 .status-ok {
@@ -87,4 +98,13 @@ select {
 
 .status-danger {
   color: var(--danger);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

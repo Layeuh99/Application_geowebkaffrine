@@ -2,9 +2,14 @@
   "use strict";
 
   const STORAGE_KEY = "geoweb-theme";
+  const META_THEME = "meta[name='theme-color']";
 
   function applyTheme(themeName) {
     document.body.classList.toggle("dark-theme", themeName === "dark");
+    const meta = document.querySelector(META_THEME);
+    if (meta) {
+      meta.setAttribute("content", themeName === "dark" ? "#0b1221" : "#1e5eff");
+    }
   }
 
   function getCurrentTheme() {
