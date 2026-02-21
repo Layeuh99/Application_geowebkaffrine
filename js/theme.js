@@ -20,10 +20,12 @@
     const next = document.body.classList.contains("dark-theme") ? "light" : "dark";
     localStorage.setItem(STORAGE_KEY, next);
     applyTheme(next);
+    return next;
   }
 
   window.ThemeModule = {
-    initTheme,
-    toggleTheme
+    initTheme: initTheme,
+    toggleTheme: toggleTheme,
+    getCurrentTheme: getCurrentTheme
   };
 })();

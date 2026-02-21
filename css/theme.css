@@ -1,15 +1,23 @@
 body.dark-theme {
   --bg: #0b1221;
-  --surface: #101a2f;
-  --text: #e5edf8;
-  --muted: #9fb0c9;
-  --primary: #3b82f6;
-  --primary-strong: #2563eb;
+  --surface: #111b33;
+  --surface-alt: #172445;
+  --text: #e8efff;
+  --muted: #a4b3cf;
+  --primary: #4f8dff;
+  --primary-strong: #2d63d2;
   --on-primary: #ffffff;
-  --border: #24324f;
-  --overlay: rgba(2, 6, 23, 0.6);
+  --border: #273a64;
+  --overlay: rgba(2, 6, 23, 0.64);
+  --ok: #34d399;
+  --warn: #fbbf24;
+  --danger: #f87171;
 }
 
-body.dark-theme .legend-chip {
-  border-color: var(--border);
+body.dark-theme .ambient-bg {
+  background:
+    radial-gradient(circle at 15% 20%, rgba(79, 141, 255, 0.18), transparent 38%),
+    radial-gradient(circle at 80% 10%, rgba(52, 211, 153, 0.14), transparent 35%),
+    radial-gradient(circle at 70% 80%, rgba(251, 191, 36, 0.1), transparent 34%),
+    var(--bg);
 }

@@ -1,9 +1,9 @@
 .map-shell {
   position: fixed;
-  top: 64px;
+  top: 68px;
   left: 0;
   right: 0;
-  bottom: 40px;
+  bottom: 42px;
   z-index: 100;
 }
 
@@ -16,12 +16,91 @@
   z-index: 200;
 }
 
+.dashboard {
+  position: fixed;
+  top: 82px;
+  left: 14px;
+  width: 360px;
+  max-height: calc(100vh - 150px);
+  padding: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  z-index: 600;
+  overflow: auto;
+  border-radius: 14px;
+  display: none;
+}
+
+.dashboard.open {
+  display: block;
+}
+
+.dashboard-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.dashboard-head h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.dashboard-grid {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.kpi-card {
+  border: 1px solid var(--border);
+  background: var(--surface-alt);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.kpi-card h3 {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.kpi-card p {
+  margin: 6px 0 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.activity-feed {
+  margin-top: 12px;
+}
+
+.activity-feed h3 {
+  margin: 0 0 8px;
+  font-size: 0.88rem;
+}
+
+.activity-feed ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.activity-feed li {
+  font-size: 0.84rem;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 0;
+}
+
 .bottom-bar {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 40px;
+  height: 42px;
   padding: 0 12px;
   display: flex;
   align-items: center;
@@ -34,14 +113,15 @@
 
 .panel {
   position: fixed;
-  top: 64px;
-  bottom: 40px;
-  width: 320px;
+  top: 68px;
+  bottom: 42px;
+  width: 340px;
   background: var(--surface);
   border: 1px solid var(--border);
   z-index: 600;
   display: none;
   overflow: auto;
+  border-radius: 12px;
 }
 
 .panel.open {
@@ -49,13 +129,11 @@
 }
 
 .panel-left {
-  left: 0;
-  border-left: 0;
+  left: 10px;
 }
 
 .panel-right {
-  right: 0;
-  border-right: 0;
+  right: 10px;
 }
 
 .panel-header {
@@ -107,21 +185,49 @@
   width: min(560px, 100%);
   background: var(--surface);
   border: 1px solid var(--border);
+  border-radius: 12px;
 }
 
-.icon-btn {
-  min-width: 48px;
-  min-height: 48px;
+.analysis-form {
+  display: grid;
+  gap: 10px;
+}
+
+.analysis-form label {
+  display: grid;
+  gap: 6px;
+  font-size: 0.9rem;
+}
+
+.analysis-form input,
+.analysis-form select {
+  min-height: 42px;
   border: 1px solid var(--border);
-  background: var(--surface);
+  background: var(--surface-alt);
   color: var(--text);
-  cursor: pointer;
+  padding: 0 8px;
+}
+
+.analysis-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.analysis-result {
+  border: 1px solid var(--border);
+  background: var(--surface-alt);
+  min-height: 48px;
+  padding: 8px;
+  font-size: 0.86rem;
 }
 
 .layer-row {
   border: 1px solid var(--border);
+  border-radius: 10px;
   padding: 8px;
   margin-bottom: 8px;
+  background: var(--surface-alt);
 }
 
 .layer-top {
@@ -149,9 +255,53 @@
   border: 1px solid var(--border);
 }
 
-.legend-chip-region { background: #93c5fd; }
-.legend-chip-departement { background: #86efac; }
-.legend-chip-arrondissement { background: #fdba74; }
-.legend-chip-routes { background: #dc2626; }
-.legend-chip-localites { background: #60a5fa; }
-.legend-chip-ecoles { background: #f87171; }
+.legend-chip-region { background: var(--layer-region); }
+.legend-chip-departement { background: var(--layer-departement); }
+.legend-chip-arrondissement { background: var(--layer-arrondissement); }
+.legend-chip-routes { background: var(--layer-routes); }
+.legend-chip-localites { background: var(--layer-localites); }
+.legend-chip-ecoles { background: var(--layer-ecoles); }
+
+.toast-rack {
+  position: fixed;
+  right: 12px;
+  top: 80px;
+  width: min(320px, calc(100vw - 24px));
+  z-index: 700;
+  display: grid;
+  gap: 8px;
+}
+
+.toast {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 10px;
+  border-radius: 12px;
+  color: var(--text);
+  box-shadow: 0 8px 16px rgba(23, 31, 56, 0.1);
+}
+
+.install-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 56px;
+  margin-left: -170px;
+  width: 340px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  z-index: 700;
+  border-radius: 12px;
+  padding: 10px;
+  display: none;
+}
+
+.install-toast.show {
+  display: block;
+}
+
+.install-actions {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}

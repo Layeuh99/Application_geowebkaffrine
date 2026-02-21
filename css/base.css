@@ -1,13 +1,23 @@
 :root {
-  --bg: #f4f6fb;
+  --bg: #eef3ff;
   --surface: #ffffff;
-  --text: #182230;
-  --muted: #5b6677;
-  --primary: #2563eb;
-  --primary-strong: #1e4fbc;
+  --surface-alt: #f6f9ff;
+  --text: #1d2840;
+  --muted: #5a6785;
+  --primary: #1e5eff;
+  --primary-strong: #1c48ba;
   --on-primary: #ffffff;
-  --border: #d6deea;
+  --border: #d6def2;
   --overlay: rgba(15, 23, 42, 0.42);
+  --ok: #0f9f64;
+  --warn: #b7791f;
+  --danger: #c53030;
+  --layer-region: #93c5fd;
+  --layer-departement: #86efac;
+  --layer-arrondissement: #fdba74;
+  --layer-routes: #dc2626;
+  --layer-localites: #60a5fa;
+  --layer-ecoles: #f87171;
 }
 
 * {
@@ -26,9 +36,12 @@ body {
   font-family: "Segoe UI", Tahoma, Arial, sans-serif;
   color: var(--text);
   background: var(--bg);
+  line-height: 1.35;
 }
 
-button {
+button,
+input,
+select {
   font: inherit;
 }
 
@@ -36,4 +49,42 @@ button {
   width: 100%;
   height: 100%;
   position: relative;
+}
+
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(30, 94, 255, 0.12), transparent 38%),
+    radial-gradient(circle at 80% 10%, rgba(15, 159, 100, 0.1), transparent 35%),
+    radial-gradient(circle at 70% 80%, rgba(183, 121, 31, 0.08), transparent 34%),
+    var(--bg);
+}
+
+.icon-btn {
+  min-width: 48px;
+  min-height: 48px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.icon-btn:hover {
+  background: var(--surface-alt);
+}
+
+.status-ok {
+  color: var(--ok);
+}
+
+.status-warn {
+  color: var(--warn);
+}
+
+.status-danger {
+  color: var(--danger);
 }

@@ -5,6 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#2563eb">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192x192.png">
   <title>GeoWeb Kaffrine</title>
 
   <link rel="stylesheet" href="css/leaflet.css">
@@ -18,10 +20,15 @@
 </head>
 <body>
   <div id="app">
+    <div class="ambient-bg" aria-hidden="true"></div>
+
     <header class="navbar" role="banner">
       <div class="brand" id="brandHome" role="button" tabindex="0" aria-label="Retour accueil">
         <span class="brand-logo" aria-hidden="true">GK</span>
-        <span class="brand-text">GeoWeb Kaffrine</span>
+        <div class="brand-copy">
+          <span class="brand-text">GeoWeb Kaffrine</span>
+          <span class="brand-subtext">Spatial Command Center</span>
+        </div>
       </div>
 
       <nav class="desktop-nav" aria-label="Navigation principale">
@@ -30,6 +37,7 @@
             <button class="nav-btn dropdown-toggle" type="button" aria-expanded="false">Navigation</button>
             <div class="dropdown-menu" role="menu">
               <button type="button" class="menu-action" data-action="home">Accueil</button>
+              <button type="button" class="menu-action" data-action="dashboard">Command center</button>
               <button type="button" class="menu-action" data-action="metadata">Metadonnees</button>
             </div>
           </li>
@@ -45,6 +53,7 @@
             <button class="nav-btn dropdown-toggle" type="button" aria-expanded="false">Analyse</button>
             <div class="dropdown-menu" role="menu">
               <button type="button" class="menu-action" data-action="analysis">Analyse spatiale</button>
+              <button type="button" class="menu-action" data-action="analysis-modal">Analyse avancee</button>
               <button type="button" class="menu-action" data-action="routing">Itineraire</button>
               <button type="button" class="menu-action" data-action="measure">Mesure</button>
             </div>
@@ -52,6 +61,8 @@
           <li class="nav-item dropdown">
             <button class="nav-btn dropdown-toggle" type="button" aria-expanded="false">Affichage</button>
             <div class="dropdown-menu" role="menu">
+              <button type="button" class="menu-action" data-action="basemap-osm">Fond OSM</button>
+              <button type="button" class="menu-action" data-action="basemap-toner">Fond Contraste</button>
               <button type="button" class="menu-action" data-action="zoom-in">Zoom +</button>
               <button type="button" class="menu-action" data-action="zoom-out">Zoom -</button>
               <button type="button" class="menu-action" data-action="full-extent">Vue complete</button>
@@ -66,12 +77,15 @@
 
     <aside id="mobileMenu" class="mobile-menu" aria-label="Menu mobile">
       <button type="button" class="menu-action" data-action="home">Accueil</button>
+      <button type="button" class="menu-action" data-action="dashboard">Command center</button>
       <button type="button" class="menu-action" data-action="layers">Couches</button>
       <button type="button" class="menu-action" data-action="legend">Legende</button>
       <button type="button" class="menu-action" data-action="analysis">Analyse</button>
+      <button type="button" class="menu-action" data-action="analysis-modal">Analyse avancee</button>
       <button type="button" class="menu-action" data-action="routing">Itineraire</button>
       <button type="button" class="menu-action" data-action="measure">Mesure</button>
       <button type="button" class="menu-action" data-action="download">Telecharger</button>
+      <button type="button" class="menu-action" data-action="install">Installer</button>
       <button type="button" class="menu-action" data-action="metadata">Metadonnees</button>
     </aside>
 
@@ -79,9 +93,39 @@
       <div id="map" aria-label="Carte interactive"></div>
     </main>
 
+    <section id="dashboardPanel" class="dashboard" aria-label="Tableau de bord">
+      <div class="dashboard-head">
+        <h2>Command center</h2>
+        <button type="button" class="icon-btn panel-close" data-close-panel="dashboardPanel" aria-label="Fermer command center">x</button>
+      </div>
+      <div class="dashboard-grid">
+        <article class="kpi-card">
+          <h3>Features actives</h3>
+          <p id="kpiFeatures">0</p>
+        </article>
+        <article class="kpi-card">
+          <h3>Couches actives</h3>
+          <p id="kpiLayers">0</p>
+        </article>
+        <article class="kpi-card">
+          <h3>Zoom</h3>
+          <p id="kpiZoom">-</p>
+        </article>
+        <article class="kpi-card">
+          <h3>Theme</h3>
+          <p id="kpiTheme">Clair</p>
+        </article>
+      </div>
+      <div class="activity-feed">
+        <h3>Activite recente</h3>
+        <ul id="activityList"></ul>
+      </div>
+    </section>
+
     <div class="bottom-bar">
       <span id="statusText">Pret</span>
       <span id="scaleText">Echelle: -</span>
+      <span id="networkText">Online</span>
     </div>
 
     <aside id="layersPanel" class="panel panel-left" aria-label="Panneau couches">
@@ -109,8 +153,38 @@
       <button type="button" class="fab-item menu-action" data-action="layers">Couches</button>
       <button type="button" class="fab-item menu-action" data-action="legend">Legende</button>
       <button type="button" class="fab-item menu-action" data-action="analysis">Analyse</button>
+      <button type="button" class="fab-item menu-action" data-action="analysis-modal">Analyse avancee</button>
       <button type="button" class="fab-item menu-action" data-action="routing">Itineraire</button>
       <button type="button" class="fab-item menu-action" data-action="measure">Mesure</button>
+    </div>
+
+    <div id="analysisModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="analysisTitle">
+      <div class="modal-content">
+        <div class="panel-header">
+          <h2 id="analysisTitle">Analyse avancee</h2>
+          <button type="button" class="icon-btn" id="closeAnalysis" aria-label="Fermer analyse">x</button>
+        </div>
+        <div class="panel-body analysis-form">
+          <label>Couche cible
+            <select id="analysisLayer">
+              <option value="Ecoles">Ecoles</option>
+              <option value="Localites">Localites</option>
+              <option value="Routes">Routes</option>
+            </select>
+          </label>
+          <label>Rayon (metres)
+            <input id="analysisRadius" type="number" min="100" max="50000" step="100" value="5000">
+          </label>
+          <label>Maximum resultats
+            <input id="analysisLimit" type="number" min="1" max="200" step="1" value="25">
+          </label>
+          <div class="analysis-actions">
+            <button id="startAnalysis" type="button" class="icon-btn">Choisir point sur carte</button>
+            <button id="clearAnalysis" type="button" class="icon-btn">Nettoyer analyse</button>
+          </div>
+          <div id="analysisResult" class="analysis-result">Aucun resultat.</div>
+        </div>
+      </div>
     </div>
 
     <div id="metadataModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="metadataTitle">
@@ -127,6 +201,15 @@
       </div>
     </div>
 
+    <div id="installToast" class="install-toast" aria-live="polite">
+      <span>Installer l'application GeoWeb Kaffrine ?</span>
+      <div class="install-actions">
+        <button type="button" id="installNow" class="icon-btn">Installer</button>
+        <button type="button" id="installLater" class="icon-btn">Plus tard</button>
+      </div>
+    </div>
+
+    <div id="toastRack" class="toast-rack" aria-live="polite"></div>
     <div id="uiOverlay" class="ui-overlay" aria-hidden="true"></div>
   </div>
 

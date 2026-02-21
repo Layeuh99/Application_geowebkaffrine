@@ -1,13 +1,17 @@
 @media (max-width: 1024px) {
+  .dashboard {
+    width: 320px;
+  }
+
   .panel {
-    width: 300px;
+    width: 310px;
   }
 }
 
 @media (max-width: 768px) {
   .navbar {
-    grid-template-columns: auto 1fr auto;
     display: grid;
+    grid-template-columns: auto 1fr auto auto;
     gap: 8px;
   }
 
@@ -21,25 +25,31 @@
     justify-content: center;
   }
 
+  .brand-subtext,
   .brand-text {
     display: none;
   }
 
-  .map-shell {
-    top: 64px;
+  .mobile-menu .menu-action {
+    min-height: 52px;
   }
 
+  .map-shell {
+    top: 68px;
+  }
+
+  .dashboard,
   .panel {
-    top: 64px;
-    bottom: 40px;
-    width: 100%;
-    left: 0;
-    right: 0;
+    top: 68px;
+    bottom: 42px;
+    left: 6px;
+    right: 6px;
+    width: auto;
+    max-height: none;
   }
 
   .panel-right {
-    right: 0;
-    left: 0;
+    right: 6px;
   }
 
   .fab-button {
@@ -49,6 +59,18 @@
 
   .fab-menu {
     right: 12px;
-    width: min(260px, calc(100vw - 24px));
+    width: min(280px, calc(100vw - 24px));
+  }
+
+  .bottom-bar {
+    padding: 0 8px;
+    font-size: 0.77rem;
+  }
+
+  .install-toast {
+    left: 6px;
+    right: 6px;
+    width: auto;
+    margin-left: 0;
   }
 }

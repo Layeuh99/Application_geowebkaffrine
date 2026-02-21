@@ -3,12 +3,12 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 64px;
+  height: 68px;
   padding: 0 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
   background: var(--surface);
   border-bottom: 1px solid var(--border);
   z-index: 400;
@@ -23,20 +23,30 @@
 }
 
 .brand-logo {
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
+  border-radius: 8px;
   color: var(--on-primary);
   background: var(--primary);
   font-weight: 700;
 }
 
+.brand-copy {
+  display: grid;
+  line-height: 1.05;
+}
+
 .brand-text {
   font-weight: 700;
   white-space: nowrap;
+}
+
+.brand-subtext {
+  font-size: 0.72rem;
+  color: var(--muted);
 }
 
 .desktop-nav {
@@ -60,20 +70,29 @@
 .nav-btn {
   min-height: 40px;
   border: 1px solid var(--border);
-  background: var(--surface);
+  background: var(--surface-alt);
   color: var(--text);
-  padding: 0 10px;
+  padding: 0 12px;
   cursor: pointer;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.nav-btn:hover,
+.dropdown.open .nav-btn {
+  background: var(--surface);
 }
 
 .dropdown-menu {
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
-  min-width: 190px;
+  min-width: 220px;
   display: none;
   border: 1px solid var(--border);
   background: var(--surface);
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(18, 27, 51, 0.12);
 }
 
 .dropdown.open .dropdown-menu {
@@ -92,6 +111,10 @@
   cursor: pointer;
 }
 
+.menu-action:hover {
+  background: var(--surface-alt);
+}
+
 .menu-action:last-child {
   border-bottom: 0;
 }
@@ -102,7 +125,7 @@
 
 .mobile-menu {
   position: fixed;
-  top: 64px;
+  top: 68px;
   left: 0;
   right: 0;
   display: none;
@@ -118,7 +141,7 @@
 .fab-button {
   position: fixed;
   right: 16px;
-  bottom: 56px;
+  bottom: 64px;
   width: 56px;
   height: 56px;
   border-radius: 999px;
@@ -128,17 +151,20 @@
   font-size: 1.5rem;
   cursor: pointer;
   z-index: 650;
+  box-shadow: 0 10px 24px rgba(30, 94, 255, 0.25);
 }
 
 .fab-menu {
   position: fixed;
   right: 16px;
-  bottom: 118px;
-  width: 220px;
+  bottom: 128px;
+  width: 260px;
   border: 1px solid var(--border);
   background: var(--surface);
   z-index: 650;
   display: none;
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(18, 27, 51, 0.14);
 }
 
 .fab-menu.open {
