@@ -49,13 +49,42 @@
   function layerDefinitions() {
     const c = stylePalette();
     return [
-      { key: "Region", label: "Région", dataVar: "json_Region_3", type: "polygon", style: colorStyle(c.outline, c.region, 2), legend: c.region },
-      { key: "Departement", label: "Département", dataVar: "json_Departement_4", type: "polygon", style: colorStyle(c.outline, c.departement, 1.5), legend: c.departement },
-      { key: "Arrondissement", label: "Arrondissement", dataVar: "json_Arrondissement_5", type: "polygon", style: colorStyle(c.outline, c.arrondissement, 1), legend: c.arrondissement },
-      { key: "Routes", label: "Routes", dataVar: "json_Routes_6", type: "line", style: { color: c.routes, opacity: 0.95, weight: 2 }, legend: c.routes },
-      { key: "Localites", label: "Localités", dataVar: "json_Localites_7", type: "point", style: { radius: 4, color: c.outline, fillColor: c.localites, fillOpacity: 0.85, opacity: 1, weight: 1 }, legend: c.localites },
-      { key: "Ecoles", label: "Écoles", dataVar: "json_Ecoles_8", type: "point", style: { radius: 5, color: c.outline, fillColor: c.ecoles, fillOpacity: 0.9, opacity: 1, weight: 1 }, legend: c.ecoles }
+      { key: "Region", label: "Région", group: "Limites administratives", dataVar: "json_Region_3", type: "polygon", style: colorStyle(c.outline, c.region, 2), legend: c.region },
+      { key: "Departement", label: "Département", group: "Limites administratives", dataVar: "json_Departement_4", type: "polygon", style: colorStyle(c.outline, c.departement, 1.5), legend: c.departement },
+      { key: "Arrondissement", label: "Arrondissement", group: "Limites administratives", dataVar: "json_Arrondissement_5", type: "polygon", style: colorStyle(c.outline, c.arrondissement, 1), legend: c.arrondissement },
+      { key: "Localites", label: "Localités", group: "Occupation du territoire", dataVar: "json_Localites_7", type: "point", style: { radius: 4, color: c.outline, fillColor: c.localites, fillOpacity: 0.85, opacity: 1, weight: 1 }, legend: c.localites },
+      { key: "Ecoles", label: "Écoles", group: "Services essentiels", dataVar: "json_Ecoles_8", type: "point", style: { radius: 5, color: c.outline, fillColor: c.ecoles, fillOpacity: 0.9, opacity: 1, weight: 1 }, legend: c.ecoles },
+      { key: "Routes", label: "Routes", group: "Réseaux et mobilité", dataVar: "json_Routes_6", type: "line", style: { color: c.routes, opacity: 0.95, weight: 2 }, legend: c.routes }
     ];
+  }
+
+  function toTitleCaseKey(key) {
+    if (!key) return "";
+    const cleaned = String(key).replace(/_/g, " ").trim();
+    return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+  }
+
+  function featureLabel(feature, fallback) {
+    if (!feature || !feature.properties) return fallback || "Entité";
+    const p = feature.properties;
+    return p.NOM || p.Nom || p.nom || p.NAME || p.Name || p.arr || p.dept || p.Region || p.Code || fallback || "Entité";
+  }
+
+  function popupHtml(feature, layerLabel) {
+    if (!feature || !feature.properties) {
+      return "<strong>" + (layerLabel || "Entité") + "</strong><br>Aucune donnée attributaire.";
+    }
+    const p = feature.properties;
+    const rows = Object.keys(p)
+      .filter((k) => p[k] !== null && p[k] !== undefined && String(p[k]).trim() !== "")
+      .slice(0, 10)
+      .map((k) => "<div><strong>" + toTitleCaseKey(k) + ":</strong> " + String(p[k]) + "</div>")
+      .join("");
+    return "<strong>" + featureLabel(feature, layerLabel) + "</strong>" + (rows ? "<hr>" + rows : "");
+  }
+
+  function bindFeatureInteractivity(feature, layer, def) {
+    layer.bindPopup(popupHtml(feature, def.label));
   }
 
   function ensureMap() {
@@ -71,10 +100,23 @@
       attribution: "&copy; OpenStreetMap"
     });
 
-    basemaps.toner = L.tileLayer("https://stamen-tiles.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png", {
-      maxZoom: 20,
-      attribution: "&copy; Stadia Maps, OpenStreetMap"
+    const esriImagery = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+      maxZoom: 19,
+      attribution: "Tiles &copy; Esri"
     });
+    const esriLabels = L.tileLayer("https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}", {
+      maxZoom: 19,
+      attribution: "Labels &copy; Esri"
+    });
+
+    basemaps.hybrid = L.layerGroup([esriImagery, esriLabels]);
+    basemaps.dark = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+      subdomains: "abcd",
+      maxZoom: 20,
+      attribution: "&copy; OpenStreetMap &copy; CARTO"
+    });
+    // Compatibilite ancienne action UI.
+    basemaps.toner = basemaps.dark;
 
     basemaps.osm.addTo(map);
     map.fitBounds(fullExtent);
@@ -97,7 +139,9 @@
     map.removeLayer(basemaps[activeBasemap]);
     basemaps[type].addTo(map);
     activeBasemap = type;
-    setStatus(type === "toner" ? "Fond contraste actif" : "Fond OSM actif");
+    if (type === "hybrid") setStatus("Fond hybride actif");
+    else if (type === "dark" || type === "toner") setStatus("Fond sombre actif");
+    else setStatus("Fond OSM actif");
   }
 
   function toLayer(def) {
@@ -106,10 +150,14 @@
 
     if (def.type === "point") {
       return L.geoJSON(data, {
-        pointToLayer: (_, latlng) => L.circleMarker(latlng, def.style)
+        pointToLayer: (_, latlng) => L.circleMarker(latlng, def.style),
+        onEachFeature: (feature, layer) => bindFeatureInteractivity(feature, layer, def)
       });
     }
-    return L.geoJSON(data, { style: def.style });
+    return L.geoJSON(data, {
+      style: def.style,
+      onEachFeature: (feature, layer) => bindFeatureInteractivity(feature, layer, def)
+    });
   }
 
   function initLayers() {
@@ -150,6 +198,21 @@
 
   function getLayerState() {
     return layerState;
+  }
+
+  function getBasemapState() {
+    const label = activeBasemap === "hybrid"
+      ? "Fond hybride"
+      : ((activeBasemap === "dark" || activeBasemap === "toner") ? "Fond sombre" : "Fond OSM");
+    return {
+      active: activeBasemap,
+      label: label,
+      items: [
+        { key: "osm", label: "Fond OSM" },
+        { key: "hybrid", label: "Fond hybride" },
+        { key: "dark", label: "Fond sombre" }
+      ]
+    };
   }
 
   function setLayerVisibility(key, visible) {
@@ -406,6 +469,7 @@
     initLayers,
     refreshThemeStyles,
     getLayerState,
+    getBasemapState,
     setLayerVisibility,
     setLayerOpacity,
     switchBasemap,

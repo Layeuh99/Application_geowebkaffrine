@@ -31,10 +31,8 @@
   }
 
   function overlayState() {
-    const panelOpen = document.querySelector(".panel.open");
-    const dashboardOpen = document.querySelector(".dashboard.open");
     const modalOpen = document.querySelector(".modal.open");
-    return Boolean(panelOpen || dashboardOpen || modalOpen || state.mobileMenuOpen);
+    return Boolean(modalOpen || state.mobileMenuOpen);
   }
 
   function setOverlay() {
@@ -154,39 +152,86 @@
     const container = byId("layersList");
     if (!container) return;
     const layers = MapModule.getLayerState();
-    const rows = Object.keys(layers).map((key) => {
+    const groups = {};
+
+    Object.keys(layers).forEach((key) => {
       const item = layers[key];
-      const checked = item.active ? "checked" : "";
-      const opacity = Math.round(item.opacity * 100);
+      const groupName = item.def.group || "Autres couches";
+      if (!groups[groupName]) groups[groupName] = [];
+      groups[groupName].push({ key: key, item: item });
+    });
+
+    const html = Object.keys(groups).map((groupName) => {
+      const rows = groups[groupName].map((entry) => {
+        const item = entry.item;
+        const key = entry.key;
+        const checked = item.active ? "checked" : "";
+        const opacity = Math.round(item.opacity * 100);
+        return (
+          '<div class="layer-row">' +
+          '<div class="layer-top">' +
+          '<label><input type="checkbox" data-layer-toggle="' + key + '" ' + checked + "> " + item.def.label + "</label>" +
+          '<span>' + opacity + "%</span>" +
+          "</div>" +
+          '<input type="range" min="0" max="100" value="' + opacity + '" data-layer-opacity="' + key + '">' +
+          "</div>"
+        );
+      }).join("");
+
       return (
-        '<div class="layer-row">' +
-        '<div class="layer-top">' +
-        '<label><input type="checkbox" data-layer-toggle="' + key + '" ' + checked + "> " + item.def.label + "</label>" +
-        '<span>' + opacity + "%</span>" +
-        "</div>" +
-        '<input type="range" min="0" max="100" value="' + opacity + '" data-layer-opacity="' + key + '">' +
+        '<div class="layer-group">' +
+        '<div class="layer-group-title">' + groupName + "</div>" +
+        rows +
         "</div>"
       );
-    });
-    container.innerHTML = rows.join("");
+    }).join("");
+
+    container.innerHTML = html;
   }
 
   function renderLegend() {
     const container = byId("legendContent");
     if (!container) return;
     const layers = MapModule.getLayerState();
-    const rows = Object.keys(layers)
-      .filter((key) => layers[key].active)
-      .map((key) => {
-        const item = layers[key];
-        return (
-          '<div class="legend-row">' +
-          '<span class="legend-chip legend-chip-' + key.toLowerCase() + '"></span>' +
-          "<span>" + item.def.label + "</span>" +
-          "</div>"
-        );
-      });
-    container.innerHTML = rows.length ? rows.join("") : "<p>Aucune couche active.</p>";
+    const basemap = MapModule.getBasemapState ? MapModule.getBasemapState() : {
+      active: "osm",
+      items: [
+        { key: "osm", label: "Fond OSM" },
+        { key: "hybrid", label: "Fond hybride" },
+        { key: "dark", label: "Fond sombre" }
+      ]
+    };
+
+    const basemapRows = basemap.items.map((item) => {
+      const active = item.key === basemap.active;
+      const chipColor = item.key === "osm" ? "#3b82f6" : (item.key === "hybrid" ? "#0ea5a4" : "#6d28d9");
+      const state = active ? "Actif" : "Inactif";
+      return (
+        '<div class="legend-row' + (active ? "" : " legend-row-muted") + '">' +
+        '<span class="legend-chip" style="background:' + chipColor + ';"></span>' +
+        "<span>" + item.label + " (" + state + ")</span>" +
+        "</div>"
+      );
+    });
+
+    const layerRows = Object.keys(layers).map((key) => {
+      const item = layers[key];
+      const active = Boolean(item.active);
+      const state = active ? "Actif" : "Inactif";
+      const color = item.def.legend || "var(--surface-alt)";
+      return (
+        '<div class="legend-row' + (active ? "" : " legend-row-muted") + '">' +
+        '<span class="legend-chip" style="background:' + color + ';"></span>' +
+        "<span>" + item.def.label + " (" + state + ")</span>" +
+        "</div>"
+      );
+    });
+
+    container.innerHTML =
+      '<div class="legend-section-title">Fonds de carte</div>' +
+      basemapRows.join("") +
+      '<div class="legend-section-title">Couches</div>' +
+      (layerRows.length ? layerRows.join("") : "<p>Aucune couche chargée.</p>");
   }
 
   function renderDashboard() {
@@ -296,8 +341,16 @@
         addActivity("Fond OSM");
         break;
       case "basemap-toner":
-        MapModule.switchBasemap("toner");
-        addActivity("Fond contraste");
+        MapModule.switchBasemap("dark");
+        addActivity("Fond sombre");
+        break;
+      case "basemap-hybrid":
+        MapModule.switchBasemap("hybrid");
+        addActivity("Fond hybride");
+        break;
+      case "basemap-dark":
+        MapModule.switchBasemap("dark");
+        addActivity("Fond sombre");
         break;
       case "zoom-in":
         MapModule.zoomIn();

@@ -268,3 +268,98 @@ body.theme-neo-ultra {
     font-size: 30px;
   }
 }
+
+/* Cyber Spatial Command Center: effets visuels avancés (CSS-only) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(0, 245, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 245, 255, 0.05) 1px, transparent 1px);
+  background-size: 80px 80px;
+  animation: gridMove 30s linear infinite;
+  z-index: 0;
+}
+
+@keyframes gridMove {
+  from { background-position: 0 0; }
+  to { background-position: 200px 200px; }
+}
+
+#map {
+  position: relative;
+}
+
+#map::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center, rgba(0, 255, 255, 0.06) 0%, transparent 60%);
+  animation: radarPulse 6s infinite linear;
+  z-index: 150;
+}
+
+@keyframes radarPulse {
+  0% { transform: scale(0.9); opacity: 0.4; }
+  50% { transform: scale(1.05); opacity: 0.15; }
+  100% { transform: scale(0.9); opacity: 0.4; }
+}
+
+.btn-primary,
+.active,
+.fab-button {
+  animation: softPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes softPulse {
+  0% { box-shadow: 0 0 5px rgba(0, 255, 255, 0.4); }
+  50% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.8); }
+  100% { box-shadow: 0 0 5px rgba(0, 255, 255, 0.4); }
+}
+
+.navbar {
+  box-shadow:
+    0 0 15px rgba(0, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(0, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+  body::before {
+    background-image:
+      linear-gradient(rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 245, 255, 0.03) 1px, transparent 1px);
+    background-size: 96px 96px;
+    animation-duration: 42s;
+  }
+
+  #map::after {
+    background: radial-gradient(circle at center, rgba(0, 255, 255, 0.04) 0%, transparent 62%);
+    animation-duration: 8s;
+    opacity: 0.75;
+  }
+
+  .fab-button,
+  .active,
+  .btn-primary {
+    animation-duration: 3.2s;
+  }
+
+  .navbar {
+    box-shadow:
+      0 0 10px rgba(0, 255, 255, 0.14),
+      inset 0 -1px 0 rgba(0, 255, 255, 0.16);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  #map::after,
+  .btn-primary,
+  .active,
+  .fab-button {
+    animation: none !important;
+  }
+}

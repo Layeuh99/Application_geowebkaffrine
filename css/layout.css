@@ -273,11 +273,37 @@
   margin-top: 8px;
 }
 
+.layer-group {
+  margin-bottom: 12px;
+}
+
+.layer-group-title {
+  margin: 2px 0 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
 .legend-row {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-bottom: 8px;
+}
+
+.legend-section-title {
+  margin: 10px 0 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.legend-row-muted {
+  opacity: 0.62;
 }
 
 .legend-chip {

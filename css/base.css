@@ -88,6 +88,10 @@ select {
   box-shadow: var(--shadow-strong);
 }
 
+.leaflet-interactive {
+  cursor: pointer;
+}
+
 .status-ok {
   color: var(--ok);
 }
