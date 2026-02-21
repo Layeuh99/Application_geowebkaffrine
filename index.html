@@ -206,7 +206,7 @@
                 <li class="mobile-menu-item">
                     <a href="#" onclick="toggleRightPanel()" role="menuitem">
                         <i class="fas fa-palette"></i>
-                        <span>Légende</span>
+                        <span>Fonds & Legende</span>
                     </a>
                 </li>
                 <li class="mobile-menu-item">
@@ -230,7 +230,7 @@
                 <li class="mobile-menu-item">
                     <a href="#" onclick="toggleMeasure()" role="menuitem">
                         <i class="fas fa-ruler-combined"></i>
-                        <span>Mesure</span>
+                        <span>Mesurer</span>
                     </a>
                 </li>
                 <li class="mobile-menu-item">
@@ -262,6 +262,7 @@
                 <i class="fas fa-mobile-alt"></i>
             </div>
         </nav>
+        </header>
 
         <!-- Modal de Bienvenue avec Tutoriel -->
         <div id="welcomeModal" class="modal welcome-modal">
@@ -292,7 +293,7 @@
                         <div class="tutorial-step">
                             <div class="step-number">2</div>
                             <div class="step-content">
-                                <h4><i class="fas fa-search"></i> Rechercher des informations</h4>
+                                <h4><i class="fas fa-search"></i> Requete attributaire</h4>
                                 <p>Utilisez la fonction de recherche pour trouver un établissement scolaire ou une localité spécifique.</p>
                             </div>
                         </div>
@@ -300,7 +301,7 @@
                         <div class="tutorial-step">
                             <div class="step-number">3</div>
                             <div class="step-content">
-                                <h4><i class="fas fa-chart-line"></i> Analyser</h4>
+                                <h4><i class="fas fa-chart-line"></i> Analyse spatiale</h4>
                                 <p>Utilisez les outils d'analyse spatiale et de mesure pour étudier les zones et calculer des distances.</p>
                             </div>
                         </div>
@@ -514,9 +515,9 @@
                 <i class="fas fa-th"></i>
                 <span class="mobile-panel-label">Couches</span>
             </button>
-            <button class="mobile-panel-btn" onclick="toggleRightPanel()" title="Légende">
+            <button class="mobile-panel-btn" onclick="toggleRightPanel()" title="Fonds et Legende">
                 <i class="fas fa-palette"></i>
-                <span class="mobile-panel-label">Légende</span>
+                <span class="mobile-panel-label">Fonds & Legende</span>
             </button>
             <button class="mobile-panel-btn" onclick="showInstallModal()" title="Installer">
                 <i class="fas fa-download"></i>
@@ -559,11 +560,11 @@
                         <div class="step-icon">
                             <i class="fas fa-search"></i>
                         </div>
-                        <h3>Rechercher</h3>
+                        <h3>Requete attributaire</h3>
                         <p>Trouvez rapidement une école, une localité ou n'importe quel point d'intérêt dans la région.</p>
                         <div class="step-actions">
                             <button class="btn btn-outline" onclick="showAttributeQuery(); closeMiniTutorial();">
-                                <i class="fas fa-search"></i> Lancer une recherche
+                                <i class="fas fa-search"></i> Lancer une requete
                             </button>
                         </div>
                     </div>
@@ -573,11 +574,11 @@
                         <div class="step-icon">
                             <i class="fas fa-chart-line"></i>
                         </div>
-                        <h3>Analyser</h3>
+                        <h3>Analyse spatiale</h3>
                         <p>Effectuez des analyses spatiales autour d'un point pour trouver les écoles, localités ou infrastructures à proximité.</p>
                         <div class="step-actions">
                             <button class="btn btn-outline" onclick="showSpatialQuery(); closeMiniTutorial();">
-                                <i class="fas fa-map"></i> Lancer une analyse
+                                <i class="fas fa-map"></i> Lancer une analyse spatiale
                             </button>
                         </div>
                     </div>
@@ -678,7 +679,7 @@
         <div id="spatialQueryModal" class="modal">
             <div class="modal-content" style="max-width: 500px;">
                 <span class="modal-close" onclick="closeModal('spatialQueryModal')">&times;</span>
-                <h2><i class="fas fa-map"></i> Analyser autour d'un point</h2>
+                <h2><i class="fas fa-map"></i> Analyse spatiale autour d'un point</h2>
                 <div style="padding: 20px;">
                     
                     <!-- Étape 1: Choisir la couche cible -->
@@ -969,7 +970,7 @@
         <div id="attributeQueryModal" class="modal">
             <div class="modal-content">
                 <span class="modal-close" onclick="closeModal('attributeQueryModal')">&times;</span>
-                <h2><i class="fas fa-database"></i> Rechercher des informations</h2>
+                <h2><i class="fas fa-database"></i> Requete attributaire</h2>
                 <div style="padding: 20px;">
                     <!-- Étape 1: Choisir la couche -->
                     <div id="attrStep1" style="margin-bottom: 20px;">
@@ -1071,7 +1072,7 @@
         <div class="fab-menu" id="fabMenu">
             <div class="fab-item" onclick="showSpatialQuery(); closeFabMenu();">
                 <span>🗺️</span>
-                <span>Analyser</span>
+                <span>Analyse spatiale</span>
             </div>
             <div class="fab-item" onclick="enableRoutingMode(); closeFabMenu();">
                 <span>🛣️</span>
@@ -1079,7 +1080,7 @@
             </div>
             <div class="fab-item" onclick="showAttributeQuery(); closeFabMenu();">
                 <span>🔍</span>
-                <span>Rechercher</span>
+                <span>Requete attributaire</span>
             </div>
             <div class="fab-item" onclick="toggleMeasure(); closeFabMenu();">
                 <span>📏</span>
@@ -1136,3 +1137,6 @@
         };
     }
 </script>
+
+</body>
+</html>
