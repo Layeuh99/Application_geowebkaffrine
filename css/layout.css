@@ -113,6 +113,32 @@
   z-index: 500;
 }
 
+.data-quick-bar {
+  position: fixed;
+  left: 50%;
+  bottom: 48px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 14px;
+  z-index: 500;
+}
+
+.quick-btn {
+  min-height: 48px;
+  min-width: 120px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface-alt);
+  color: var(--text);
+  cursor: pointer;
+  padding: 0 12px;
+}
+
 .panel {
   position: fixed;
   top: 68px;

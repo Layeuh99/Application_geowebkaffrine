@@ -12,6 +12,9 @@
   --text-muted: #c9b2b2;
 
   --border-color: rgba(255, 90, 0, 0.2);
+  --ring-color: rgba(255, 174, 0, 0.5);
+  --glow-soft: 0 0 0 1px rgba(255, 122, 0, 0.14), 0 8px 24px rgba(255, 60, 0, 0.2);
+  --glow-strong: 0 0 0 1px rgba(255, 174, 0, 0.22), 0 12px 30px rgba(255, 122, 0, 0.32);
 
   /* Mapping vers l'architecture existante */
   --bg: var(--bg-main);
@@ -33,9 +36,18 @@ body {
   color: var(--text-main);
 }
 
+.ambient-bg {
+  background:
+    radial-gradient(circle at 18% 14%, rgba(255, 60, 0, 0.16), transparent 38%),
+    radial-gradient(circle at 82% 10%, rgba(255, 122, 0, 0.12), transparent 35%),
+    radial-gradient(circle at 72% 84%, rgba(255, 174, 0, 0.08), transparent 32%),
+    var(--bg-main);
+}
+
 .navbar {
   background: linear-gradient(90deg, #1b0f0f, #2a1111);
   border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--glow-soft);
 }
 
 .navbar-menu li a,
@@ -51,6 +63,7 @@ body {
 .dropdown.open .nav-btn {
   color: var(--accent);
   text-shadow: 0 0 6px var(--primary);
+  box-shadow: inset 0 0 0 1px rgba(255, 122, 0, 0.2);
 }
 
 .sidebar-left,
@@ -65,11 +78,14 @@ body {
 .panel-header {
   background: linear-gradient(90deg, #2a1414, #3a1515);
   border-bottom: 1px solid var(--border-color);
+  box-shadow: inset 0 -1px 0 rgba(255, 122, 0, 0.12);
 }
 
 .fab-button {
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   box-shadow: 0 0 15px rgba(255, 60, 0, 0.5);
+  color: #fff;
+  border: 1px solid rgba(255, 174, 0, 0.38);
 }
 
 .fab-button:hover {
@@ -82,9 +98,11 @@ body {
 .modal-content,
 .dashboard,
 .install-toast,
-.toast {
+.toast,
+.data-quick-bar {
   background: #1a1010;
   border: 1px solid var(--border-color);
+  box-shadow: var(--glow-soft);
 }
 
 .dropdown-menu li:hover,
@@ -93,6 +111,7 @@ body {
 .fab-menu .menu-action:hover,
 .fab-menu .fab-item:hover {
   background: var(--bg-hover);
+  box-shadow: inset 2px 0 0 var(--secondary);
 }
 
 .mobile-bottom-bar,
@@ -115,6 +134,7 @@ body {
 .icon-btn,
 .menu-action,
 .nav-btn,
+.quick-btn,
 .kpi-card,
 .layer-row,
 .analysis-result,
@@ -123,11 +143,99 @@ body {
   background: var(--bg-panel);
   color: var(--text-main);
   border-color: var(--border-color);
+  box-shadow: var(--glow-soft);
+}
+
+/* Boutons fantaisistes "Volcanic Command" */
+.icon-btn,
+.nav-btn,
+.menu-action,
+.quick-btn,
+.fab-item {
+  border: 1px solid rgba(255, 122, 0, 0.35);
+  background:
+    linear-gradient(180deg, rgba(255, 174, 0, 0.08) 0%, rgba(255, 60, 0, 0.04) 100%),
+    linear-gradient(135deg, #2b1717 0%, #1c1111 100%);
+  color: var(--text-main);
+  border-radius: 14px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 210, 170, 0.18),
+    0 0 0 1px rgba(255, 122, 0, 0.12),
+    0 8px 20px rgba(0, 0, 0, 0.34);
+}
+
+.icon-btn:hover,
+.nav-btn:hover,
+.menu-action:hover,
+.quick-btn:hover,
+.fab-item:hover {
+  background:
+    linear-gradient(180deg, rgba(255, 193, 77, 0.14) 0%, rgba(255, 122, 0, 0.08) 100%),
+    linear-gradient(135deg, #342020 0%, #221414 100%);
+  color: var(--accent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 230, 190, 0.2),
+    0 0 0 1px rgba(255, 174, 0, 0.22),
+    0 10px 26px rgba(255, 90, 0, 0.3);
+}
+
+.icon-btn:active,
+.nav-btn:active,
+.menu-action:active,
+.quick-btn:active,
+.fab-item:active {
+  background:
+    linear-gradient(180deg, rgba(255, 174, 0, 0.18) 0%, rgba(255, 60, 0, 0.1) 100%),
+    linear-gradient(135deg, #2a1919 0%, #1a1010 100%);
+  color: #ffd7a6;
+}
+
+.install-actions .icon-btn,
+.analysis-actions .icon-btn {
+  font-weight: 700;
+  letter-spacing: 0.2px;
 }
 
 .icon-btn:hover,
 .menu-action:hover {
   background: var(--bg-hover);
+  box-shadow: var(--glow-strong);
+}
+
+.kpi-card h3,
+.brand-subtext,
+.bottom-bar,
+#networkText {
+  color: var(--text-muted);
+}
+
+.kpi-card p,
+.panel-header h2,
+.dashboard-head h2 {
+  color: var(--text-main);
+}
+
+.analysis-form input::placeholder {
+  color: var(--text-muted);
+}
+
+.analysis-result strong,
+.status-ok,
+.status-warn,
+.status-danger {
+  text-shadow: 0 0 8px rgba(255, 122, 0, 0.25);
+}
+
+.icon-btn:focus-visible,
+.menu-action:focus-visible,
+.nav-btn:focus-visible,
+.quick-btn:focus-visible,
+.fab-button:focus-visible,
+.dropdown-toggle:focus-visible,
+#themeToggle:focus-visible,
+#mobileMenuToggle:focus-visible {
+  outline: 2px solid var(--ring-color);
+  outline-offset: 2px;
 }
 
 .leaflet-container {
@@ -150,6 +258,13 @@ body.dark-theme {
   --text-main: #fff0e8;
   --text-muted: #d7b7a6;
   --border-color: rgba(255, 106, 0, 0.3);
+  --ring-color: rgba(255, 193, 77, 0.62);
+  --glow-soft: 0 0 0 1px rgba(255, 122, 0, 0.2), 0 10px 28px rgba(0, 0, 0, 0.46);
+  --glow-strong: 0 0 0 1px rgba(255, 193, 77, 0.35), 0 14px 34px rgba(0, 0, 0, 0.6);
   --primary-strong: #de3a0c;
   --overlay: rgba(9, 3, 3, 0.72);
+}
+
+body.dark-theme .leaflet-tile {
+  filter: brightness(0.82) contrast(1.16) saturate(1.06);
 }

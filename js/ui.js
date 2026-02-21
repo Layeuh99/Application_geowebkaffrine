@@ -451,11 +451,11 @@
 
     const brand = byId("brandHome");
     if (brand) {
-      brand.addEventListener("click", () => handleMenuAction("home"));
+      brand.addEventListener("click", () => window.location.reload());
       brand.addEventListener("keydown", (event) => {
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
-          handleMenuAction("home");
+          window.location.reload();
         }
       });
     }
