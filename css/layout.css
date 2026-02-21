@@ -1,0 +1,157 @@
+.map-shell {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  bottom: 40px;
+  z-index: 100;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+.leaflet-control-container {
+  z-index: 200;
+}
+
+.bottom-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 40px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  z-index: 500;
+}
+
+.panel {
+  position: fixed;
+  top: 64px;
+  bottom: 40px;
+  width: 320px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  z-index: 600;
+  display: none;
+  overflow: auto;
+}
+
+.panel.open {
+  display: block;
+}
+
+.panel-left {
+  left: 0;
+  border-left: 0;
+}
+
+.panel-right {
+  right: 0;
+  border-right: 0;
+}
+
+.panel-header {
+  min-height: 56px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.panel-header h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.panel-body {
+  padding: 10px 12px;
+}
+
+.ui-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  z-index: 800;
+  display: none;
+}
+
+.ui-overlay.show {
+  display: block;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 700;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal.open {
+  display: flex;
+}
+
+.modal-content {
+  width: min(560px, 100%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.icon-btn {
+  min-width: 48px;
+  min-height: 48px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.layer-row {
+  border: 1px solid var(--border);
+  padding: 8px;
+  margin-bottom: 8px;
+}
+
+.layer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.layer-row input[type="range"] {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.legend-chip {
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--border);
+}
+
+.legend-chip-region { background: #93c5fd; }
+.legend-chip-departement { background: #86efac; }
+.legend-chip-arrondissement { background: #fdba74; }
+.legend-chip-routes { background: #dc2626; }
+.legend-chip-localites { background: #60a5fa; }
+.legend-chip-ecoles { background: #f87171; }

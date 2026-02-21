@@ -1,0 +1,15 @@
+body.dark-theme {
+  --bg: #0b1221;
+  --surface: #101a2f;
+  --text: #e5edf8;
+  --muted: #9fb0c9;
+  --primary: #3b82f6;
+  --primary-strong: #2563eb;
+  --on-primary: #ffffff;
+  --border: #24324f;
+  --overlay: rgba(2, 6, 23, 0.6);
+}
+
+body.dark-theme .legend-chip {
+  border-color: var(--border);
+}
