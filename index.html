@@ -70,9 +70,9 @@
                                     <i class="fas fa-info-circle"></i>
                                     <span>À propos</span>
                                 </a>
-                                <a href="#" onclick="showMetadata()" role="menuitem">
-                                    <i class="fas fa-info"></i>
-                                    <span>Métadonnées</span>
+                                <a href="#" onclick="showMiniTutorial()" role="menuitem">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>Tutoriel rapide</span>
                                 </a>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                     </a>
                     <div class="dropdown-menu">
                         <div class="dropdown-section">
-                            <h6 class="dropdown-title">Couches et fonds</h6>
+                            <h6 class="dropdown-title">Gestion des données</h6>
                             <div class="dropdown-items">
                                 <a href="#" onclick="toggleLeftPanel()" role="menuitem">
                                     <i class="fas fa-layer-group"></i>
@@ -97,6 +97,10 @@
                                 <a href="#" onclick="toggleRightPanel()" role="menuitem">
                                     <i class="fas fa-palette"></i>
                                     <span>Fonds & Légende</span>
+                                </a>
+                                <a href="#" onclick="showMetadata()" role="menuitem">
+                                    <i class="fas fa-info"></i>
+                                    <span>Métadonnées</span>
                                 </a>
                             </div>
                         </div>
@@ -129,22 +133,22 @@
                     </a>
                     <div class="dropdown-menu">
                         <div class="dropdown-section">
-                            <h6 class="dropdown-title">Outils d'analyse</h6>
+                            <h6 class="dropdown-title">Traitements</h6>
                             <div class="dropdown-items">
                                 <a href="#" onclick="showAttributeQuery()" role="menuitem">
                                     <i class="fas fa-search"></i>
-                                    <span>Rechercher</span>
+                                    <span>Requête attributaire</span>
                                 </a>
                                 <a href="#" onclick="showSpatialQuery()" role="menuitem">
                                     <i class="fas fa-map"></i>
-                                    <span>Analyser</span>
+                                    <span>Analyse spatiale</span>
                                 </a>
                                 <a href="#" onclick="enableRoutingMode()" role="menuitem">
                                     <i class="fas fa-road"></i>
                                     <span>Itinéraire</span>
                                 </a>
                                 <a href="#" onclick="clearRouting()" role="menuitem" class="clear-routing-btn">
-                                    <i class="fas fa-trash"></i> Réinitialiser
+                                    <i class="fas fa-trash"></i> Réinitialiser itinéraire
                                 </a>
                                 <a href="#" onclick="toggleMeasure()" role="menuitem">
                                     <i class="fas fa-ruler-combined"></i>

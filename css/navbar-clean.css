@@ -344,120 +344,10 @@
     transform: none !important;
 }
 
-/* ============================================
-   MOBILE - ADAPTATION PROPRE
-   ============================================ */
-@media (max-width: 768px) {
-    .navbar {
-        padding: 0 12px !important;
-        height: 56px !important;
-        display: grid !important;
-        grid-template-columns: 1fr auto 1fr !important;
-        align-items: center !important;
-    }
-    
-    .brand-text {
-        display: none !important;
-    }
-    
-    .logo-container {
-        width: 28px !important;
-        height: 28px !important;
-        min-width: 28px !important;
-        max-width: 28px !important;
-        min-height: 28px !important;
-        max-height: 28px !important;
-    }
-    
-    .navbar-brand {
-        justify-self: start !important;
-    }
-
-    .navbar-toggle {
-        justify-self: center !important;
-    }
-
-    .theme-toggle {
-        justify-self: end !important;
-    }
-
-    .install-toggle {
-        display: none !important;
-    }
-
-    .navbar-menu {
-        position: fixed !important;
-        top: 56px !important;
-        left: 0 !important;
-        right: 0 !important;
-        width: 100% !important;
-        background: var(--bg) !important;
-        color: var(--text) !important;
-        border-top: 1px solid var(--border) !important;
-        display: none !important;
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: 0 !important;
-        padding: 8px 0 !important;
-        z-index: 600 !important;
-        max-height: calc(100dvh - 56px) !important;
-        overflow-y: auto !important;
-        transform: none !important;
-    }
-
-    .navbar-menu.active {
-        display: flex !important;
-        animation: mobileMenuSlide 0.2s ease;
-    }
-
-    .navbar-menu li {
-        width: 100% !important;
-        height: auto !important;
-    }
-
-    .navbar-menu .dropdown {
-        display: none !important;
-    }
-
-    .navbar-menu .mobile-menu-item {
-        display: block !important;
-    }
-
-    .navbar-menu .mobile-menu-item a {
-        display: flex !important;
-        align-items: center !important;
-        gap: 12px !important;
-        padding: 12px 16px !important;
-        color: var(--text) !important;
-        text-decoration: none !important;
-        border-bottom: 1px solid var(--border) !important;
-    }
-
-    .navbar-menu .mobile-menu-item a:hover {
-        background: var(--border) !important;
-    }
-    
-    #map {
-        height: calc(100dvh - 56px) !important;
-        top: 56px !important;
-    }
-    
-    .map-container {
-        height: calc(100dvh - 56px) !important;
-        margin-top: 56px !important;
-    }
-}
-
-@keyframes mobileMenuSlide {
-    from {
-        opacity: 0;
-        transform: translateY(-8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+/* NOTE:
+   Les règles mobile de la navbar sont centralisées dans ui-structure-clean.css
+   pour éviter les doublons et conflits d'affichage.
+*/
 
 /* ============================================
    SUPPRESSION DES CONFLITS HÉRITÉS
@@ -482,11 +372,13 @@
     overflow: visible !important;
 }
 
-/* Forcer les hauteurs correctes */
-.navbar {
-    height: 60px !important;
-    max-height: 60px !important;
-    min-height: 60px !important;
+/* Forcer les hauteurs correctes (desktop uniquement) */
+@media (min-width: 769px) {
+    .navbar {
+        height: 60px !important;
+        max-height: 60px !important;
+        min-height: 60px !important;
+    }
 }
 
 /* Bouton clear routing spécial */
