@@ -148,12 +148,16 @@
     }).join("");
   }
 
-  function renderLayersPanel() {
-    const container = byId("layersList");
-    if (!container) return;
-    const layers = MapModule.getLayerState();
-    const groups = {};
+  function buildLayerCategories(layers) {
+    const preferredOrder = [
+      "Limites administratives",
+      "Réseaux et mobilité",
+      "Occupation du territoire",
+      "Services essentiels",
+      "Autres couches"
+    ];
 
+    const groups = {};
     Object.keys(layers).forEach((key) => {
       const item = layers[key];
       const groupName = item.def.group || "Autres couches";
@@ -161,8 +165,28 @@
       groups[groupName].push({ key: key, item: item });
     });
 
-    const html = Object.keys(groups).map((groupName) => {
-      const rows = groups[groupName].map((entry) => {
+    const orderedNames = Object.keys(groups).sort((a, b) => {
+      const ai = preferredOrder.indexOf(a);
+      const bi = preferredOrder.indexOf(b);
+      const av = ai === -1 ? 999 : ai;
+      const bv = bi === -1 ? 999 : bi;
+      if (av !== bv) return av - bv;
+      return a.localeCompare(b, "fr");
+    });
+
+    return orderedNames.map((name) => {
+      const entries = groups[name].slice().sort((x, y) => x.item.def.label.localeCompare(y.item.def.label, "fr"));
+      return { name: name, entries: entries };
+    });
+  }
+  function renderLayersPanel() {
+    const container = byId("layersList");
+    if (!container) return;
+    const layers = MapModule.getLayerState();
+    const categories = buildLayerCategories(layers);
+
+    const html = categories.map((category) => {
+      const rows = category.entries.map((entry) => {
         const item = entry.item;
         const key = entry.key;
         const checked = item.active ? "checked" : "";
@@ -170,29 +194,30 @@
         return (
           '<div class="layer-row">' +
           '<div class="layer-top">' +
-          '<label><input type="checkbox" data-layer-toggle="' + key + '" ' + checked + "> " + item.def.label + "</label>" +
-          '<span>' + opacity + "%</span>" +
-          "</div>" +
+          '<label><input type="checkbox" data-layer-toggle="' + key + '" ' + checked + '> ' + item.def.label + '</label>' +
+          '<span>' + opacity + '%</span>' +
+          '</div>' +
           '<input type="range" min="0" max="100" value="' + opacity + '" data-layer-opacity="' + key + '">' +
-          "</div>"
+          '</div>'
         );
       }).join("");
 
       return (
         '<div class="layer-group">' +
-        '<div class="layer-group-title">' + groupName + "</div>" +
+        '<div class="layer-group-title">' + category.name + ' <span class="layer-group-count">(' + category.entries.length + ')</span></div>' +
         rows +
-        "</div>"
+        '</div>'
       );
     }).join("");
 
-    container.innerHTML = html;
+    container.innerHTML = html || "<p>Aucune couche chargée.</p>";
   }
 
   function renderLegend() {
     const container = byId("legendContent");
     if (!container) return;
     const layers = MapModule.getLayerState();
+    const categories = buildLayerCategories(layers);
     const basemap = MapModule.getBasemapState ? MapModule.getBasemapState() : {
       active: "osm",
       items: [
@@ -209,29 +234,33 @@
       return (
         '<div class="legend-row' + (active ? "" : " legend-row-muted") + '">' +
         '<span class="legend-chip" style="background:' + chipColor + ';"></span>' +
-        "<span>" + item.label + " (" + state + ")</span>" +
-        "</div>"
+        '<span>' + item.label + ' (' + state + ')</span>' +
+        '</div>'
       );
     });
 
-    const layerRows = Object.keys(layers).map((key) => {
-      const item = layers[key];
-      const active = Boolean(item.active);
-      const state = active ? "Actif" : "Inactif";
-      const color = item.def.legend || "var(--surface-alt)";
-      return (
-        '<div class="legend-row' + (active ? "" : " legend-row-muted") + '">' +
-        '<span class="legend-chip" style="background:' + color + ';"></span>' +
-        "<span>" + item.def.label + " (" + state + ")</span>" +
-        "</div>"
-      );
-    });
+    const groupedLayerRows = categories.map((category) => {
+      const rows = category.entries.map((entry) => {
+        const item = entry.item;
+        const active = Boolean(item.active);
+        const state = active ? "Actif" : "Inactif";
+        const color = item.def.legend || "var(--surface-alt)";
+        return (
+          '<div class="legend-row' + (active ? "" : " legend-row-muted") + '">' +
+          '<span class="legend-chip" style="background:' + color + ';"></span>' +
+          '<span>' + item.def.label + ' (' + state + ')</span>' +
+          '</div>'
+        );
+      }).join("");
+
+      return '<div class="legend-section-title">' + category.name + '</div>' + rows;
+    }).join("");
 
     container.innerHTML =
       '<div class="legend-section-title">Fonds de carte</div>' +
       basemapRows.join("") +
       '<div class="legend-section-title">Couches</div>' +
-      (layerRows.length ? layerRows.join("") : "<p>Aucune couche chargée.</p>");
+      (groupedLayerRows || "<p>Aucune couche chargée.</p>");
   }
 
   function renderDashboard() {
@@ -786,5 +815,6 @@
     executeAction: handleMenuAction
   };
 })();
+
 
 

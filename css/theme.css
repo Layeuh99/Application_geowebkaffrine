@@ -218,13 +218,6 @@ body.dark-theme .fab-menu .fab-item {
   outline-offset: 2px;
 }
 
-.leaflet-container {
-  filter: none;
-}
-
-.leaflet-tile {
-  filter: none;
-}
 
 body.dark-theme {
   --bg-main: #080d1a;
@@ -259,13 +252,6 @@ body.dark-theme .ambient-bg {
     var(--bg-main);
 }
 
-body.dark-theme .leaflet-container {
-  filter: contrast(1.1) saturate(1.1);
-}
-
-body.dark-theme .leaflet-tile {
-  filter: brightness(0.85) contrast(1.15);
-}
 
 /* Variantes optionnelles: appliquer sur <body> */
 /* body class="theme-neo-low"    -> glow discret */
@@ -349,21 +335,6 @@ body::before {
   position: relative;
 }
 
-#map::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(circle at center, rgba(0, 255, 255, 0.06) 0%, transparent 60%);
-  animation: radarPulse 6s infinite linear;
-  z-index: 150;
-}
-
-@keyframes radarPulse {
-  0% { transform: scale(0.9); opacity: 0.4; }
-  50% { transform: scale(1.05); opacity: 0.15; }
-  100% { transform: scale(0.9); opacity: 0.4; }
-}
 
 .btn-primary,
 .active,
@@ -392,12 +363,6 @@ body::before {
     animation-duration: 42s;
   }
 
-  #map::after {
-    background: radial-gradient(circle at center, rgba(0, 255, 255, 0.04) 0%, transparent 62%);
-    animation-duration: 8s;
-    opacity: 0.75;
-  }
-
   .fab-button,
   .active,
   .btn-primary {
@@ -413,27 +378,11 @@ body::before {
 
 @media (prefers-reduced-motion: reduce) {
   body::before,
-  #map::after,
   .btn-primary,
   .active,
   .fab-button {
     animation: none !important;
   }
-}
-
-.leaflet-control-measure {
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-soft);
-}
-
-.leaflet-control-measure .leaflet-control-measure-toggle,
-.leaflet-control-measure .leaflet-control-measure-toggle:hover {
-  background-color: var(--surface);
-}
-
-body.dark-theme .leaflet-control-measure .leaflet-control-measure-toggle,
-body.dark-theme .leaflet-control-measure .leaflet-control-measure-toggle:hover {
-  filter: brightness(1.15) contrast(1.15);
 }
 
 @media (max-width: 768px) {
