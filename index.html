@@ -1,22 +1,22 @@
-ï»¿<!doctype html>
+<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#2563eb">
-  <link rel="manifest" href="manifest.json?v=20260222i">
+  <link rel="manifest" href="manifest.json?v=20260222w">
   <link rel="apple-touch-icon" href="icons/icon-192x192.png">
   <title>GeoWeb Kaffrine</title>
 
-  <link rel="stylesheet" href="css/leaflet.css?v=20260222i">
-  <link rel="stylesheet" href="css/leaflet-measure.css?v=20260222i">
+  <link rel="stylesheet" href="css/leaflet.css?v=20260222w">
+  <link rel="stylesheet" href="css/leaflet-measure.css?v=20260222w">
 
-  <link rel="stylesheet" href="css/base.css?v=20260222i">
-  <link rel="stylesheet" href="css/layout.css?v=20260222i">
-  <link rel="stylesheet" href="css/navbar.css?v=20260222i">
-  <link rel="stylesheet" href="css/mobile.css?v=20260222i">
-  <link rel="stylesheet" href="css/theme.css?v=20260222i">
+  <link rel="stylesheet" href="css/base.css?v=20260222w">
+  <link rel="stylesheet" href="css/layout.css?v=20260222w">
+  <link rel="stylesheet" href="css/navbar.css?v=20260222w">
+  <link rel="stylesheet" href="css/mobile.css?v=20260222w">
+  <link rel="stylesheet" href="css/theme.css?v=20260222w">
 </head>
 <body>
   <div id="app">
@@ -38,24 +38,24 @@
             <div class="dropdown-menu" role="menu">
               <button type="button" class="menu-action" data-action="home">&#x1F3E0; Accueil</button>
               <button type="button" class="menu-action" data-action="dashboard">&#x1F5A5;&#xFE0F; Centre de commande</button>
-              <button type="button" class="menu-action" data-action="metadata">&#x2139;&#xFE0F; MetadonnÃ©es</button>
+              <button type="button" class="menu-action" data-action="metadata">&#x2139;&#xFE0F; Metadonnées</button>
             </div>
           </li>
           <li class="nav-item dropdown">
-            <button class="nav-btn dropdown-toggle" type="button" aria-expanded="false">&#x1F5C2;&#xFE0F; DonnÃ©es</button>
+            <button class="nav-btn dropdown-toggle" type="button" aria-expanded="false">&#x1F5C2;&#xFE0F; Données</button>
             <div class="dropdown-menu" role="menu">
               <button type="button" class="menu-action" data-action="layers">&#x1F9F1; Couches</button>
-              <button type="button" class="menu-action" data-action="legend">&#x1F5FA;&#xFE0F; LÃ©gende</button>
-              <button type="button" class="menu-action" data-action="download">&#x2B07;&#xFE0F; TÃ©lÃ©charger</button>
+              <button type="button" class="menu-action" data-action="legend">&#x1F5FA;&#xFE0F; Légende</button>
+              <button type="button" class="menu-action" data-action="download">&#x2B07;&#xFE0F; Télécharger</button>
             </div>
           </li>
           <li class="nav-item dropdown">
             <button class="nav-btn dropdown-toggle" type="button" aria-expanded="false">&#x1F4CA; Analyse</button>
             <div class="dropdown-menu" role="menu">
               <button type="button" class="menu-action" data-action="analysis">&#x1F6F0;&#xFE0F; Analyse spatiale</button>
-              <button type="button" class="menu-action" data-action="analysis-modal">&#x1F3AF; Analyse avancÃ©e</button>
-              <button type="button" class="menu-action" data-action="routing">&#x1F6E3;&#xFE0F; ItinÃ©raire</button>
-              <button type="button" class="menu-action" data-action="measure">&#x1F4CF; Mesure</button>
+              <button type="button" class="menu-action" data-action="analysis-modal">&#x1F3AF; Analyse avancée</button>
+              <button type="button" class="menu-action" data-action="routing">&#x1F6E3;&#xFE0F; Itinéraire</button>
+              <button type="button" class="menu-action" data-action="measure">&#x1F4D0; Mesure</button>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -73,7 +73,7 @@
       </nav>
 
       <button id="mobileMenuToggle" class="icon-btn menu-toggle" type="button" aria-label="Ouvrir menu mobile" aria-expanded="false">&#9776;</button>
-      <button id="themeToggle" class="icon-btn" type="button" aria-label="Basculer le thÃ¨me">ThÃ¨me</button>
+      <button id="themeToggle" class="icon-btn" type="button" aria-label="Basculer le thème">Thème</button>
       <button id="installButton" class="icon-btn" type="button" aria-label="Installer application">Installer</button>
     </header>
 
@@ -81,14 +81,14 @@
       <button type="button" class="menu-action" data-action="home">&#x1F3E0; Accueil</button>
       <button type="button" class="menu-action" data-action="dashboard">&#x1F5A5;&#xFE0F; Centre de commande</button>
       <button type="button" class="menu-action" data-action="layers">&#x1F9F1; Couches</button>
-      <button type="button" class="menu-action" data-action="legend">&#x1F5FA;&#xFE0F; LÃ©gende</button>
+      <button type="button" class="menu-action" data-action="legend">&#x1F5FA;&#xFE0F; Légende</button>
       <button type="button" class="menu-action" data-action="analysis">&#x1F6F0;&#xFE0F; Analyse</button>
-      <button type="button" class="menu-action" data-action="analysis-modal">&#x1F3AF; Analyse avancÃ©e</button>
-      <button type="button" class="menu-action" data-action="routing">&#x1F6E3;&#xFE0F; ItinÃ©raire</button>
-      <button type="button" class="menu-action" data-action="measure">&#x1F4CF; Mesure</button>
-      <button type="button" class="menu-action" data-action="download">&#x2B07;&#xFE0F; TÃ©lÃ©charger</button>
+      <button type="button" class="menu-action" data-action="analysis-modal">&#x1F3AF; Analyse avancée</button>
+      <button type="button" class="menu-action" data-action="routing">&#x1F6E3;&#xFE0F; Itinéraire</button>
+      <button type="button" class="menu-action" data-action="measure">&#x1F4D0; Mesure</button>
+      <button type="button" class="menu-action" data-action="download">&#x2B07;&#xFE0F; Télécharger</button>
       <button type="button" class="menu-action" data-action="install">&#x1F4F2; Installer</button>
-      <button type="button" class="menu-action" data-action="metadata">&#x2139;&#xFE0F; MetadonnÃ©es</button>
+      <button type="button" class="menu-action" data-action="metadata">&#x2139;&#xFE0F; Metadonnées</button>
     </aside>
 
     <main class="map-shell">
@@ -102,7 +102,7 @@
       </div>
       <div class="dashboard-grid">
         <article class="kpi-card">
-          <h3>EntitÃ©s actives</h3>
+          <h3>Entités actives</h3>
           <p id="kpiFeatures">0</p>
         </article>
         <article class="kpi-card">
@@ -114,26 +114,26 @@
           <p id="kpiZoom">-</p>
         </article>
         <article class="kpi-card">
-          <h3>ThÃ¨me</h3>
+          <h3>Thème</h3>
           <p id="kpiTheme">Clair</p>
         </article>
       </div>
       <div class="activity-feed">
-        <h3>ActivitÃ© rÃ©cente</h3>
+        <h3>Activité récente</h3>
         <ul id="activityList"></ul>
       </div>
     </section>
 
     <div class="bottom-bar">
-      <span id="statusText">PrÃªt</span>
-      <span id="scaleText">Ã‰chelle: -</span>
+      <span id="statusText">Prêt</span>
+      <span id="scaleText">Échelle: -</span>
       <span id="networkText">En ligne</span>
     </div>
 
-    <div class="data-quick-bar" aria-label="AccÃ¨s rapide donnÃ©es">
+    <div class="data-quick-bar" aria-label="Accès rapide données">
       <button type="button" class="quick-btn menu-action" data-action="layers" aria-label="Couches" title="Couches">&#x1F9F1;</button>
-      <button type="button" class="quick-btn menu-action" data-action="legend" aria-label="LÃ©gende" title="LÃ©gende">&#x1F5FA;&#xFE0F;</button>
-      <button type="button" class="quick-btn menu-action" data-action="download" aria-label="TÃ©lÃ©charger" title="TÃ©lÃ©charger">&#x2B07;&#xFE0F;</button>
+      <button type="button" class="quick-btn menu-action" data-action="legend" aria-label="Légende" title="Légende">&#x1F5FA;&#xFE0F;</button>
+      <button type="button" class="quick-btn menu-action" data-action="download" aria-label="Télécharger" title="Télécharger">&#x2B07;&#xFE0F;</button>
     </div>
 
     <aside id="layersPanel" class="panel panel-left" aria-label="Panneau couches">
@@ -146,10 +146,10 @@
       </div>
     </aside>
 
-    <aside id="legendPanel" class="panel panel-right" aria-label="Panneau lÃ©gende">
+    <aside id="legendPanel" class="panel panel-right" aria-label="Panneau légende">
       <div class="panel-header">
-        <h2>LÃ©gende</h2>
-        <button type="button" class="icon-btn panel-close" data-close-panel="legendPanel" aria-label="Fermer le panneau lÃ©gende">x</button>
+        <h2>Légende</h2>
+        <button type="button" class="icon-btn panel-close" data-close-panel="legendPanel" aria-label="Fermer le panneau légende">x</button>
       </div>
       <div class="panel-body">
         <div id="legendContent"></div>
@@ -159,38 +159,38 @@
     <button id="fabButton" class="fab-button" type="button" aria-label="Actions rapides">+</button>
     <div id="fabMenu" class="fab-menu" aria-label="Menu actions rapides">
       <button type="button" class="fab-item menu-action" data-action="layers">&#x1F9F1; Couches</button>
-      <button type="button" class="fab-item menu-action" data-action="legend">&#x1F5FA;&#xFE0F; LÃ©gende</button>
+      <button type="button" class="fab-item menu-action" data-action="legend">&#x1F5FA;&#xFE0F; Légende</button>
       <button type="button" class="fab-item menu-action" data-action="analysis">&#x1F6F0;&#xFE0F; Analyse</button>
-      <button type="button" class="fab-item menu-action" data-action="analysis-modal">&#x1F3AF; Analyse avancÃ©e</button>
-      <button type="button" class="fab-item menu-action" data-action="routing">&#x1F6E3;&#xFE0F; ItinÃ©raire</button>
-      <button type="button" class="fab-item menu-action" data-action="measure">&#x1F4CF; Mesure</button>
+      <button type="button" class="fab-item menu-action" data-action="analysis-modal">&#x1F3AF; Analyse avancée</button>
+      <button type="button" class="fab-item menu-action" data-action="routing">&#x1F6E3;&#xFE0F; Itinéraire</button>
+      <button type="button" class="fab-item menu-action" data-action="measure">&#x1F4D0; Mesure</button>
     </div>
 
     <div id="analysisModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="analysisTitle">
       <div class="modal-content">
         <div class="panel-header">
-          <h2 id="analysisTitle">Analyse avancÃ©e</h2>
+          <h2 id="analysisTitle">Analyse avancée</h2>
           <button type="button" class="icon-btn" id="closeAnalysis" aria-label="Fermer analyse">x</button>
         </div>
         <div class="panel-body analysis-form">
           <label>Couche cible
             <select id="analysisLayer">
-              <option value="Ecoles">Ã‰coles</option>
-              <option value="Localites">LocalitÃ©s</option>
+              <option value="Ecoles">Écoles</option>
+              <option value="Localites">Localités</option>
               <option value="Routes">Routes</option>
             </select>
           </label>
-          <label>Rayon (mÃ¨tres)
+          <label>Rayon (mètres)
             <input id="analysisRadius" type="number" min="100" max="50000" step="100" value="5000">
           </label>
-          <label>RÃ©sultats maximum
+          <label>Résultats maximum
             <input id="analysisLimit" type="number" min="1" max="200" step="1" value="25">
           </label>
           <div class="analysis-actions">
             <button id="startAnalysis" type="button" class="icon-btn">Choisir point sur carte</button>
             <button id="clearAnalysis" type="button" class="icon-btn">Nettoyer analyse</button>
           </div>
-          <div id="analysisResult" class="analysis-result">Aucun rÃ©sultat.</div>
+          <div id="analysisResult" class="analysis-result">Aucun résultat.</div>
         </div>
       </div>
     </div>
@@ -198,13 +198,68 @@
     <div id="metadataModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="metadataTitle">
       <div class="modal-content">
         <div class="panel-header">
-          <h2 id="metadataTitle">MetadonnÃ©es</h2>
-          <button type="button" class="icon-btn" id="closeMetadata" aria-label="Fermer les mÃ©tadonnÃ©es">x</button>
+          <h2 id="metadataTitle">Metadonnées</h2>
+          <button type="button" class="icon-btn" id="closeMetadata" aria-label="Fermer les métadonnées">x</button>
         </div>
-        <div class="panel-body">
-          <p><strong>Projet:</strong> GeoWeb Kaffrine</p>
-          <p><strong>SystÃ¨me:</strong> WGS84 (EPSG:4326)</p>
-          <p><strong>Couches:</strong> RÃ©gion, DÃ©partement, Arrondissement, Routes, LocalitÃ©s, Ã‰coles</p>
+        <div class="panel-body metadata-body">
+          <div class="metadata-grid">
+            <div class="metadata-card">
+              <span class="metadata-label">Projet</span>
+              <strong>GeoWeb Kaffrine</strong>
+            </div>
+            <div class="metadata-card">
+              <span class="metadata-label">Projection</span>
+              <strong>WGS84 (EPSG:4326)</strong>
+            </div>
+            <div class="metadata-card">
+              <span class="metadata-label">Date génération</span>
+              <strong id="metadataGeneratedAt">-</strong>
+            </div>
+            <div class="metadata-card">
+              <span class="metadata-label">Thème</span>
+              <strong id="metadataTheme">-</strong>
+            </div>
+            <div class="metadata-card">
+              <span class="metadata-label">Fond actif</span>
+              <strong id="metadataBasemap">-</strong>
+            </div>
+            <div class="metadata-card">
+              <span class="metadata-label">Vue carte</span>
+              <strong id="metadataViewport">-</strong>
+            </div>
+            <div class="metadata-card">
+              <span class="metadata-label">Couches actives</span>
+              <strong id="metadataLayersCount">-</strong>
+            </div>
+            <div class="metadata-card">
+              <span class="metadata-label">Entités visibles</span>
+              <strong id="metadataFeaturesCount">-</strong>
+            </div>
+          </div>
+
+          <p class="metadata-extent"><strong>Emprise actuelle :</strong> <span id="metadataExtent">-</span></p>
+
+          <div class="metadata-table-wrap">
+            <table class="metadata-table" aria-label="Résumé des couches">
+              <thead>
+                <tr>
+                  <th>Couche</th>
+                  <th>Catégorie</th>
+                  <th>État</th>
+                  <th>Objets</th>
+                  <th>Opacité</th>
+                </tr>
+              </thead>
+              <tbody id="metadataLayersTable">
+                <tr><td colspan="5">Chargement...</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="analysis-actions metadata-actions">
+            <button id="metadataCopy" type="button" class="icon-btn">Copier le résumé</button>
+            <button id="metadataDownload" type="button" class="icon-btn">Télécharger JSON</button>
+          </div>
         </div>
       </div>
     </div>
@@ -221,8 +276,8 @@
     <div id="uiOverlay" class="ui-overlay" aria-hidden="true"></div>
   </div>
 
-  <script src="js/leaflet.js?v=20260222i"></script>
-  <script src="js/leaflet-measure.js?v=20260222i"></script>
+  <script src="js/leaflet.js?v=20260222w"></script>
+  <script src="js/leaflet-measure.js?v=20260222w"></script>
   <script src="data/Region_3.js"></script>
   <script src="data/Departement_4.js"></script>
   <script src="data/Arrondissement_5.js"></script>
@@ -230,12 +285,25 @@
   <script src="data/Localites_7.js"></script>
   <script src="data/Ecoles_8.js"></script>
 
-  <script src="js/theme.js?v=20260222i"></script>
-  <script src="js/map.js?v=20260222i"></script>
-  <script src="js/ui.js?v=20260222i"></script>
-  <script src="js/app.js?v=20260222i"></script>
+  <script src="js/theme.js?v=20260222w"></script>
+  <script src="js/map.js?v=20260222w"></script>
+  <script src="js/ui.js?v=20260222w"></script>
+  <script src="js/app.js?v=20260222w"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

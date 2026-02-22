@@ -32,7 +32,7 @@
 
   function overlayState() {
     const modalOpen = document.querySelector(".modal.open");
-    return Boolean(modalOpen || state.mobileMenuOpen);
+    return Boolean(modalOpen);
   }
 
   function setOverlay() {
@@ -246,6 +246,169 @@
     if (kpiTheme) kpiTheme.textContent = document.body.classList.contains("dark-theme") ? "Sombre" : "Clair";
   }
 
+  function escapeHtml(text) {
+    return String(text)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function countLayerFeatures(layer) {
+    let count = 0;
+    if (!layer || !layer.eachLayer) return count;
+    layer.eachLayer(() => {
+      count += 1;
+    });
+    return count;
+  }
+
+  function buildMetadataPayload() {
+    const layers = MapModule.getLayerState();
+    const stats = MapModule.dashboardStats();
+    const basemap = MapModule.getBasemapState ? MapModule.getBasemapState() : { label: "Fond OSM", active: "osm" };
+    const view = MapModule.getViewState ? MapModule.getViewState() : null;
+    const now = new Date();
+
+    const layerDetails = Object.keys(layers).map((key) => {
+      const layer = layers[key];
+      return {
+        key: key,
+        nom: layer.def.label,
+        categorie: layer.def.group || "Autres",
+        active: Boolean(layer.active),
+        objets: countLayerFeatures(layer.layer),
+        opacite: Math.round(Number(layer.opacity || 0) * 100)
+      };
+    });
+
+    return {
+      projet: "GeoWeb Kaffrine",
+      projection: "WGS84 (EPSG:4326)",
+      date_generation: now.toISOString(),
+      theme: document.body.classList.contains("dark-theme") ? "Sombre" : "Clair",
+      basemap: basemap.label,
+      basemap_key: basemap.active,
+      vue: view,
+      resume: {
+        couches_total: layerDetails.length,
+        couches_actives: stats.activeLayers,
+        entites_visibles: stats.activeFeatures,
+        zoom: stats.zoom
+      },
+      couches: layerDetails
+    };
+  }
+
+  function metadataBoundsText(view) {
+    if (!view || !view.bounds) return "Non disponible";
+    const b = view.bounds;
+    return (
+      "S " + b.south.toFixed(5) +
+      " | O " + b.west.toFixed(5) +
+      " | N " + b.north.toFixed(5) +
+      " | E " + b.east.toFixed(5)
+    );
+  }
+
+  function renderMetadata() {
+    const payload = buildMetadataPayload();
+    const generatedAt = byId("metadataGeneratedAt");
+    const theme = byId("metadataTheme");
+    const basemap = byId("metadataBasemap");
+    const viewport = byId("metadataViewport");
+    const layersCount = byId("metadataLayersCount");
+    const featuresCount = byId("metadataFeaturesCount");
+    const extent = byId("metadataExtent");
+    const table = byId("metadataLayersTable");
+
+    if (generatedAt) {
+      const d = new Date(payload.date_generation);
+      generatedAt.textContent = d.toLocaleString("fr-FR");
+    }
+    if (theme) theme.textContent = payload.theme;
+    if (basemap) basemap.textContent = payload.basemap;
+
+    if (viewport) {
+      if (payload.vue && payload.vue.center) {
+        viewport.textContent = "Zoom " + payload.resume.zoom + " | " +
+          payload.vue.center.lat.toFixed(5) + ", " + payload.vue.center.lng.toFixed(5);
+      } else {
+        viewport.textContent = "Non disponible";
+      }
+    }
+
+    if (layersCount) {
+      layersCount.textContent = payload.resume.couches_actives + " / " + payload.resume.couches_total;
+    }
+    if (featuresCount) featuresCount.textContent = String(payload.resume.entites_visibles);
+    if (extent) extent.textContent = metadataBoundsText(payload.vue);
+
+    if (table) {
+      const sortedLayers = payload.couches.slice().sort((a, b) => {
+        if (a.active === b.active) return a.nom.localeCompare(b.nom, "fr");
+        return a.active ? -1 : 1;
+      });
+
+      if (!sortedLayers.length) {
+        table.innerHTML = '<tr><td colspan="5">Aucune couche disponible.</td></tr>';
+        return;
+      }
+
+      table.innerHTML = sortedLayers.map((layer) => {
+        const statusClass = layer.active ? "metadata-status metadata-status-on" : "metadata-status metadata-status-off";
+        const statusText = layer.active ? "Actif" : "Inactif";
+        return (
+          "<tr>" +
+          "<td>" + escapeHtml(layer.nom) + "</td>" +
+          "<td>" + escapeHtml(layer.categorie) + "</td>" +
+          '<td><span class="' + statusClass + '">' + statusText + "</span></td>" +
+          "<td>" + layer.objets + "</td>" +
+          "<td>" + layer.opacite + "%</td>" +
+          "</tr>"
+        );
+      }).join("");
+    }
+  }
+
+  function copyMetadataSummary() {
+    const payload = buildMetadataPayload();
+    const lines = [
+      "Projet: " + payload.projet,
+      "Projection: " + payload.projection,
+      "Date: " + new Date(payload.date_generation).toLocaleString("fr-FR"),
+      "Theme: " + payload.theme,
+      "Fond actif: " + payload.basemap,
+      "Couches actives: " + payload.resume.couches_actives + "/" + payload.resume.couches_total,
+      "Entites visibles: " + payload.resume.entites_visibles
+    ];
+    const summary = lines.join("\n");
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(summary).then(() => {
+        toast("Résumé métadonnées copié", "ok");
+      }).catch(() => {
+        toast("Copie impossible", "warn");
+      });
+      return;
+    }
+    toast("Copie non supportée par ce navigateur", "warn");
+  }
+
+  function downloadMetadataJson() {
+    const payload = buildMetadataPayload();
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "geoweb-kaffrine-metadata.json";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    toast("Fichier métadonnées téléchargé", "ok");
+  }
+
   function updateNetworkLabel() {
     const net = byId("networkText");
     if (!net) return;
@@ -329,6 +492,7 @@
         addActivity("Export GeoJSON");
         break;
       case "metadata":
+        renderMetadata();
         openModal("metadataModal");
         addActivity("Ouverture métadonnées");
         break;
@@ -372,7 +536,7 @@
       const fromMobileMenu = Boolean(originEl.closest("#mobileMenu"));
       const fromFabMenu = Boolean(originEl.closest("#fabMenu"));
       const fromDropdown = Boolean(originEl.closest(".dropdown-menu"));
-      if (fromMobileMenu) closeMobileMenu();
+      // Menu mobile: reste ouvert pendant les interactions internes.
       if (fromFabMenu) closeFab();
       if (!fromDropdown) closeAllDropdowns();
     }
@@ -401,7 +565,45 @@
   }
 
   function bindEvents() {
+    const mobileMenu = byId("mobileMenu");
+    const toggleBtn = byId("mobileMenuToggle");
+
+    if (mobileMenu) {
+      mobileMenu.addEventListener("click", (event) => {
+        event.stopPropagation();
+        const actionButton = event.target.closest(".menu-action");
+        if (actionButton) {
+          handleMenuAction(actionButton.getAttribute("data-action"), actionButton);
+        }
+      });
+    }
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener("click", (event) => {
+        event.stopPropagation();
+        toggleMobileMenu();
+      });
+    }
+
     document.addEventListener("click", (event) => {
+      if (state.mobileMenuOpen && mobileMenu) {
+        const clickOutsideMenu = !mobileMenu.contains(event.target);
+        const clickOnToggle = toggleBtn && toggleBtn.contains(event.target);
+        if (clickOutsideMenu && !clickOnToggle) {
+          closeMobileMenu();
+        }
+      }
+
+      const clickInsideUiContainer = event.target.closest(
+        "#layersPanel, #legendPanel, #dashboardPanel, #analysisModal .modal-content, #metadataModal .modal-content, #fabMenu"
+      );
+      const clickOnUiAction = event.target.closest(
+        ".menu-action, [data-close-panel], #closeMetadata, #closeAnalysis, #startAnalysis, #clearAnalysis, #metadataCopy, #metadataDownload"
+      );
+      if (clickInsideUiContainer && !clickOnUiAction) {
+        return;
+      }
+
       const dropdownToggle = event.target.closest(".dropdown-toggle");
       if (dropdownToggle) {
         toggleDropdown(dropdownToggle.closest(".dropdown"));
@@ -424,10 +626,6 @@
         return;
       }
 
-      if (event.target.id === "mobileMenuToggle") {
-        toggleMobileMenu();
-        return;
-      }
       if (event.target.id === "installButton") {
         executeInstall();
         return;
@@ -447,6 +645,14 @@
       }
       if (event.target.id === "closeMetadata") {
         closeModal("metadataModal");
+        return;
+      }
+      if (event.target.id === "metadataCopy") {
+        copyMetadataSummary();
+        return;
+      }
+      if (event.target.id === "metadataDownload") {
+        downloadMetadataJson();
         return;
       }
       if (event.target.id === "closeAnalysis") {
@@ -548,6 +754,7 @@
     bindEvents();
     renderLayersPanel();
     renderLegend();
+    renderMetadata();
     renderDashboard();
     updateNetworkLabel();
     const themeBtn = byId("themeToggle");

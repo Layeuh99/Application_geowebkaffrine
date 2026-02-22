@@ -262,8 +262,35 @@
       });
       map.addControl(measureControl);
     }
-    const toggle = document.querySelector(".leaflet-control-measure-toggle");
-    if (toggle) toggle.click();
+
+    // Si une mesure est en cours, un nouvel appel arrete proprement la session.
+    if (measureControl._locked && typeof measureControl._finishMeasure === "function") {
+      measureControl._finishMeasure();
+      setStatus("Mesure arrêtée");
+      return;
+    }
+
+    // Methode robuste: API interne du plugin si disponible.
+    if (typeof measureControl._expand === "function") measureControl._expand();
+    if (typeof measureControl._startMeasure === "function") {
+      measureControl._startMeasure();
+      setStatus("Outil de mesure actif");
+      return;
+    }
+
+    // Fallback DOM pour compatibilite versions plugin.
+    const scope = measureControl._container || document;
+    const toggle =
+      scope.querySelector(".leaflet-control-measure-toggle") ||
+      scope.querySelector(".js-toggle");
+    if (toggle) {
+      toggle.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+    }
+    const start = scope.querySelector(".js-start");
+    if (start) {
+      start.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+    }
+
     setStatus("Outil de mesure actif");
   }
 
@@ -464,6 +491,22 @@
     return stats;
   }
 
+  function getViewState() {
+    if (!map) return null;
+    const center = map.getCenter();
+    const bounds = map.getBounds();
+    return {
+      zoom: map.getZoom(),
+      center: { lat: center.lat, lng: center.lng },
+      bounds: {
+        south: bounds.getSouth(),
+        west: bounds.getWest(),
+        north: bounds.getNorth(),
+        east: bounds.getEast()
+      }
+    };
+  }
+
   window.MapModule = {
     initMap: ensureMap,
     initLayers,
@@ -483,6 +526,7 @@
     clearAnalysis,
     downloadActiveData,
     dashboardStats,
+    getViewState,
     invalidateSize,
     setStatus
   };

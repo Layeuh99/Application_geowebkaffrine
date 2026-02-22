@@ -111,6 +111,40 @@ button:hover,
   box-shadow: 0 0 18px rgba(255, 0, 200, 0.75);
 }
 
+.fab-button {
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+}
+
+.fab-menu {
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(30, 94, 255, 0.24);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+.fab-menu .fab-item {
+  background: transparent !important;
+  color: #1d2840 !important;
+  border-bottom: 1px solid rgba(30, 94, 255, 0.14) !important;
+}
+
+.fab-menu .fab-item:last-child {
+  border-bottom: 0 !important;
+}
+
+body.dark-theme .fab-menu {
+  background: rgba(7, 13, 24, 0.9) !important;
+  border: 1px solid rgba(111, 235, 255, 0.24) !important;
+}
+
+body.dark-theme .fab-menu .fab-item {
+  color: #eaf2ff !important;
+  border-bottom: 1px solid rgba(111, 235, 255, 0.14) !important;
+}
+
 .dropdown-menu,
 .mobile-menu,
 .fab-menu,
@@ -387,16 +421,33 @@ body::before {
   }
 }
 
+.leaflet-control-measure {
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-soft);
+}
+
+.leaflet-control-measure .leaflet-control-measure-toggle,
+.leaflet-control-measure .leaflet-control-measure-toggle:hover {
+  background-color: var(--surface);
+}
+
+body.dark-theme .leaflet-control-measure .leaflet-control-measure-toggle,
+body.dark-theme .leaflet-control-measure .leaflet-control-measure-toggle:hover {
+  filter: brightness(1.15) contrast(1.15);
+}
+
 @media (max-width: 768px) {
   #themeToggle {
     font-size: 0;
     line-height: 0;
-    width: 40px;
-    min-width: 40px;
-    height: 40px;
-    min-height: 40px;
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+    min-height: 42px;
     border-radius: 999px;
     padding: 0;
+    justify-self: end;
+    align-self: center;
   }
 
   #themeToggle::before {
@@ -599,6 +650,25 @@ body.dark-theme {
   opacity: 1;
 }
 
+/* Reprise boutons navbar (burger + theme) */
+#mobileMenuToggle,
+#themeToggle {
+  width: 42px !important;
+  min-width: 42px !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  border-radius: 999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+}
+
+#mobileMenuToggle {
+  font-size: 22px !important;
+}
+
 body.dark-theme #mobileMenuToggle,
 body.dark-theme #themeToggle,
 body.dark-theme #installButton {
@@ -609,6 +679,88 @@ body.dark-theme .dropdown-menu .menu-action,
 body.dark-theme .mobile-menu .menu-action,
 body.dark-theme .fab-menu .fab-item {
   color: #eaf2ff !important;
+}
+
+/* Ciblage precis: panneaux des menus deroulants desktop + mobile */
+.dropdown-menu,
+.mobile-menu {
+  border-radius: 16px !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(30, 94, 255, 0.24) !important;
+  box-shadow: 0 14px 32px rgba(21, 33, 66, 0.18) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+.dropdown-menu .menu-action,
+.mobile-menu .menu-action {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(30, 94, 255, 0.14) !important;
+  color: #1d2840 !important;
+}
+
+.dropdown-menu .menu-action:hover,
+.mobile-menu .menu-action:hover {
+  background: rgba(30, 94, 255, 0.1) !important;
+}
+
+.dropdown-menu .menu-action:last-child,
+.mobile-menu .menu-action:last-child {
+  border-bottom: 0 !important;
+}
+
+body.dark-theme .dropdown-menu,
+body.dark-theme .mobile-menu {
+  background: rgba(7, 13, 24, 0.9) !important;
+  border: 1px solid rgba(111, 235, 255, 0.24) !important;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.52) !important;
+}
+
+body.dark-theme .dropdown-menu .menu-action,
+body.dark-theme .mobile-menu .menu-action {
+  color: #eaf2ff !important;
+  border-bottom: 1px solid rgba(111, 235, 255, 0.14) !important;
+}
+
+body.dark-theme .dropdown-menu .menu-action:hover,
+body.dark-theme .mobile-menu .menu-action:hover {
+  background: rgba(111, 235, 255, 0.12) !important;
+}
+
+/* Esthetique: panneaux plus arrondis + transparence douce */
+.panel,
+.dashboard,
+.modal-content,
+.dropdown-menu,
+.mobile-menu,
+.fab-menu,
+.toast,
+.install-toast,
+.data-quick-bar {
+  border-radius: 20px !important;
+  background: rgba(255, 255, 255, 0.82) !important;
+  border: 1px solid rgba(30, 94, 255, 0.22) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.panel-header {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+body.dark-theme .panel,
+body.dark-theme .dashboard,
+body.dark-theme .modal-content,
+body.dark-theme .dropdown-menu,
+body.dark-theme .mobile-menu,
+body.dark-theme .fab-menu,
+body.dark-theme .toast,
+body.dark-theme .install-toast,
+body.dark-theme .data-quick-bar {
+  background: rgba(7, 13, 24, 0.78) !important;
+  border-color: rgba(111, 235, 255, 0.2) !important;
 }
 
 
