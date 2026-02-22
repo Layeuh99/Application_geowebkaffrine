@@ -481,28 +481,28 @@ body::before {
 
 /* Renfort mode sombre: interface plus profonde + icônes lisibles */
 body.dark-theme {
-  --bg-main: #03050b;
-  --bg-navbar: #070b14;
-  --bg-panel: #0b1220;
-  --bg-hover: #111a2d;
-  --primary: #00d8ff;
-  --secondary: #5a48ff;
-  --accent: #ff1fae;
-  --text-main: #eaf2ff;
-  --text-muted: #95a5c2;
-  --border-color: rgba(111, 235, 255, 0.22);
-  --ring-color: rgba(111, 235, 255, 0.45);
-  --primary-strong: #0089c7;
+  --bg-main: #010205;
+  --bg-navbar: #04070f;
+  --bg-panel: #070d18;
+  --bg-hover: #0d1626;
+  --primary: #0fd6ff;
+  --secondary: #4f44ff;
+  --accent: #ff1499;
+  --text-main: #f2f7ff;
+  --text-muted: #9ca9c2;
+  --border-color: rgba(111, 235, 255, 0.18);
+  --ring-color: rgba(111, 235, 255, 0.5);
+  --primary-strong: #007fb8;
   --on-primary: #f3fbff;
-  --overlay: rgba(2, 6, 13, 0.78);
-  --shadow-soft: 0 8px 20px rgba(0, 0, 0, 0.42);
-  --shadow-strong: 0 16px 34px rgba(0, 0, 0, 0.56);
+  --overlay: rgba(1, 3, 8, 0.82);
+  --shadow-soft: 0 10px 24px rgba(0, 0, 0, 0.52);
+  --shadow-strong: 0 18px 40px rgba(0, 0, 0, 0.66);
 }
 
 body.dark-theme .navbar,
 body.dark-theme .bottom-bar,
 body.dark-theme .mobile-bottom-bar {
-  background: linear-gradient(90deg, #070b14, #0b1220) !important;
+  background: linear-gradient(90deg, #04070f, #070d18) !important;
 }
 
 body.dark-theme .panel,
@@ -514,12 +514,12 @@ body.dark-theme .fab-menu,
 body.dark-theme .toast,
 body.dark-theme .install-toast,
 body.dark-theme .data-quick-bar {
-  background: #0b1220 !important;
-  border-color: rgba(111, 235, 255, 0.24) !important;
+  background: #070d18 !important;
+  border-color: rgba(111, 235, 255, 0.2) !important;
 }
 
 body.dark-theme .panel-header {
-  background: linear-gradient(90deg, #0a1221, #111a2d) !important;
+  background: linear-gradient(90deg, #09101d, #0d1626) !important;
 }
 
 body.dark-theme .icon-btn,
@@ -527,9 +527,9 @@ body.dark-theme .menu-action,
 body.dark-theme .nav-btn,
 body.dark-theme .quick-btn,
 body.dark-theme .fab-item {
-  background: linear-gradient(135deg, #0f1a2e, #111f37) !important;
+  background: linear-gradient(135deg, #0c1527, #101b31) !important;
   color: var(--text-main) !important;
-  border: 1px solid rgba(111, 235, 255, 0.2) !important;
+  border: 1px solid rgba(111, 235, 255, 0.17) !important;
   box-shadow: none !important;
 }
 
@@ -538,7 +538,7 @@ body.dark-theme .menu-action:hover,
 body.dark-theme .nav-btn:hover,
 body.dark-theme .quick-btn:hover,
 body.dark-theme .fab-item:hover {
-  background: #162742 !important;
+  background: #16233a !important;
   color: #f5fbff !important;
 }
 
@@ -553,15 +553,62 @@ body.dark-theme #themeToggle::before {
 }
 
 body.dark-theme .data-quick-bar .quick-btn {
-  background: linear-gradient(135deg, #0f1a2e, #14233b) !important;
+  background: linear-gradient(135deg, #0d182b, #13223a) !important;
   color: #dff7ff !important;
-  border: 1px solid rgba(111, 235, 255, 0.22) !important;
+  border: 1px solid rgba(111, 235, 255, 0.18) !important;
 }
 
 body.dark-theme .data-quick-bar .quick-btn:hover,
 body.dark-theme .data-quick-bar .quick-btn:focus-visible {
-  background: linear-gradient(135deg, #162742, #1a3152) !important;
+  background: linear-gradient(135deg, #15243d, #193050) !important;
   color: #ffffff !important;
+}
+
+/* Visibilite icones: clair + sombre */
+:root {
+  --icon-foreground: #ffffff;
+  --icon-shadow: none;
+}
+
+body.dark-theme {
+  --icon-foreground: #f6fbff;
+  --icon-shadow: 0 0 10px rgba(111, 235, 255, 0.22);
+}
+
+.nav-btn,
+.menu-action,
+.icon-btn,
+.quick-btn,
+.fab-item,
+.fab-button {
+  color: var(--icon-foreground) !important;
+  text-shadow: var(--icon-shadow);
+  font-weight: 700;
+}
+
+.nav-btn,
+.menu-action,
+.fab-item {
+  letter-spacing: 0.01em;
+}
+
+#mobileMenuToggle,
+#themeToggle,
+#installButton,
+.fab-button {
+  opacity: 1;
+}
+
+body.dark-theme #mobileMenuToggle,
+body.dark-theme #themeToggle,
+body.dark-theme #installButton {
+  border: 1px solid rgba(111, 235, 255, 0.28) !important;
+}
+
+body.dark-theme .dropdown-menu .menu-action,
+body.dark-theme .mobile-menu .menu-action,
+body.dark-theme .fab-menu .fab-item {
+  color: #eaf2ff !important;
 }
 
 

@@ -285,7 +285,7 @@
     }
   }
 
-  function handleMenuAction(actionName) {
+  function handleMenuAction(actionName, originEl) {
     switch (actionName) {
       case "home":
         MapModule.resetHome();
@@ -364,9 +364,18 @@
       default:
         break;
     }
-    closeMobileMenu();
-    closeFab();
-    closeAllDropdowns();
+    if (!originEl) {
+      closeMobileMenu();
+      closeFab();
+      closeAllDropdowns();
+    } else {
+      const fromMobileMenu = Boolean(originEl.closest("#mobileMenu"));
+      const fromFabMenu = Boolean(originEl.closest("#fabMenu"));
+      const fromDropdown = Boolean(originEl.closest(".dropdown-menu"));
+      if (fromMobileMenu) closeMobileMenu();
+      if (fromFabMenu) closeFab();
+      if (!fromDropdown) closeAllDropdowns();
+    }
     renderDashboard();
   }
 
@@ -402,7 +411,7 @@
 
       const actionButton = event.target.closest(".menu-action");
       if (actionButton) {
-        handleMenuAction(actionButton.getAttribute("data-action"));
+        handleMenuAction(actionButton.getAttribute("data-action"), actionButton);
         return;
       }
 
