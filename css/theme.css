@@ -479,4 +479,89 @@ body::before {
   }
 }
 
+/* Renfort mode sombre: interface plus profonde + icônes lisibles */
+body.dark-theme {
+  --bg-main: #03050b;
+  --bg-navbar: #070b14;
+  --bg-panel: #0b1220;
+  --bg-hover: #111a2d;
+  --primary: #00d8ff;
+  --secondary: #5a48ff;
+  --accent: #ff1fae;
+  --text-main: #eaf2ff;
+  --text-muted: #95a5c2;
+  --border-color: rgba(111, 235, 255, 0.22);
+  --ring-color: rgba(111, 235, 255, 0.45);
+  --primary-strong: #0089c7;
+  --on-primary: #f3fbff;
+  --overlay: rgba(2, 6, 13, 0.78);
+  --shadow-soft: 0 8px 20px rgba(0, 0, 0, 0.42);
+  --shadow-strong: 0 16px 34px rgba(0, 0, 0, 0.56);
+}
+
+body.dark-theme .navbar,
+body.dark-theme .bottom-bar,
+body.dark-theme .mobile-bottom-bar {
+  background: linear-gradient(90deg, #070b14, #0b1220) !important;
+}
+
+body.dark-theme .panel,
+body.dark-theme .dashboard,
+body.dark-theme .modal-content,
+body.dark-theme .dropdown-menu,
+body.dark-theme .mobile-menu,
+body.dark-theme .fab-menu,
+body.dark-theme .toast,
+body.dark-theme .install-toast,
+body.dark-theme .data-quick-bar {
+  background: #0b1220 !important;
+  border-color: rgba(111, 235, 255, 0.24) !important;
+}
+
+body.dark-theme .panel-header {
+  background: linear-gradient(90deg, #0a1221, #111a2d) !important;
+}
+
+body.dark-theme .icon-btn,
+body.dark-theme .menu-action,
+body.dark-theme .nav-btn,
+body.dark-theme .quick-btn,
+body.dark-theme .fab-item {
+  background: linear-gradient(135deg, #0f1a2e, #111f37) !important;
+  color: var(--text-main) !important;
+  border: 1px solid rgba(111, 235, 255, 0.2) !important;
+  box-shadow: none !important;
+}
+
+body.dark-theme .icon-btn:hover,
+body.dark-theme .menu-action:hover,
+body.dark-theme .nav-btn:hover,
+body.dark-theme .quick-btn:hover,
+body.dark-theme .fab-item:hover {
+  background: #162742 !important;
+  color: #f5fbff !important;
+}
+
+body.dark-theme .fab-button {
+  background: linear-gradient(135deg, var(--accent), var(--secondary)) !important;
+  color: var(--on-primary) !important;
+  border: 0 !important;
+}
+
+body.dark-theme #themeToggle::before {
+  color: var(--on-primary) !important;
+}
+
+body.dark-theme .data-quick-bar .quick-btn {
+  background: linear-gradient(135deg, #0f1a2e, #14233b) !important;
+  color: #dff7ff !important;
+  border: 1px solid rgba(111, 235, 255, 0.22) !important;
+}
+
+body.dark-theme .data-quick-bar .quick-btn:hover,
+body.dark-theme .data-quick-bar .quick-btn:focus-visible {
+  background: linear-gradient(135deg, #162742, #1a3152) !important;
+  color: #ffffff !important;
+}
+
 
