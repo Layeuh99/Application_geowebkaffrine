@@ -145,3 +145,49 @@
     margin-left: 0;
   }
 }
+
+/* Correctif prioritaire mobile (force l'affichage mobile) */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none !important;
+  }
+
+  .menu-toggle {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  #mobileMenuToggle {
+    display: inline-flex !important;
+  }
+
+  #themeToggle {
+    display: inline-flex !important;
+  }
+
+  #installButton {
+    display: none !important;
+  }
+
+  .mobile-menu {
+    display: none;
+    top: 56px !important;
+    z-index: 520 !important;
+  }
+
+  .mobile-menu.open {
+    display: block !important;
+  }
+
+  .navbar {
+    height: 56px !important;
+    min-height: 56px !important;
+    grid-template-columns: 1fr auto 1fr !important;
+  }
+
+  .map-shell {
+    top: 56px !important;
+    bottom: 0 !important;
+  }
+}

@@ -1,5 +1,5 @@
-﻿const APP_CACHE = "geoweb-v8-static";
-const TILE_CACHE = "geoweb-v8-tiles";
+﻿const APP_CACHE = "geoweb-v11-static";
+const TILE_CACHE = "geoweb-v11-tiles";
 
 const STATIC_ASSETS = [
   "./",
@@ -77,6 +77,9 @@ self.addEventListener("fetch", (event) => {
     }).catch(() => caches.match(req).then((cached) => cached || caches.match("./index.html")))
   );
 });
+
+
+
 
 
 
