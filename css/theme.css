@@ -363,3 +363,51 @@ body::before {
     animation: none !important;
   }
 }
+
+@media (max-width: 768px) {
+  #themeToggle {
+    font-size: 0;
+    line-height: 0;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    min-height: 40px;
+    border-radius: 999px;
+    padding: 0;
+  }
+
+  #themeToggle::before {
+    content: "\25D0";
+    font-size: 20px;
+    line-height: 1;
+    color: #fff;
+  }
+
+  .data-quick-bar {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border: 0 !important;
+    border-radius: 40px !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  .data-quick-bar .quick-btn {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    border-radius: 50% !important;
+    border: 0 !important;
+    background: #6c63ff !important;
+    color: #fff !important;
+    box-shadow: none !important;
+    font-size: 20px !important;
+  }
+
+  .data-quick-bar .quick-btn:hover,
+  .data-quick-bar .quick-btn:focus-visible {
+    background: #584fe0 !important;
+    color: #fff !important;
+    box-shadow: none !important;
+    outline: none;
+  }
+}
