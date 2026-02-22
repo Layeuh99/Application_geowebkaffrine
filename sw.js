@@ -1,5 +1,5 @@
-const APP_CACHE = "geoweb-v2-static";
-const TILE_CACHE = "geoweb-v2-tiles";
+const APP_CACHE = "geoweb-v3-static";
+const TILE_CACHE = "geoweb-v3-tiles";
 
 const STATIC_ASSETS = [
   "./",
@@ -48,7 +48,11 @@ self.addEventListener("fetch", (event) => {
   if (req.method !== "GET") return;
 
   const url = new URL(req.url);
-  const isTile = url.hostname.includes("tile.openstreetmap.org") || url.pathname.includes("toner-lite");
+  const isTile =
+    url.hostname.includes("tile.openstreetmap.org") ||
+    url.pathname.includes("toner-lite") ||
+    url.hostname.includes("cartocdn.com") ||
+    url.hostname.includes("arcgisonline.com");
 
   if (isTile) {
     event.respondWith(
