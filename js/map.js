@@ -11,6 +11,7 @@
   let analysisMarker = null;
   let analysisCircle = null;
   let analysisLayer = null;
+  let quickMarkerLayer = null;
 
   const fullExtent = [[13.721171, -16.131927], [14.821031, -14.310368]];
   const layerState = {};
@@ -87,13 +88,161 @@
     layer.bindPopup(popupHtml(feature, def.label));
   }
 
+  function locateUser() {
+    ensureMap();
+    map.once("locationfound", (event) => {
+      if (!quickMarkerLayer) quickMarkerLayer = L.layerGroup().addTo(map);
+      const marker = L.marker(event.latlng).addTo(quickMarkerLayer);
+      marker.bindPopup("Position actuelle").openPopup();
+      setStatus("Position détectée");
+    });
+    map.once("locationerror", () => {
+      setStatus("Localisation indisponible");
+    });
+    map.locate({ setView: true, maxZoom: 16, enableHighAccuracy: true });
+  }
+
+  function toggleFullscreen() {
+    ensureMap();
+    const container = map.getContainer();
+    const inFullscreen = Boolean(document.fullscreenElement);
+    if (!inFullscreen && container.requestFullscreen) {
+      container.requestFullscreen().then(() => setStatus("Mode plein écran activé")).catch(() => setStatus("Plein écran indisponible"));
+      return;
+    }
+    if (inFullscreen && document.exitFullscreen) {
+      document.exitFullscreen().then(() => setStatus("Mode plein écran quitté")).catch(() => setStatus("Sortie plein écran impossible"));
+    }
+  }
+
+  function addQuickMarker() {
+    ensureMap();
+    if (!quickMarkerLayer) quickMarkerLayer = L.layerGroup().addTo(map);
+    const center = map.getCenter();
+    const marker = L.marker(center).addTo(quickMarkerLayer);
+    marker.bindPopup("Marqueur rapide").openPopup();
+    setStatus("Marqueur ajouté");
+  }
+
+  function executeSigToolAction(action) {
+    switch (action) {
+      case "home":
+        resetHome();
+        break;
+      case "locate":
+        locateUser();
+        break;
+      case "measure":
+        toggleMeasure();
+        break;
+      case "fullscreen":
+        toggleFullscreen();
+        break;
+      case "marker":
+        addQuickMarker();
+        break;
+      case "export":
+        downloadActiveData();
+        break;
+      case "reset":
+        window.location.reload();
+        break;
+      default:
+        break;
+    }
+  }
+
+  function addSigToolsControl() {
+    if (!map) return;
+    const toolsControl = L.control({ position: "topleft" });
+
+    toolsControl.onAdd = function () {
+      const container = L.DomUtil.create("div", "leaflet-bar sig-tools");
+      container.innerHTML =
+        '<a href="#" class="sig-main-btn" title="Outils SIG" aria-label="Menu Outils SIG">🧰</a>' +
+        '<div class="sig-dropdown">' +
+        '<a href="#" data-action="home">🏠 Home</a>' +
+        '<a href="#" data-action="locate">📍 GPS</a>' +
+        '<a href="#" data-action="measure">📏 Mesure</a>' +
+        '<a href="#" data-action="fullscreen">⛶ Plein écran</a>' +
+        '<a href="#" data-action="marker">📌 Marqueur</a>' +
+        '<a href="#" data-action="export">🖨 Export</a>' +
+        '<a href="#" data-action="reset">🔄 Reset</a>' +
+        "</div>";
+
+      const mainBtn = container.querySelector(".sig-main-btn");
+      const dropdown = container.querySelector(".sig-dropdown");
+      const actionLinks = container.querySelectorAll(".sig-dropdown a");
+
+      function closeDropdown() {
+        if (dropdown) dropdown.style.display = "none";
+      }
+
+      function positionDropdown() {
+        if (!dropdown || !container) return;
+        dropdown.classList.remove("sig-dropdown-left");
+        const containerRect = container.getBoundingClientRect();
+        const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+        const estimatedWidth = Math.max(dropdown.offsetWidth || 0, 180);
+        const defaultLeft = containerRect.left + 48 + estimatedWidth;
+        if (defaultLeft > viewportWidth - 8) {
+          dropdown.classList.add("sig-dropdown-left");
+        }
+      }
+
+      function toggleDropdown() {
+        if (!dropdown) return;
+        const opening = dropdown.style.display !== "flex";
+        if (opening) {
+          dropdown.style.display = "flex";
+          positionDropdown();
+          return;
+        }
+        dropdown.style.display = "none";
+      }
+
+      L.DomEvent.disableClickPropagation(container);
+      L.DomEvent.disableScrollPropagation(container);
+
+      if (mainBtn) {
+        L.DomEvent.on(mainBtn, "click", (event) => {
+          L.DomEvent.preventDefault(event);
+          toggleDropdown();
+        });
+      }
+
+      actionLinks.forEach((link) => {
+        L.DomEvent.on(link, "click", (event) => {
+          L.DomEvent.preventDefault(event);
+          const action = link.getAttribute("data-action");
+          executeSigToolAction(action);
+          closeDropdown();
+        });
+      });
+
+      document.addEventListener("click", (event) => {
+        if (!container.contains(event.target)) closeDropdown();
+      });
+
+      window.addEventListener("resize", () => {
+        if (dropdown && dropdown.style.display === "flex") positionDropdown();
+      });
+
+      return container;
+    };
+
+    toolsControl.addTo(map);
+    map.getContainer().classList.add("sig-tools-enabled");
+  }
+
   function ensureMap() {
     if (map) return map;
 
     map = L.map("map", {
-      zoomControl: true,
+      zoomControl: false,
       attributionControl: true
     });
+    addSigToolsControl();
 
     basemaps.osm = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
@@ -527,6 +676,9 @@
     downloadActiveData,
     dashboardStats,
     getViewState,
+    locateUser,
+    toggleFullscreen,
+    addQuickMarker,
     invalidateSize,
     setStatus
   };

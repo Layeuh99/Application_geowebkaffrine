@@ -567,6 +567,7 @@
   function bindEvents() {
     const mobileMenu = byId("mobileMenu");
     const toggleBtn = byId("mobileMenuToggle");
+    const metadataModal = byId("metadataModal");
 
     if (mobileMenu) {
       mobileMenu.addEventListener("click", (event) => {
@@ -582,6 +583,19 @@
       toggleBtn.addEventListener("click", (event) => {
         event.stopPropagation();
         toggleMobileMenu();
+      });
+    }
+
+    if (metadataModal) {
+      metadataModal.addEventListener("click", (event) => {
+        const navButton = event.target.closest(".metadata-nav-btn");
+        if (!navButton) return;
+        const targetId = navButton.getAttribute("data-target");
+        if (!targetId) return;
+        const section = byId(targetId);
+        if (!section) return;
+        if (section.tagName === "DETAILS") section.open = true;
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     }
 

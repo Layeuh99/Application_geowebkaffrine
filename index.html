@@ -5,18 +5,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#2563eb">
-  <link rel="manifest" href="manifest.json?v=20260222w">
+  <link rel="manifest" href="manifest.json?v=20260222aa">
   <link rel="apple-touch-icon" href="icons/icon-192x192.png">
   <title>GeoWeb Kaffrine</title>
 
-  <link rel="stylesheet" href="css/leaflet.css?v=20260222w">
-  <link rel="stylesheet" href="css/leaflet-measure.css?v=20260222w">
+  <link rel="stylesheet" href="css/leaflet.css?v=20260222aa">
+  <link rel="stylesheet" href="css/leaflet-measure.css?v=20260222aa">
 
-  <link rel="stylesheet" href="css/base.css?v=20260222w">
-  <link rel="stylesheet" href="css/layout.css?v=20260222w">
-  <link rel="stylesheet" href="css/navbar.css?v=20260222w">
-  <link rel="stylesheet" href="css/mobile.css?v=20260222w">
-  <link rel="stylesheet" href="css/theme.css?v=20260222w">
+  <link rel="stylesheet" href="css/base.css?v=20260222aa">
+  <link rel="stylesheet" href="css/layout.css?v=20260222aa">
+  <link rel="stylesheet" href="css/navbar.css?v=20260222aa">
+  <link rel="stylesheet" href="css/mobile.css?v=20260222aa">
+  <link rel="stylesheet" href="css/theme.css?v=20260222aa">
 </head>
 <body>
   <div id="app">
@@ -202,64 +202,93 @@
           <button type="button" class="icon-btn" id="closeMetadata" aria-label="Fermer les métadonnées">x</button>
         </div>
         <div class="panel-body metadata-body">
-          <div class="metadata-grid">
-            <div class="metadata-card">
-              <span class="metadata-label">Projet</span>
-              <strong>GeoWeb Kaffrine</strong>
-            </div>
-            <div class="metadata-card">
-              <span class="metadata-label">Projection</span>
-              <strong>WGS84 (EPSG:4326)</strong>
-            </div>
-            <div class="metadata-card">
-              <span class="metadata-label">Date génération</span>
-              <strong id="metadataGeneratedAt">-</strong>
-            </div>
-            <div class="metadata-card">
-              <span class="metadata-label">Thème</span>
-              <strong id="metadataTheme">-</strong>
-            </div>
-            <div class="metadata-card">
-              <span class="metadata-label">Fond actif</span>
-              <strong id="metadataBasemap">-</strong>
-            </div>
-            <div class="metadata-card">
-              <span class="metadata-label">Vue carte</span>
-              <strong id="metadataViewport">-</strong>
-            </div>
-            <div class="metadata-card">
-              <span class="metadata-label">Couches actives</span>
-              <strong id="metadataLayersCount">-</strong>
-            </div>
-            <div class="metadata-card">
-              <span class="metadata-label">Entités visibles</span>
-              <strong id="metadataFeaturesCount">-</strong>
-            </div>
+          <div class="metadata-nav" aria-label="Navigation métadonnées">
+            <button type="button" class="metadata-nav-btn" data-target="metadataSectionOverview">Aperçu</button>
+            <button type="button" class="metadata-nav-btn" data-target="metadataSectionContext">Contexte</button>
+            <button type="button" class="metadata-nav-btn" data-target="metadataSectionLayers">Couches</button>
+            <button type="button" class="metadata-nav-btn" data-target="metadataSectionActions">Actions</button>
           </div>
 
-          <p class="metadata-extent"><strong>Emprise actuelle :</strong> <span id="metadataExtent">-</span></p>
+          <details id="metadataSectionOverview" class="metadata-section" open>
+            <summary>Vue générale</summary>
+            <div class="metadata-section-body">
+              <div class="metadata-grid">
+                <div class="metadata-card">
+                  <span class="metadata-label">Projet</span>
+                  <strong>GeoWeb Kaffrine</strong>
+                </div>
+                <div class="metadata-card">
+                  <span class="metadata-label">Thème</span>
+                  <strong id="metadataTheme">-</strong>
+                </div>
+                <div class="metadata-card">
+                  <span class="metadata-label">Fond actif</span>
+                  <strong id="metadataBasemap">-</strong>
+                </div>
+                <div class="metadata-card">
+                  <span class="metadata-label">Couches actives</span>
+                  <strong id="metadataLayersCount">-</strong>
+                </div>
+                <div class="metadata-card">
+                  <span class="metadata-label">Entités visibles</span>
+                  <strong id="metadataFeaturesCount">-</strong>
+                </div>
+              </div>
+            </div>
+          </details>
 
-          <div class="metadata-table-wrap">
-            <table class="metadata-table" aria-label="Résumé des couches">
-              <thead>
-                <tr>
-                  <th>Couche</th>
-                  <th>Catégorie</th>
-                  <th>État</th>
-                  <th>Objets</th>
-                  <th>Opacité</th>
-                </tr>
-              </thead>
-              <tbody id="metadataLayersTable">
-                <tr><td colspan="5">Chargement...</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <details id="metadataSectionContext" class="metadata-section">
+            <summary>Contexte cartographique</summary>
+            <div class="metadata-section-body">
+              <div class="metadata-grid metadata-grid-context">
+                <div class="metadata-card">
+                  <span class="metadata-label">Projection</span>
+                  <strong>WGS84 (EPSG:4326)</strong>
+                </div>
+                <div class="metadata-card">
+                  <span class="metadata-label">Date génération</span>
+                  <strong id="metadataGeneratedAt">-</strong>
+                </div>
+                <div class="metadata-card">
+                  <span class="metadata-label">Vue carte</span>
+                  <strong id="metadataViewport">-</strong>
+                </div>
+              </div>
+              <p class="metadata-extent"><strong>Emprise actuelle :</strong> <span id="metadataExtent">-</span></p>
+            </div>
+          </details>
 
-          <div class="analysis-actions metadata-actions">
-            <button id="metadataCopy" type="button" class="icon-btn">Copier le résumé</button>
-            <button id="metadataDownload" type="button" class="icon-btn">Télécharger JSON</button>
-          </div>
+          <details id="metadataSectionLayers" class="metadata-section">
+            <summary>Couches et statut</summary>
+            <div class="metadata-section-body">
+              <div class="metadata-table-wrap">
+                <table class="metadata-table" aria-label="Résumé des couches">
+                  <thead>
+                    <tr>
+                      <th>Couche</th>
+                      <th>Catégorie</th>
+                      <th>État</th>
+                      <th>Objets</th>
+                      <th>Opacité</th>
+                    </tr>
+                  </thead>
+                  <tbody id="metadataLayersTable">
+                    <tr><td colspan="5">Chargement...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </details>
+
+          <details id="metadataSectionActions" class="metadata-section">
+            <summary>Actions</summary>
+            <div class="metadata-section-body">
+              <div class="analysis-actions metadata-actions">
+                <button id="metadataCopy" type="button" class="icon-btn">Copier le résumé</button>
+                <button id="metadataDownload" type="button" class="icon-btn">Télécharger JSON</button>
+              </div>
+            </div>
+          </details>
         </div>
       </div>
     </div>
@@ -276,8 +305,8 @@
     <div id="uiOverlay" class="ui-overlay" aria-hidden="true"></div>
   </div>
 
-  <script src="js/leaflet.js?v=20260222w"></script>
-  <script src="js/leaflet-measure.js?v=20260222w"></script>
+  <script src="js/leaflet.js?v=20260222aa"></script>
+  <script src="js/leaflet-measure.js?v=20260222aa"></script>
   <script src="data/Region_3.js"></script>
   <script src="data/Departement_4.js"></script>
   <script src="data/Arrondissement_5.js"></script>
@@ -285,12 +314,17 @@
   <script src="data/Localites_7.js"></script>
   <script src="data/Ecoles_8.js"></script>
 
-  <script src="js/theme.js?v=20260222w"></script>
-  <script src="js/map.js?v=20260222w"></script>
-  <script src="js/ui.js?v=20260222w"></script>
-  <script src="js/app.js?v=20260222w"></script>
+  <script src="js/theme.js?v=20260222aa"></script>
+  <script src="js/map.js?v=20260222aa"></script>
+  <script src="js/ui.js?v=20260222aa"></script>
+  <script src="js/app.js?v=20260222aa"></script>
 </body>
 </html>
+
+
+
+
+
 
 
 
