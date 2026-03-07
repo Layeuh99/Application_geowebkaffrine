@@ -541,6 +541,22 @@
   margin-top: 8px;
 }
 
+.layer-label-row {
+  margin-top: 6px;
+}
+
+.layer-label-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.layer-label-toggle input {
+  accent-color: var(--primary);
+}
+
 .layer-group {
   margin-bottom: 12px;
 }

@@ -191,12 +191,18 @@
         const key = entry.key;
         const checked = item.active ? "checked" : "";
         const opacity = Math.round(item.opacity * 100);
+        const hasLabels = Boolean(item.def.labels);
+        const labelsChecked = item.labelsEnabled ? "checked" : "";
+        const labelsToggle = hasLabels
+          ? '<label class="layer-label-toggle"><input type="checkbox" data-layer-labels="' + key + '" ' + labelsChecked + '> Labels</label>'
+          : "";
         return (
           '<div class="layer-row">' +
           '<div class="layer-top">' +
           '<label><input type="checkbox" data-layer-toggle="' + key + '" ' + checked + '> ' + item.def.label + '</label>' +
           '<span>' + opacity + '%</span>' +
           '</div>' +
+          (labelsToggle ? '<div class="layer-label-row">' + labelsToggle + '</div>' : "") +
           '<input type="range" min="0" max="100" value="' + opacity + '" data-layer-opacity="' + key + '">' +
           '</div>'
         );
@@ -465,6 +471,13 @@
       renderLegend();
       renderDashboard();
       addActivity((toggle.checked ? "Activation " : "Désactivation ") + key);
+      return;
+    }
+    const labelToggle = event.target.closest("[data-layer-labels]");
+    if (labelToggle) {
+      const key = labelToggle.getAttribute("data-layer-labels");
+      MapModule.setLayerLabels(key, labelToggle.checked);
+      addActivity((labelToggle.checked ? "Labels activés " : "Labels désactivés ") + key);
       return;
     }
     const opacity = event.target.closest("[data-layer-opacity]");

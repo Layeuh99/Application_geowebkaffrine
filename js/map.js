@@ -23,39 +23,143 @@
     return val || fallback;
   }
 
-  function colorStyle(color, fillColor, weight) {
+  function qgis2webStyles() {
     return {
-      color: color,
-      fillColor: fillColor || color,
-      fillOpacity: 0.55,
-      opacity: 1,
-      weight: weight || 1.5
+      region: {
+        opacity: 1,
+        color: "rgba(35,35,35,1.0)",
+        dashArray: "",
+        lineCap: "butt",
+        lineJoin: "miter",
+        weight: 5.0,
+        fillOpacity: 0,
+        interactive: true
+      },
+      routes: {
+        opacity: 1,
+        color: "rgba(255,0,0,1.0)",
+        dashArray: "",
+        lineCap: "round",
+        lineJoin: "round",
+        weight: 1.0,
+        fillOpacity: 0,
+        interactive: true
+      },
+      localites: {
+        radius: 3.2,
+        opacity: 1,
+        color: "rgba(247,247,247,1.0)",
+        dashArray: "",
+        lineCap: "butt",
+        lineJoin: "miter",
+        weight: 2.0,
+        fill: true,
+        fillOpacity: 1,
+        fillColor: "rgba(83,83,83,1.0)",
+        interactive: true
+      },
+      ecoles: {
+        radius: 4.77,
+        opacity: 1,
+        color: "rgba(184,8,8,1.0)",
+        dashArray: "",
+        lineCap: "butt",
+        lineJoin: "miter",
+        weight: 1.0,
+        fill: true,
+        fillOpacity: 1,
+        fillColor: "rgba(184,8,8,1.0)",
+        interactive: true
+      }
     };
   }
 
-  function stylePalette() {
+  function styleDepartement(feature) {
+    const colors = {
+      BIRKELANE: "rgba(126,222,43,1.0)",
+      KAFFRINE: "rgba(214,97,39,1.0)",
+      KOUNGHEUL: "rgba(211,108,199,1.0)",
+      "MALEM HODDAR": "rgba(101,202,175,1.0)"
+    };
+
     return {
-      region: cssVar("--layer-region", "#93c5fd"),
-      departement: cssVar("--layer-departement", "#86efac"),
-      arrondissement: cssVar("--layer-arrondissement", "#fdba74"),
-      routes: cssVar("--layer-routes", "#dc2626"),
-      localites: cssVar("--layer-localites", "#60a5fa"),
-      ecoles: cssVar("--layer-ecoles", "#f87171"),
-      outline: cssVar("--text", "#1d2840"),
-      analysis: cssVar("--primary", "#1e5eff"),
-      route: cssVar("--ok", "#0f9f64")
+      opacity: 1,
+      color: "rgba(35,35,35,1.0)",
+      dashArray: "",
+      lineCap: "butt",
+      lineJoin: "miter",
+      weight: 1.0,
+      fill: true,
+      fillOpacity: 1,
+      fillColor: colors[feature?.properties?.dept] || "rgba(200,200,200,1.0)",
+      interactive: true
+    };
+  }
+
+  function styleArrondissement(feature) {
+    const colors = {
+      "DAROU MINAME II": "rgba(212,225,126,1.0)",
+      GNIBY: "rgba(168,29,214,1.0)",
+      "IDA MOURIDE": "rgba(132,116,220,1.0)",
+      KATAKEL: "rgba(200,69,76,1.0)",
+      "KEUR MBOUCKI": "rgba(202,130,41,1.0)",
+      "LOUR ESCALE": "rgba(61,142,235,1.0)",
+      MABO: "rgba(234,59,173,1.0)",
+      "MISSIRAH WADENE": "rgba(68,214,204,1.0)",
+      SAGNA: "rgba(87,201,45,1.0)"
+    };
+
+    return {
+      opacity: 1,
+      color: "rgba(35,35,35,1.0)",
+      dashArray: "",
+      lineCap: "butt",
+      lineJoin: "miter",
+      weight: 1.0,
+      fill: true,
+      fillOpacity: 1,
+      fillColor: colors[feature?.properties?.arr] || "rgba(200,200,200,1.0)",
+      interactive: true
     };
   }
 
   function layerDefinitions() {
-    const c = stylePalette();
+    const styles = qgis2webStyles();
     return [
-      { key: "Region", label: "Région", group: "Limites administratives", dataVar: "json_Region_3", type: "polygon", style: colorStyle(c.outline, c.region, 2), legend: c.region },
-      { key: "Departement", label: "Département", group: "Limites administratives", dataVar: "json_Departement_4", type: "polygon", style: colorStyle(c.outline, c.departement, 1.5), legend: c.departement },
-      { key: "Arrondissement", label: "Arrondissement", group: "Limites administratives", dataVar: "json_Arrondissement_5", type: "polygon", style: colorStyle(c.outline, c.arrondissement, 1), legend: c.arrondissement },
-      { key: "Localites", label: "Localités", group: "Occupation du territoire", dataVar: "json_Localites_7", type: "point", style: { radius: 4, color: c.outline, fillColor: c.localites, fillOpacity: 0.85, opacity: 1, weight: 1 }, legend: c.localites },
-      { key: "Ecoles", label: "Écoles", group: "Services essentiels", dataVar: "json_Ecoles_8", type: "point", style: { radius: 5, color: c.outline, fillColor: c.ecoles, fillOpacity: 0.9, opacity: 1, weight: 1 }, legend: c.ecoles },
-      { key: "Routes", label: "Routes", group: "Réseaux et mobilité", dataVar: "json_Routes_6", type: "line", style: { color: c.routes, opacity: 0.95, weight: 2 }, legend: c.routes }
+      { key: "Region", label: "Région", group: "Limites administratives", dataVar: "json_Region_3", type: "polygon", style: styles.region, legend: "#232323" },
+      { key: "Departement", label: "Département", group: "Limites administratives", dataVar: "json_Departement_4", type: "polygon", style: styleDepartement, legend: "#d66127" },
+      {
+        key: "Arrondissement",
+        label: "Arrondissement",
+        group: "Limites administratives",
+        dataVar: "json_Arrondissement_5",
+        type: "polygon",
+        style: styleArrondissement,
+        legend: "#3d8eeb",
+        labels: {
+          default: false,
+          className: "arrondissement-label",
+          direction: "center",
+          offset: [0, 0]
+        }
+      },
+      {
+        key: "Localites",
+        label: "Localités",
+        group: "Occupation du territoire",
+        dataVar: "json_Localites_7",
+        type: "point",
+        pointStyle: styles.localites,
+        legend: "#535353",
+        labels: {
+          default: false,
+          className: "localite-label",
+          direction: "top",
+          offset: [0, -10]
+        }
+      },
+      { key: "Ecoles", label: "Écoles", group: "Services essentiels", dataVar: "json_Ecoles_8", type: "point", pointStyle: styles.ecoles, legend: "#b80808" },
+      { key: "Routes", label: "Routes", group: "Réseaux et mobilité", dataVar: "json_Routes_6", type: "line", style: styles.routes, legend: "#ff0000" }
     ];
   }
 
@@ -68,24 +172,122 @@
   function featureLabel(feature, fallback) {
     if (!feature || !feature.properties) return fallback || "Entité";
     const p = feature.properties;
-    return p.NOM || p.Nom || p.nom || p.NAME || p.Name || p.arr || p.dept || p.Region || p.Code || fallback || "Entité";
+    return p.NOM || p.Nom || p.nom || p.NAME || p.Name || p.arr || p.dept || p.Region || p["Région"] || p["RÃ©gion"] || p.Code || fallback || "Entité";
   }
 
-  function popupHtml(feature, layerLabel) {
-    if (!feature || !feature.properties) {
-      return "<strong>" + (layerLabel || "Entité") + "</strong><br>Aucune donnée attributaire.";
+  function pickProp(properties, keys) {
+    if (!properties) return "";
+    for (let i = 0; i < keys.length; i += 1) {
+      const key = keys[i];
+      const value = properties[key];
+      if (value !== undefined && value !== null && String(value).trim() !== "") return value;
     }
+    return "";
+  }
+
+  function popupHtml(feature, layerKey) {
+    if (!feature || !feature.properties) {
+      return "<strong>" + (layerKey || "Entité") + "</strong><br>Aucune donnée attributaire.";
+    }
+
     const p = feature.properties;
-    const rows = Object.keys(p)
-      .filter((k) => p[k] !== null && p[k] !== undefined && String(p[k]).trim() !== "")
-      .slice(0, 10)
-      .map((k) => "<div><strong>" + toTitleCaseKey(k) + ":</strong> " + String(p[k]) + "</div>")
-      .join("");
-    return "<strong>" + featureLabel(feature, layerLabel) + "</strong>" + (rows ? "<hr>" + rows : "");
+    const rows = [];
+    const addRow = (label, value) => {
+      if (value === undefined || value === null || String(value).trim() === "") return;
+      rows.push("<tr><td colspan=\"2\"><strong>" + label + "</strong><br />" + String(value) + "</td></tr>");
+    };
+
+    switch (layerKey) {
+      case "Region":
+        addRow("Code", pickProp(p, ["Code", "code"]));
+        addRow("Région", pickProp(p, ["Region", "Région", "RÃ©gion"]));
+        break;
+      case "Departement":
+        addRow("Région", pickProp(p, ["reg", "Reg", "REG"]));
+        addRow("Département", pickProp(p, ["dept", "Dept", "DEPT"]));
+        break;
+      case "Arrondissement":
+        addRow("Région", pickProp(p, ["reg", "Reg", "REG"]));
+        addRow("Département", pickProp(p, ["dept", "Dept", "DEPT"]));
+        addRow("CAV", pickProp(p, ["cav", "CAV"]));
+        addRow("Arrondissement", pickProp(p, ["arr", "ARR", "Arrondissement"]));
+        break;
+      case "Routes":
+        addRow("Route ID", pickProp(p, ["ROUTESA3_", "ROUTE_ID", "route_id"]));
+        addRow("Route Info", pickProp(p, ["ROUTESA3_I", "ROUTE_INFO", "route_info"]));
+        break;
+      case "Localites":
+        addRow("Entité", pickProp(p, ["ENTITY", "Entite", "entite"]));
+        addRow("Nom", pickProp(p, ["NOM", "Nom", "nom"]));
+        addRow("Numéro village", pickProp(p, ["NUM_VILLAG", "NUM_VILLAGE", "num_villag"]));
+        break;
+      case "Ecoles":
+        addRow("Nom", pickProp(p, ["Nom", "NOM", "nom"]));
+        break;
+      default:
+        break;
+    }
+
+    const header = "<strong>" + (featureLabel(feature, layerKey) || layerKey || "Entité") + "</strong>";
+    if (!rows.length) return header + "<br>Aucune donnée attributaire.";
+    return header + "<hr><table>" + rows.join("") + "</table>";
+  }
+
+  function labelText(feature, def) {
+    if (!feature || !feature.properties || !def || !def.labels) return "";
+    if (def.key === "Localites") return pickProp(feature.properties, ["NOM", "Nom", "nom"]);
+    if (def.key === "Arrondissement") return pickProp(feature.properties, ["arr", "ARR", "Arrondissement"]);
+    return "";
+  }
+
+  function applyLabelsForLayer(key, enabled) {
+    const state = layerState[key];
+    if (!state || !state.layer || !state.def || !state.def.labels) return;
+    state.labelsEnabled = enabled;
+    state.layer.eachLayer((child) => {
+      if (!child || !child.bindTooltip) return;
+      if (!enabled) {
+        if (child.getTooltip && child.getTooltip()) child.unbindTooltip();
+        return;
+      }
+      const text = labelText(child.feature, state.def);
+      if (!text) return;
+      child.bindTooltip(text, {
+        permanent: true,
+        direction: state.def.labels.direction,
+        className: state.def.labels.className,
+        offset: state.def.labels.offset
+      });
+    });
+  }
+
+  function highlightFeature(event) {
+    const layer = event.target;
+    const geomType = layer?.feature?.geometry?.type;
+    if (geomType === "LineString" || geomType === "MultiLineString") {
+      layer.setStyle({ color: "rgba(255,255,0,1.00)", weight: 3 });
+    } else {
+      layer.setStyle({ fillColor: "rgba(255,255,0,1.00)", fillOpacity: 0.7 });
+    }
+    layer.openPopup();
   }
 
   function bindFeatureInteractivity(feature, layer, def) {
-    layer.bindPopup(popupHtml(feature, def.label));
+    layer.on({
+      mouseout: (event) => {
+        for (const key in event.target._eventParents) {
+          if (typeof event.target._eventParents[key].resetStyle === "function") {
+            event.target._eventParents[key].resetStyle(event.target);
+          }
+        }
+        if (typeof layer.closePopup === "function") layer.closePopup();
+      },
+      mouseover: highlightFeature
+    });
+
+    const content = popupHtml(feature, def.key);
+    layer.bindPopup(content, { maxHeight: 400 });
+
   }
 
   function locateUser() {
@@ -299,7 +501,7 @@
 
     if (def.type === "point") {
       return L.geoJSON(data, {
-        pointToLayer: (_, latlng) => L.circleMarker(latlng, def.style),
+        pointToLayer: (_, latlng) => L.circleMarker(latlng, def.pointStyle),
         onEachFeature: (feature, layer) => bindFeatureInteractivity(feature, layer, def)
       });
     }
@@ -319,9 +521,15 @@
         def: def,
         layer: layer,
         active: Boolean(layer),
-        opacity: 1
+        opacity: 1,
+        labelsEnabled: def.labels ? Boolean(def.labels.default) : false
       };
       if (layer) layer.addTo(map);
+    });
+
+    defs.forEach((def) => {
+      if (!def.labels) return;
+      applyLabelsForLayer(def.key, Boolean(def.labels.default));
     });
     updateScaleText();
   }
@@ -334,7 +542,13 @@
       state.def.legend = def.legend;
       state.layer.eachLayer((child) => {
         if (!child.setStyle) return;
-        child.setStyle(def.style);
+        if (def.type === "point") {
+          child.setStyle(def.pointStyle);
+        } else if (typeof def.style === "function") {
+          child.setStyle(def.style(child.feature));
+        } else {
+          child.setStyle(def.style);
+        }
       });
       setLayerOpacity(def.key, state.opacity);
     });
@@ -386,6 +600,10 @@
         child.setStyle({ opacity: opacity, fillOpacity: Math.max(0.12, opacity * 0.6) });
       }
     });
+  }
+
+  function setLayerLabels(key, enabled) {
+    applyLabelsForLayer(key, enabled);
   }
 
   function resetHome() {
@@ -664,6 +882,7 @@
     getBasemapState,
     setLayerVisibility,
     setLayerOpacity,
+    setLayerLabels,
     switchBasemap,
     resetHome,
     zoomIn,

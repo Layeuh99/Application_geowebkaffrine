@@ -100,6 +100,25 @@ select {
   color: var(--danger);
 }
 
+.leaflet-tooltip.localite-label,
+.leaflet-tooltip.arrondissement-label {
+  background: rgba(15, 23, 42, 0.88);
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.3);
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.leaflet-tooltip.arrondissement-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
