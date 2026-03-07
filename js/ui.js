@@ -184,6 +184,19 @@
     if (!container) return;
     const layers = MapModule.getLayerState();
     const categories = buildLayerCategories(layers);
+    const labelsState = MapModule.getLabelsState ? MapModule.getLabelsState() : { keys: [], anyEnabled: false, allEnabled: false };
+
+    const globalLabelsToggle = labelsState.keys.length
+      ? (
+        '<div class="layer-row layer-row-compact">' +
+        '<div class="layer-top">' +
+        '<label class="layer-label-toggle"><input type="checkbox" id="labelsToggleAll" data-layer-labels-all ' +
+        (labelsState.allEnabled ? "checked" : "") +
+        '> Labels (tout)</label>' +
+        '</div>' +
+        '</div>'
+      )
+      : "";
 
     const html = categories.map((category) => {
       const rows = category.entries.map((entry) => {
@@ -216,7 +229,14 @@
       );
     }).join("");
 
-    container.innerHTML = html || "<p>Aucune couche chargée.</p>";
+    container.innerHTML = (globalLabelsToggle + html) || "<p>Aucune couche chargée.</p>";
+
+    if (labelsState.keys.length) {
+      const allToggle = byId("labelsToggleAll");
+      if (allToggle) {
+        allToggle.indeterminate = labelsState.anyEnabled && !labelsState.allEnabled;
+      }
+    }
   }
 
   function renderLegend() {
@@ -477,7 +497,15 @@
     if (labelToggle) {
       const key = labelToggle.getAttribute("data-layer-labels");
       MapModule.setLayerLabels(key, labelToggle.checked);
+      renderLayersPanel();
       addActivity((labelToggle.checked ? "Labels activés " : "Labels désactivés ") + key);
+      return;
+    }
+    const labelToggleAll = event.target.closest("[data-layer-labels-all]");
+    if (labelToggleAll) {
+      MapModule.setAllLabels(labelToggleAll.checked);
+      renderLayersPanel();
+      addActivity(labelToggleAll.checked ? "Labels activés (tout)" : "Labels désactivés (tout)");
       return;
     }
     const opacity = event.target.closest("[data-layer-opacity]");

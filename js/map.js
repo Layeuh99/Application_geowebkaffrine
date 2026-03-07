@@ -606,6 +606,22 @@
     applyLabelsForLayer(key, enabled);
   }
 
+  function getLabelsState() {
+    const keys = Object.keys(layerState);
+    const labelKeys = keys.filter((key) => layerState[key]?.def?.labels);
+    const anyEnabled = labelKeys.some((key) => layerState[key].labelsEnabled);
+    const allEnabled = labelKeys.length > 0 && labelKeys.every((key) => layerState[key].labelsEnabled);
+    return { keys: labelKeys, anyEnabled, allEnabled };
+  }
+
+  function setAllLabels(enabled) {
+    const keys = Object.keys(layerState);
+    keys.forEach((key) => {
+      if (!layerState[key]?.def?.labels) return;
+      applyLabelsForLayer(key, enabled);
+    });
+  }
+
   function resetHome() {
     ensureMap().fitBounds(fullExtent);
     setStatus("Vue complète chargée");
@@ -883,6 +899,8 @@
     setLayerVisibility,
     setLayerOpacity,
     setLayerLabels,
+    getLabelsState,
+    setAllLabels,
     switchBasemap,
     resetHome,
     zoomIn,

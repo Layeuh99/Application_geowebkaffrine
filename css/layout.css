@@ -529,6 +529,10 @@
   box-shadow: var(--shadow-soft);
 }
 
+.layer-row-compact {
+  padding: 6px 8px;
+}
+
 .layer-top {
   display: flex;
   align-items: center;
@@ -543,6 +547,8 @@
 
 .layer-label-row {
   margin-top: 6px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .layer-label-toggle {
@@ -550,7 +556,12 @@
   align-items: center;
   gap: 8px;
   font-size: 0.85rem;
-  color: var(--muted);
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px 10px;
+  box-shadow: var(--shadow-soft);
 }
 
 .layer-label-toggle input {
